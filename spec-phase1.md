@@ -36,10 +36,10 @@ Phase 1 establishes the local isolated staging environment (`backstage.ekkairo.o
 
 ## 3. Human Verification & Gate 1 Criteria
 
-- [ ] Git repository initialized with all plan, architecture, and phase spec files committed.
-- [ ] Staging webroot `/var/www/backstage.ekkairo.org/public` created.
-- [ ] Nginx configuration active and `nginx -t` passes.
-- [ ] `https://backstage.ekkairo.org` responds cleanly under PHP 7.4-FPM.
-- [ ] Database `backstage_ekk` loaded and URLs replaced.
-- [ ] Media assets load transparently from live site via Nginx `proxy_pass`.
-- [ ] Human review and explicit approval requested before advancing to Phase 2.
+- [x] Git repository initialized with all plan, architecture, and phase spec files committed.
+- [x] Staging webroot `/var/www/backstage.ekkairo.org/public` created.
+- [x] Nginx configuration active and `nginx -t` passes.
+- [x] `https://backstage.ekkairo.org` responds cleanly under PHP 7.4-FPM.
+- [x] Database `backstage_ekk` loaded and URLs replaced.
+- [x] Media assets load transparently from live site via Nginx `proxy_pass`.
+- [x] Human review and explicit approval requested before advancing to Phase 2.
