@@ -1,6 +1,6 @@
 # Todo List: Phase 1 — Analysis, Staging Setup & Tooling Port
 
-- [ ] Task 1: Repository Core & Spec Tracking Initialization
+- [x] Task 1: Repository Core & Spec Tracking Initialization
 - [ ] Task 2: Agent Skills Port & Sync
 - [ ] Task 3: Staging Webroot, Local SSL (OpenSSL) & Nginx Infrastructure Setup
 - [ ] Task 4: Database Snapshot & Staging DB Provisioning (`backstage_ekk`)
