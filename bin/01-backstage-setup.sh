@@ -1,0 +1,65 @@
+#!/bin/bash
+# bin/01-backstage-setup.sh
+# EKK Portal Staging Environment Reset, Theme Activation & Setup Script
+# Targets: /var/www/backstage.ekkairo.org (DB: backstage_ekk)
+
+set -eo pipefail
+
+STAGING_DIR="/var/www/backstage.ekkairo.org"
+WP_DIR="$STAGING_DIR/public"
+THEME_DIR="$WP_DIR/wp-content/themes/ekkairo-flagship"
+LOG_DIR="$THEME_DIR/ai-work/logs"
+MAIN_LOG="$LOG_DIR/01-backstage-setup.log"
+
+mkdir -p "$LOG_DIR"
+: > "$MAIN_LOG"
+
+exec > >(tee -a "$MAIN_LOG") 2>&1
+
+echo "=========================================="
+echo "Resetting Staging Environment: $(date)"
+echo "Target DB: backstage_ekk"
+echo "=========================================="
+
+# 1. Run Pre-flight Checks
+if [ -x "$THEME_DIR/bin/pre-flight.sh" ]; then
+    "$THEME_DIR/bin/pre-flight.sh" || { echo "Notice: Pre-flight checks returned warnings."; }
+fi
+
+# 2. Database Export from Live Production Snapshot
+PROD_DIR="/var/www/ekkairo.org"
+DUMP_FILE="/tmp/ekk_prod_db.sql"
+
+if [ -d "$PROD_DIR/public" ]; then
+    echo "Exporting live database snapshot from $PROD_DIR/public..."
+    mysqldump -u root -p0024 --ssl-mode=DISABLED db207080_ekk > "$DUMP_FILE" || { echo "ERROR: Live DB export failed."; exit 1; }
+else
+    echo "ERROR: Production directory $PROD_DIR/public not found."
+    exit 1
+fi
+
+# 3. Import Fresh Snapshot into backstage_ekk
+echo "Recreating clean database backstage_ekk..."
+mysql -u root -p0024 --ssl-mode=DISABLED -e "DROP DATABASE IF EXISTS backstage_ekk; CREATE DATABASE backstage_ekk DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+echo "Importing fresh database snapshot into backstage_ekk..."
+mysql -u root -p0024 --ssl-mode=DISABLED backstage_ekk < "$DUMP_FILE"
+rm -f "$DUMP_FILE"
+
+# 4. Synchronize Staging Files with Preservation Rules
+if [ -d "$PROD_DIR/public" ]; then
+    echo "Synchronizing staging files from production baseline..."
+    rsync -av --delete \
+        --exclude='wp-config.php' \
+        --exclude='wp-content/uploads***' \
+        --exclude='wp-content/themes/ekkairo-flagship***' \
+        "$PROD_DIR/public/" "$STAGING_DIR/public/"
+fi
+
+# 5. Search-Replace Domain Mapping
+echo "Performing DB domain mapping (ekkairo.org -> backstage.ekkairo.org)..."
+php7.4 /usr/local/bin/wp search-replace 'https://ekkairo.org' 'https://backstage.ekkairo.org' --path="$WP_DIR" --all-tables --skip-plugins --allow-root || true
+php7.4 /usr/local/bin/wp search-replace 'http://ekkairo.local' 'https://backstage.ekkairo.org' --path="$WP_DIR" --all-tables --skip-plugins --allow-root || true
+
+echo "Staging environment setup completed successfully at $(date)!"
+exit 0
