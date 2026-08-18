@@ -61,5 +61,17 @@ echo "Performing DB domain mapping (ekkairo.org -> backstage.ekkairo.org)..."
 php7.4 /usr/local/bin/wp search-replace 'https://ekkairo.org' 'https://backstage.ekkairo.org' --path="$WP_DIR" --all-tables --skip-plugins --allow-root || true
 php7.4 /usr/local/bin/wp search-replace 'http://ekkairo.local' 'https://backstage.ekkairo.org' --path="$WP_DIR" --all-tables --skip-plugins --allow-root || true
 
+# 6. Deactivate Captcha & Cache Plugins, Purge Cache & Disable WP_CACHE Directive
+echo "Deactivating captcha and cache plugins..."
+php7.4 /usr/local/bin/wp plugin deactivate google-captcha w3-total-cache jetpack-boost --path="$WP_DIR" --allow-root || true
+
+echo "Disabling WP_CACHE in wp-config.php..."
+php7.4 /usr/local/bin/wp config set WP_CACHE false --raw --type=constant --path="$WP_DIR" --allow-root || true
+
+echo "Purging drop-in cache files and static cache directories..."
+rm -rf "$WP_DIR/wp-content/cache/"* "$WP_DIR/wp-content/boost-cache/"* "$WP_DIR/wp-content/advanced-cache.php" "$WP_DIR/wp-content/object-cache.php"
+php7.4 /usr/local/bin/wp cache flush --path="$WP_DIR" --allow-root || true
+
 echo "Staging environment setup completed successfully at $(date)!"
 exit 0
+
