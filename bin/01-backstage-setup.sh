@@ -26,24 +26,22 @@ if [ -x "$THEME_DIR/bin/pre-flight.sh" ]; then
     "$THEME_DIR/bin/pre-flight.sh" || { echo "Notice: Pre-flight checks returned warnings."; }
 fi
 
-# 2. Database Export from Live Production Snapshot
+# 2. Database Export from Live Production Snapshot via WP-CLI
 PROD_DIR="/var/www/ekkairo.org"
 DUMP_FILE="/tmp/ekk_prod_db.sql"
 
 if [ -d "$PROD_DIR/public" ]; then
-    echo "Exporting live database snapshot from $PROD_DIR/public..."
-    mysqldump -u root -p0024 --ssl-mode=DISABLED db207080_ekk > "$DUMP_FILE" || { echo "ERROR: Live DB export failed."; exit 1; }
+    echo "Exporting live database snapshot from $PROD_DIR/public via WP-CLI..."
+    (cd "$PROD_DIR/public" && php7.4 /usr/local/bin/wp db export "$DUMP_FILE" --hex-blob --default-character-set=utf8mb4 --skip-plugins --allow-root) || { echo "ERROR: Live DB export failed."; exit 1; }
 else
     echo "ERROR: Production directory $PROD_DIR/public not found."
     exit 1
 fi
 
-# 3. Import Fresh Snapshot into backstage_ekk
-echo "Recreating clean database backstage_ekk..."
-mysql -u root -p0024 --ssl-mode=DISABLED -e "DROP DATABASE IF EXISTS backstage_ekk; CREATE DATABASE backstage_ekk DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
-
-echo "Importing fresh database snapshot into backstage_ekk..."
-mysql -u root -p0024 --ssl-mode=DISABLED backstage_ekk < "$DUMP_FILE"
+# 3. Reset Staging DB & Import Snapshot via WP-CLI
+echo "Resetting database backstage_ekk and importing snapshot via WP-CLI..."
+(cd "$WP_DIR" && php7.4 /usr/local/bin/wp db reset --yes --skip-plugins --allow-root) || { echo "ERROR: DB reset failed."; exit 1; }
+(cd "$WP_DIR" && php7.4 /usr/local/bin/wp db import "$DUMP_FILE" --skip-plugins --allow-root) || { echo "ERROR: DB import failed."; exit 1; }
 rm -f "$DUMP_FILE"
 
 # 4. Synchronize Staging Files with Preservation Rules
