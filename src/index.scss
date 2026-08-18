@@ -1,0 +1,38 @@
+/**
+ * Main Theme Stylesheet (Source)
+ * Compiled via @wordpress/scripts into build/index.css
+ */
+
+:root {
+	--ekk-primary: #003366;
+	--ekk-secondary: #c5a059;
+	--ekk-accent: #d32f2f;
+	--ekk-dark: #1a1a1a;
+	--ekk-light: #f4f6f8;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: var(--wp--preset--font-family--sans-serif, sans-serif);
+	background-color: var(--wp--preset--color--base, #ffffff);
+	color: var(--wp--preset--color--contrast, #1a1a1a);
+}
+
+/* Base link styling */
+a {
+	color: var(--wp--preset--color--primary, #003366);
+	text-decoration: underline;
+	transition: color 0.2s ease-in-out;
+
+	&:hover,
+	&:focus {
+		color: var(--wp--preset--color--secondary, #c5a059);
+	}
+}
+
+/* Header & Footer Template Part Overrides */
+.wp-block-template-part {
+	width: 100%;
+}
