@@ -2,6 +2,7 @@
 
 - [ ] Task 1: Database Scoping & Legacy Content Audit Execution
   - [ ] Run `bin/scope-betheme-config.php` and `bin/scope-legacy-items.php`
+  - [ ] Audit installed plugins against the Plugin Audit & Disregard Matrix
   - [ ] Verify scoping outputs in `ai-work/scopings/`
   - [ ] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
@@ -16,7 +17,8 @@
   - [ ] Ensure 0 block editor invalid content warnings
   - [ ] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 4: Legacy Plugin Deactivation, Theme Activation & Nginx Switch
-  - [ ] Run plugin deactivations via WP-CLI and activate `ekkairo-flagship`
+  - [ ] Deactivate 15 legacy plugins identified in Disregard Matrix via WP-CLI
+  - [ ] Activate `ekkairo-flagship` block theme
   - [ ] Reconfigure Nginx site handler to `php8.2-fpm.sock` and reload
   - [ ] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 5: Gate 3 Verification & Final Human Review Sign-Off
