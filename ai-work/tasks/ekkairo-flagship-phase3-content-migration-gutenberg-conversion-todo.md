@@ -17,11 +17,11 @@
   - [x] Iterative loop: Scoping → Migration → Inspect Results → Adapt Engine → Re-run
   - [x] Ensure 0 block editor invalid content warnings
   - [x] **Human Verification Gate**: Present results for human review before git commit
-- [ ] Task 4: Polylang & Legacy Plugin Deactivation, Theme Activation & Nginx Switch
-  - [ ] Safely deactivate `polylang` and `polylang-theme-strings`, purge English draft, set locale to Greek (`el_GR`)
-  - [ ] Deactivate 17 legacy plugins identified in Disregard Matrix via WP-CLI
-  - [ ] Activate `ekkairo-flagship` block theme
-  - [ ] Reconfigure Nginx site handler to `php8.2-fpm.sock` and reload
-  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [x] Task 4: Polylang & Legacy Plugin Deactivation, Theme Activation & Nginx Switch
+  - [x] Safely deactivate `polylang` and `polylang-theme-strings`, purge English draft, set locale to Greek (`el_GR`)
+  - [x] Deactivate 17 legacy plugins identified in Disregard Matrix via WP-CLI
+  - [x] Activate `ekkairo-flagship` block theme
+  - [x] Reconfigure Nginx site handler to `php8.2-fpm.sock` and reload
+  - [x] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 5: Gate 3 Verification & Final Human Review Sign-Off
   - [ ] Present Gate 3 report and `unmapped-shortcodes.log` to human supervisor
