@@ -1,6 +1,6 @@
 #!/bin/bash
-# bin/04-finalize-cutover.sh
-# Stage 04: Plugin Cleanup, Theme Activation & Site Cutover Automation
+# bin/03-deactivate-plugins-activate-theme.sh
+# Stage 03: Legacy Plugin Deactivation, Greek Locale Setting & FSE Theme Activation
 # Targets: /var/www/backstage.ekkairo.org (DB: backstage_ekk)
 
 set -euo pipefail
@@ -9,7 +9,7 @@ STAGING_DIR="/var/www/backstage.ekkairo.org"
 WP_DIR="$STAGING_DIR/public"
 THEME_DIR="$WP_DIR/wp-content/themes/ekkairo-flagship"
 LOG_DIR="$THEME_DIR/ai-work/logs"
-MAIN_LOG="$LOG_DIR/04-finalize-cutover.log"
+MAIN_LOG="$LOG_DIR/03-deactivate-plugins-activate-theme.log"
 
 mkdir -p "$LOG_DIR"
 : > "$MAIN_LOG"
@@ -17,7 +17,7 @@ mkdir -p "$LOG_DIR"
 exec > >(tee -a "$MAIN_LOG") 2>&1
 
 echo "=========================================="
-echo "Starting Stage 04: Finalize Cutover: $(date)"
+echo "Starting Stage 03: Plugin Cleanup & Theme Activation: $(date)"
 echo "Target WP Path: $WP_DIR"
 echo "Theme Path: $THEME_DIR"
 echo "=========================================="
@@ -25,7 +25,7 @@ echo "=========================================="
 WP_CLI="$(which wp)"
 
 # 1. Deactivate Legacy & Unused Plugins (Disregard Matrix)
-echo "Deactivating legacy plugins..."
+echo "Deactivating 16 legacy plugins..."
 LEGACY_PLUGINS=(
     "polylang"
     "polylang-theme-strings"
@@ -60,13 +60,14 @@ php7.4 "$WP_CLI" option update WPLANG el_GR --path="$WP_DIR" --allow-root
 echo "Activating ekkairo-flagship FSE theme..."
 php8.2 "$WP_CLI" theme activate ekkairo-flagship --path="$WP_DIR" --allow-root
 
-# 4. Flush Transients, Object Cache, and Rewrite Rules
-echo "Flushing transients, cache, and rewrite rules..."
+# 4. Transient Clean-Up & Cache Flush
+echo "Flushing transient cache and object cache..."
+cd "$WP_DIR" || exit 1
 php8.2 "$WP_CLI" transient delete --all --path="$WP_DIR" --allow-root || true
 php8.2 "$WP_CLI" cache flush --path="$WP_DIR" --allow-root || true
 php8.2 "$WP_CLI" rewrite flush --path="$WP_DIR" --allow-root || true
 
 echo "=========================================="
-echo "Stage 04 Finalize Cutover Completed Successfully at $(date)!"
+echo "Stage 03 Deactivate Plugins & Activate Theme Completed Successfully at $(date)!"
 echo "=========================================="
 exit 0
