@@ -3,23 +3,48 @@
 # EKK Portal Staging Environment Reset, Theme Activation & Setup Script
 # Targets: /var/www/backstage.ekkairo.org (DB: backstage_ekk)
 
-set -eo pipefail
+set -euo pipefail
 
 STAGING_DIR="/var/www/backstage.ekkairo.org"
 WP_DIR="$STAGING_DIR/public"
 THEME_DIR="$WP_DIR/wp-content/themes/ekkairo-flagship"
 LOG_DIR="$THEME_DIR/ai-work/logs"
+TMP_DIR="$THEME_DIR/ai-work/tmp"
 MAIN_LOG="$LOG_DIR/01-backstage-setup.log"
 
-mkdir -p "$LOG_DIR"
+mkdir -p "$LOG_DIR" "$TMP_DIR"
+chmod 700 "$TMP_DIR"
 : > "$MAIN_LOG"
 
 exec > >(tee -a "$MAIN_LOG") 2>&1
+
+DUMP_FILE="$TMP_DIR/ekk_prod_db_$(date +%s).sql"
+trap 'rm -f "$DUMP_FILE"' EXIT
 
 echo "=========================================="
 echo "Resetting Staging Environment: $(date)"
 echo "Target DB: backstage_ekk"
 echo "=========================================="
+
+# Guardrail 1: Confirm WP_DIR is staging webroot
+if [ "$WP_DIR" != "/var/www/backstage.ekkairo.org/public" ]; then
+    echo "FATAL ERROR: Target WP_DIR is invalid: $WP_DIR"
+    exit 1
+fi
+
+# Guardrail 2: Confirm Target Database is backstage_ekk and NOT production (db207080_ekk)
+TARGET_DB=$(cd "$WP_DIR" && php7.4 /usr/local/bin/wp config get DB_NAME --allow-root 2>/dev/null || echo "unknown")
+echo "Verified Target DB Name: $TARGET_DB"
+
+if [ "$TARGET_DB" = "db207080_ekk" ] || [[ "$TARGET_DB" == *"prod"* ]]; then
+    echo "FATAL ERROR: Target database '$TARGET_DB' is PRODUCTION! Aborting reset."
+    exit 1
+fi
+
+if [ "$TARGET_DB" != "backstage_ekk" ]; then
+    echo "FATAL ERROR: Unexpected DB '$TARGET_DB' (expected 'backstage_ekk'). Aborting."
+    exit 1
+fi
 
 # 1. Run Pre-flight Checks
 if [ -x "$THEME_DIR/bin/pre-flight.sh" ]; then
@@ -28,7 +53,6 @@ fi
 
 # 2. Database Export from Live Production Snapshot via WP-CLI
 PROD_DIR="/var/www/ekkairo.org"
-DUMP_FILE="/tmp/ekk_prod_db.sql"
 
 if [ -d "$PROD_DIR/public" ]; then
     echo "Exporting live database snapshot from $PROD_DIR/public via WP-CLI..."
@@ -39,18 +63,17 @@ else
 fi
 
 # 3. Reset Staging DB & Import Snapshot via WP-CLI
-echo "Resetting database backstage_ekk and importing snapshot via WP-CLI..."
+echo "Resetting staging database $TARGET_DB and importing snapshot..."
 (cd "$WP_DIR" && php7.4 /usr/local/bin/wp db reset --yes --skip-plugins --allow-root) || { echo "ERROR: DB reset failed."; exit 1; }
 (cd "$WP_DIR" && php7.4 /usr/local/bin/wp db import "$DUMP_FILE" --skip-plugins --allow-root) || { echo "ERROR: DB import failed."; exit 1; }
-rm -f "$DUMP_FILE"
 
 # 4. Synchronize Staging Files with Preservation Rules
 if [ -d "$PROD_DIR/public" ]; then
     echo "Synchronizing staging files from production baseline..."
     rsync -av --delete \
         --exclude='wp-config.php' \
-        --exclude='wp-content/uploads***' \
-        --exclude='wp-content/themes/ekkairo-flagship***' \
+        --exclude='wp-content/uploads/' \
+        --exclude='wp-content/themes/ekkairo-flagship/' \
         "$PROD_DIR/public/" "$STAGING_DIR/public/"
 fi
 
@@ -72,4 +95,3 @@ php7.4 /usr/local/bin/wp cache flush --path="$WP_DIR" --allow-root || true
 
 echo "Staging environment setup completed successfully at $(date)!"
 exit 0
-
