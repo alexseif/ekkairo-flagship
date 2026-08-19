@@ -210,3 +210,9 @@ if (!function_exists('eka_resolve_post_images')) {
         return $images;
     }
 }
+
+if (!function_exists('eka_sanitize_image_tags')) {
+    function eka_sanitize_image_tags($html) {
+        return StyleSanitizer::sanitizeImageTags((string)$html);
+    }
+}

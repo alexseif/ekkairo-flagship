@@ -6,17 +6,17 @@
   - [x] Audit installed plugins against the Plugin Audit & Disregard Matrix
   - [x] Verify scoping outputs in `ai-work/scopings/`
   - [x] **Human Verification Gate**: Present results for human review before git commit
-- [ ] Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
+- [x] Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
   - [x] Update `bin/02-migrate-content.sh` with correct paths (`/var/www/backstage.ekkairo.org` & `ekkairo-flagship`)
   - [x] Update `bin/migration-content-engine.php` with Muffin Builder transforms & page/post migration rules
   - [x] Implement `ai-work/logs/unmapped-shortcodes.log` logging protocol & metrics reporting
   - [x] Execute `bin/02-migrate-content.sh`
-  - [ ] **Human Verification Gate**: Present results for human review before git commit
-- [ ] Task 3: Iterative Migration, AST & DOM Markup Validation Cycle
-  - [ ] Run `bin/test-fse-sanitizer.php` and `bin/validate-ast.js`
-  - [ ] Iterative loop: Scoping → Migration → Inspect Results → Adapt Engine → Re-run
-  - [ ] Ensure 0 block editor invalid content warnings
-  - [ ] **Human Verification Gate**: Present results for human review before git commit
+  - [x] **Human Verification Gate**: Present results for human review before git commit
+- [x] Task 3: Iterative Migration, AST & DOM Markup Validation Cycle
+  - [x] Run `bin/test-fse-sanitizer.php` and `bin/validate-ast.js`
+  - [x] Iterative loop: Scoping → Migration → Inspect Results → Adapt Engine → Re-run
+  - [x] Ensure 0 block editor invalid content warnings
+  - [x] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 4: Polylang & Legacy Plugin Deactivation, Theme Activation & Nginx Switch
   - [ ] Safely deactivate `polylang` and `polylang-theme-strings`, purge English draft, set locale to Greek (`el_GR`)
   - [ ] Deactivate 17 legacy plugins identified in Disregard Matrix via WP-CLI
