@@ -63,9 +63,10 @@ else
 fi
 
 # 3. Reset Staging DB & Import Snapshot via WP-CLI
+cd "$WP_DIR" || exit 1
 echo "Resetting staging database $TARGET_DB and importing snapshot..."
-(cd "$WP_DIR" && php7.4 /usr/local/bin/wp db reset --yes --skip-plugins --allow-root) || { echo "ERROR: DB reset failed."; exit 1; }
-(cd "$WP_DIR" && php7.4 /usr/local/bin/wp db import "$DUMP_FILE" --skip-plugins --allow-root) || { echo "ERROR: DB import failed."; exit 1; }
+php7.4 /usr/local/bin/wp db reset --yes --skip-plugins --allow-root || { echo "ERROR: DB reset failed."; exit 1; }
+php7.4 /usr/local/bin/wp db import "$DUMP_FILE" --skip-plugins --allow-root || { echo "ERROR: DB import failed."; exit 1; }
 
 # 4. Synchronize Staging Files with Preservation Rules
 if [ -d "$PROD_DIR/public" ]; then

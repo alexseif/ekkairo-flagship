@@ -29,6 +29,7 @@ if [ ! -f "$THEME_DIR/bin/migration-content-engine.php" ]; then
     exit 1
 fi
 
+cd "$WP_DIR" || exit 1
 echo "Executing modular Gutenberg content engine (bin/migration-content-engine.php)..."
 php7.4 "$(which wp)" eval-file "$THEME_DIR/bin/migration-content-engine.php" --path="$WP_DIR" --skip-plugins --allow-root
 

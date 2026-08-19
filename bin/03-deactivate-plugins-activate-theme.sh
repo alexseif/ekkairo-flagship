@@ -22,6 +22,7 @@ echo "Target WP Path: $WP_DIR"
 echo "Theme Path: $THEME_DIR"
 echo "=========================================="
 
+cd "$WP_DIR" || exit 1
 WP_CLI="$(which wp)"
 
 # 1. Deactivate Legacy & Unused Plugins (Disregard Matrix)
