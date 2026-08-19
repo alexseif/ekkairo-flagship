@@ -16,8 +16,9 @@
   - [ ] Iterative loop: Scoping → Migration → Inspect Results → Adapt Engine → Re-run
   - [ ] Ensure 0 block editor invalid content warnings
   - [ ] **Human Verification Gate**: Present results for human review before git commit
-- [ ] Task 4: Legacy Plugin Deactivation, Theme Activation & Nginx Switch
-  - [ ] Deactivate 15 legacy plugins identified in Disregard Matrix via WP-CLI
+- [ ] Task 4: Polylang & Legacy Plugin Deactivation, Theme Activation & Nginx Switch
+  - [ ] Safely deactivate `polylang` and `polylang-theme-strings`
+  - [ ] Deactivate 17 legacy plugins identified in Disregard Matrix via WP-CLI
   - [ ] Activate `ekkairo-flagship` block theme
   - [ ] Reconfigure Nginx site handler to `php8.2-fpm.sock` and reload
   - [ ] **Human Verification Gate**: Present results for human review before git commit
