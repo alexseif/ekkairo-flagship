@@ -7,10 +7,10 @@
   - [x] Verify scoping outputs in `ai-work/scopings/`
   - [x] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
-  - [ ] Update `bin/02-migrate-content.sh` with correct paths (`/var/www/backstage.ekkairo.org` & `ekkairo-flagship`)
-  - [ ] Update `bin/migration-content-engine.php` with Muffin Builder transforms & page/post migration rules
-  - [ ] Implement `ai-work/logs/unmapped-shortcodes.log` logging protocol
-  - [ ] Execute `bin/02-migrate-content.sh`
+  - [x] Update `bin/02-migrate-content.sh` with correct paths (`/var/www/backstage.ekkairo.org` & `ekkairo-flagship`)
+  - [x] Update `bin/migration-content-engine.php` with Muffin Builder transforms & page/post migration rules
+  - [x] Implement `ai-work/logs/unmapped-shortcodes.log` logging protocol & metrics reporting
+  - [x] Execute `bin/02-migrate-content.sh`
   - [ ] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 3: Iterative Migration, AST & DOM Markup Validation Cycle
   - [ ] Run `bin/test-fse-sanitizer.php` and `bin/validate-ast.js`

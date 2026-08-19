@@ -1,11 +1,18 @@
 <?php
 /**
  * Shared Helpers for Gutenberg Migration & FSE Style Sanitization
+ * Targets: ekkairo-flagship / backstage_ekk DB
  */
 
 if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
     require_once dirname(__DIR__) . '/vendor/autoload.php';
 }
+
+require_once __DIR__ . '/src/Utils/Logger.php';
+require_once __DIR__ . '/src/Utils/StyleSanitizer.php';
+require_once __DIR__ . '/src/Content/ContentTransformer.php';
+require_once __DIR__ . '/src/Cpt/CptMigrator.php';
+require_once __DIR__ . '/src/Navigation/MenuMigrator.php';
 
 use EkaAlexandria\Migration\Utils\StyleSanitizer;
 use EkaAlexandria\Migration\Content\ContentTransformer;
@@ -38,10 +45,10 @@ if (!function_exists('eka_get_db_config')) {
 
         $possible_paths = [
             dirname(__DIR__, 3) . '/wp-config.php',
-            '/var/www/backstage.ekalexandria.org/public/wp-config.php',
+            '/var/www/backstage.ekkairo.org/public/wp-config.php',
         ];
 
-        $config = ['host' => 'localhost', 'user' => 'root', 'pass' => '', 'name' => 'backstage_eka'];
+        $config = ['host' => 'localhost', 'user' => 'root', 'pass' => '', 'name' => 'backstage_ekk'];
 
         foreach ($possible_paths as $wp_config_path) {
             if (!file_exists($wp_config_path)) {
@@ -92,12 +99,16 @@ if (!function_exists('eka_load_slider_scoping')) {
      * @return array Array indexed by post_id
      */
     function eka_load_slider_scoping() {
-        $scoping_file = dirname(__DIR__) . '/ai-work/scopings/rev-sliders-scoping.json';
+        $scoping_file = dirname(__DIR__) . '/ai-work/scopings/detailed-sliders-inventory.json';
+        if (!file_exists($scoping_file)) {
+            $scoping_file = dirname(__DIR__) . '/ai-work/scopings/legacy-items-inventory.json';
+        }
         $scoping_map = [];
         if (file_exists($scoping_file)) {
             $raw = json_decode(file_get_contents($scoping_file), true);
             if (is_array($raw)) {
-                foreach ($raw as $item) {
+                $usages = isset($raw['layerslider_page_usages']) ? $raw['layerslider_page_usages'] : $raw;
+                foreach ($usages as $item) {
                     if (isset($item['page_id'])) {
                         $scoping_map[(int)$item['page_id']] = $item;
                     }
@@ -197,53 +208,5 @@ if (!function_exists('eka_resolve_post_images')) {
         }
 
         return $images;
-    }
-}
-
-if (!function_exists('eka_resolve_slider_images_by_alias')) {
-    /**
-     * Resolves media images by slider alias across translated pages in scoping index.
-     *
-     * @param string $alias
-     * @param int $post_id
-     * @param array $scoping_map
-     * @param mysqli|null $mysqli
-     * @return array Array of ['id' => int, 'url' => string]
-     */
-    function eka_resolve_slider_images_by_alias($alias, $post_id, $scoping_map = [], $mysqli = null) {
-        $images = eka_resolve_post_images($post_id, $scoping_map, $mysqli);
-        if (!empty($images)) {
-            return $images;
-        }
-
-        if (!empty($alias) && is_array($scoping_map)) {
-            foreach ($scoping_map as $pid => $scoped) {
-                if (!empty($scoped['rev_sliders']) && is_array($scoped['rev_sliders'])) {
-                    foreach ($scoped['rev_sliders'] as $rs) {
-                        if (isset($rs['alias']) && strcasecmp($rs['alias'], $alias) === 0) {
-                            $found = eka_resolve_post_images($pid, $scoping_map, $mysqli);
-                            if (!empty($found)) {
-                                return $found;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return [];
-    }
-}
-
-if (!function_exists('eka_build_gutenberg_gallery_block')) {
-    function eka_build_gutenberg_gallery_block($images, $extra_class = 'rev-slider-replaced', $fallback_title = 'Slider') {
-        $transformer = new ContentTransformer();
-        return $transformer->buildGutenbergGalleryBlock((array)$images, (string)$extra_class, (string)$fallback_title);
-    }
-}
-
-if (!function_exists('eka_sanitize_image_tags')) {
-    function eka_sanitize_image_tags($html) {
-        return StyleSanitizer::sanitizeImageTags((string)$html);
     }
 }
