@@ -71,7 +71,7 @@ class ContentTransformer
     /**
      * Constructs Gutenberg wp:gallery block with nested wp:image blocks.
      */
-    public function buildGutenbergGalleryBlock(array $images, string $extraClass = 'rev-slider-replaced', string $fallbackTitle = 'Slider', $mysqli = null): string
+    public function buildGutenbergGalleryBlock(array $images, string $extraClass = 'layerslider-replaced ekk-carousel', string $fallbackTitle = 'Slider', $mysqli = null): string
     {
         $validImages = [];
         foreach ($images as $img) {
@@ -136,14 +136,56 @@ class ContentTransformer
     }
 
     /**
-     * Step 3A: Transform Revolution / Layer Sliders to FSE Gallery Blocks
+     * Specialized LayerSlider Shortcode Transformer ([layerslider id="X"] or [layerslider X])
      */
-    public function transformSliders(string $content, int $postId, array $scopingMap = [], $mysqli = null): string
+    public function transformLayerSliders(string $content, int $postId, array $dbSliders = []): string
     {
         // Strip outer <p> wrappers around slider shortcodes
-        $content = preg_replace('/<p[^>]*>\s*(\[(?:rev_slider|rev_slider_vc|layerslider)\s+[^\]]+\])\s*<\/p>/is', '$1', $content);
+        $content = preg_replace('/<p[^>]*>\s*(\[layerslider\s+[^\]]+\])\s*<\/p>/is', '$1', $content);
 
-        return preg_replace_callback('/\[(?:rev_slider|rev_slider_vc|layerslider)\s+([^\]]*)\]/i', function ($m) use ($postId, $scopingMap, $mysqli) {
+        return preg_replace_callback('/\[layerslider\s+(?:(?:id|title)=["\']([^"\']+)["\']|([0-9]+))[^\]]*\]/i', function ($m) use ($postId, $dbSliders) {
+            $sliderId = !empty($m[1]) ? $m[1] : (!empty($m[2]) ? $m[2] : '0');
+
+            $images = [];
+            if (!empty($dbSliders)) {
+                foreach ($dbSliders as $slider) {
+                    if ((int)$slider['slider_id'] === (int)$sliderId || (isset($slider['name']) && strtolower($slider['name']) === strtolower($sliderId))) {
+                        foreach ($slider['slides'] as $slide) {
+                            if (!empty($slide['background_image_url'])) {
+                                $images[] = [
+                                    'id'  => (int)($slide['background_att_id'] ?? 0),
+                                    'url' => $slide['background_image_url']
+                                ];
+                            }
+                            if (!empty($slide['sublayer_images'])) {
+                                foreach ($slide['sublayer_images'] as $subImg) {
+                                    if (!empty($subImg['src_url'])) {
+                                        $images[] = [
+                                            'id'  => (int)($subImg['db_attachment_id'] ?? 0),
+                                            'url' => $subImg['src_url']
+                                        ];
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
+
+            return $this->buildGutenbergGalleryBlock($images, 'layerslider-replaced ekk-carousel', "LayerSlider ID: {$sliderId}");
+        }, $content);
+    }
+
+    /**
+     * Specialized Revolution Slider Shortcode Transformer ([rev_slider alias="X"])
+     */
+    public function transformRevSliders(string $content, int $postId, array $scopingMap = [], $mysqli = null): string
+    {
+        // Strip outer <p> wrappers around slider shortcodes
+        $content = preg_replace('/<p[^>]*>\s*(\[(?:rev_slider|rev_slider_vc)\s+[^\]]+\])\s*<\/p>/is', '$1', $content);
+
+        return preg_replace_callback('/\[(?:rev_slider|rev_slider_vc)\s+([^\]]*)\]/i', function ($m) use ($postId, $scopingMap, $mysqli) {
             $attrStr = $m[1];
             $alias = '';
             $title = 'Slider';
@@ -156,9 +198,143 @@ class ContentTransformer
                 $title = 'Slider (' . $alias . ')';
             }
 
-            $images = eka_resolve_slider_images_by_alias($alias, $postId, $scopingMap, $mysqli);
-            return $this->buildGutenbergGalleryBlock($images, 'rev-slider-replaced', $title, $mysqli);
+            $images = function_exists('eka_resolve_slider_images_by_alias')
+                ? eka_resolve_slider_images_by_alias($alias, $postId, $scopingMap, $mysqli)
+                : [];
+
+            return $this->buildGutenbergGalleryBlock($images, 'rev-slider-replaced ekk-carousel', $title, $mysqli);
         }, $content);
+    }
+
+    /**
+     * Specialized Muffin Builder Postmeta Transformer (handles raw serialized & Base64-encoded array data)
+     */
+    public function transformMfnBuilder(string $rawMetaValue, bool $isFrontPage = false): string
+    {
+        if (empty(trim($rawMetaValue))) {
+            return '';
+        }
+
+        $mfnStruct = function_exists('maybe_unserialize') ? maybe_unserialize($rawMetaValue) : @unserialize($rawMetaValue);
+
+        // Fallback: If raw string fails to unserialize, attempt Base64 decoding
+        if (!is_array($mfnStruct)) {
+            $decoded = @base64_decode($rawMetaValue, true);
+            if ($decoded !== false) {
+                $mfnStruct = function_exists('maybe_unserialize') ? maybe_unserialize($decoded) : @unserialize($decoded);
+            }
+        }
+
+        if (!is_array($mfnStruct)) {
+            return '';
+        }
+
+        $blocksHtml = '';
+
+        foreach ($mfnStruct as $section) {
+            if (empty($section['wraps']) || !is_array($section['wraps'])) {
+                continue;
+            }
+            foreach ($section['wraps'] as $wrap) {
+                if (empty($wrap['items']) || !is_array($wrap['items'])) {
+                    continue;
+                }
+                foreach ($wrap['items'] as $item) {
+                    $type = isset($item['type']) ? $item['type'] : '';
+                    $fields = isset($item['fields']) ? $item['fields'] : [];
+
+                    switch ($type) {
+                        case 'column':
+                            if (!empty($fields['content'])) {
+                                $itemContent = trim($fields['content']);
+                                $itemContent = preg_replace('/^\s*<div\s+class=["\']content_box["\']\s*>(.*?)<\/div>\s*$/is', '$1', $itemContent);
+                                $blocksHtml .= trim($itemContent) . "\n\n";
+                            }
+                            break;
+
+                        case 'fancy_heading':
+                            $title = !empty($fields['title']) ? trim($fields['title']) : '';
+                            $slogan = !empty($fields['slogan']) ? trim($fields['slogan']) : '';
+                            if (!empty($title)) {
+                                $blocksHtml .= sprintf("<!-- wp:heading -->\n<h2 class=\"wp-block-heading\">%s</h2>\n<!-- /wp:heading -->\n\n", htmlspecialchars($title, ENT_QUOTES, 'UTF-8'));
+                            }
+                            if (!empty($slogan)) {
+                                $blocksHtml .= sprintf("<!-- wp:paragraph -->\n<p><em>%s</em></p>\n<!-- /wp:paragraph -->\n\n", htmlspecialchars($slogan, ENT_QUOTES, 'UTF-8'));
+                            }
+                            break;
+
+                        case 'contact_box':
+                            $cTitle = !empty($fields['title']) ? trim($fields['title']) : '';
+                            $address = !empty($fields['address']) ? trim($fields['address']) : '';
+                            $phone = !empty($fields['telephone']) ? trim($fields['telephone']) : '';
+                            $email = !empty($fields['email']) ? trim($fields['email']) : '';
+                            $www = !empty($fields['www']) ? trim($fields['www']) : '';
+
+                            $cardInner = '';
+                            if (!empty($cTitle)) {
+                                $cardInner .= sprintf("<!-- wp:heading {\"level\":4} -->\n<h4 class=\"wp-block-heading\">%s</h4>\n<!-- /wp:heading -->\n\n", htmlspecialchars($cTitle, ENT_QUOTES, 'UTF-8'));
+                            }
+                            if (!empty($address)) {
+                                $cleanAddress = str_replace(["\r\n", "\r", "\n"], "<br>", htmlspecialchars($address, ENT_QUOTES, 'UTF-8'));
+                                $cardInner .= sprintf("<!-- wp:paragraph -->\n<p>%s</p>\n<!-- /wp:paragraph -->\n\n", $cleanAddress);
+                            }
+                            if (!empty($phone)) {
+                                $cardInner .= sprintf("<!-- wp:paragraph -->\n<p>Tel: %s</p>\n<!-- /wp:paragraph -->\n\n", htmlspecialchars($phone, ENT_QUOTES, 'UTF-8'));
+                            }
+                            if (!empty($email)) {
+                                $cardInner .= sprintf("<!-- wp:paragraph -->\n<p>Email: %s</p>\n<!-- /wp:paragraph -->\n\n", htmlspecialchars($email, ENT_QUOTES, 'UTF-8'));
+                            }
+                            if (!empty($www)) {
+                                $cardInner .= sprintf("<!-- wp:paragraph -->\n<p>Web: %s</p>\n<!-- /wp:paragraph -->\n\n", htmlspecialchars($www, ENT_QUOTES, 'UTF-8'));
+                            }
+
+                            $blocksHtml .= sprintf("<!-- wp:group {\"className\":\"contact-box-card\",\"layout\":{\"type\":\"constrained\"}} -->\n<div class=\"wp-block-group contact-box-card\">\n%s</div>\n<!-- /wp:group -->\n\n", $cardInner);
+                            break;
+
+                        case 'blog_slider':
+                        case 'blog':
+                            $cat = !empty($fields['category']) ? (int)$fields['category'] : 0;
+                            $count = !empty($fields['count']) ? (int)$fields['count'] : 4;
+                            $queryAttrs = [
+                                'queryId' => rand(100, 999),
+                                'query'   => [
+                                    'perPage'   => $count,
+                                    'pages'     => 0,
+                                    'offset'    => 0,
+                                    'postType'  => 'post',
+                                    'order'     => 'desc',
+                                    'orderBy'   => 'date',
+                                    'author'    => '',
+                                    'search'    => '',
+                                    'exclude'   => [],
+                                    'sticky'    => '',
+                                    'inherit'   => false,
+                                    'taxQuery'  => $cat ? ['category' => [$cat]] : [],
+                                ],
+                            ];
+                            $queryJson = json_encode($queryAttrs, JSON_UNESCAPED_SLASHES);
+                            $blocksHtml .= sprintf(
+                                "<!-- wp:query %s -->\n<div class=\"wp-block-query\">\n<!-- wp:post-template -->\n<!-- wp:post-title {\"isLink\":true} /-->\n<!-- wp:post-excerpt /-->\n<!-- /wp:post-template -->\n</div>\n<!-- /wp:query -->\n\n",
+                                $queryJson
+                            );
+                            break;
+
+                        default:
+                            if (!empty($fields['content'])) {
+                                $itemContent = trim($fields['content']);
+                                $itemContent = preg_replace('/^\s*<div\s+class=["\']content_box["\']\s*>(.*?)<\/div>\s*$/is', '$1', $itemContent);
+                                $blocksHtml .= trim($itemContent) . "\n\n";
+                            }
+                            break;
+                    }
+                }
+            }
+        }
+
+        // Clean up remaining content_box wrappers
+        $blocksHtml = preg_replace('/<div\s+class=["\']content_box["\']\s*>/i', '', $blocksHtml);
+
+        return trim($blocksHtml);
     }
 
     /**

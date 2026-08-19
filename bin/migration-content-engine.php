@@ -2,389 +2,470 @@
 /**
  * bin/migration-content-engine.php
  * Modular 6-Step Gutenberg Content Migration Engine
- * Targets: backstage_eka DB via WP-CLI / MySQL
+ * Targets: backstage_ekk DB via WP-CLI / MySQL
  */
 
 require_once __DIR__ . '/migration-helpers.php';
 
-use EkaAlexandria\Migration\Content\ContentTransformer;
-use EkaAlexandria\Migration\Utils\Logger;
+$base_dir = dirname(__DIR__);
+$log_dir = $base_dir . '/ai-work/logs';
+if (!file_exists($log_dir)) {
+    mkdir($log_dir, 0755, true);
+}
 
-$GLOBALS['eka_log_file'] = dirname(__DIR__) . '/ai-work/logs/content-engine.log';
+$GLOBALS['engine_log_file'] = $log_dir . '/content-engine.log';
+$GLOBALS['unmapped_log_file'] = $log_dir . '/unmapped-shortcodes.log';
 
-function eka_engine_log($msg, $level = 'INFO')
+function engine_log($msg, $level = 'INFO')
 {
-    static $logger = null;
-    if ($logger === null) {
-        $log_file = isset($GLOBALS['eka_log_file']) ? $GLOBALS['eka_log_file'] : dirname(__DIR__) . '/ai-work/logs/content-engine.log';
-        $logger = new Logger($log_file, true);
+    $log_file = $GLOBALS['engine_log_file'];
+    $timestamp = date('Y-m-d H:i:s');
+    $line = "[{$timestamp}] [{$level}] {$msg}\n";
+    file_put_contents($log_file, $line, FILE_APPEND);
+    echo $line;
+}
+
+function log_unmapped_shortcode($post_id, $post_title, $post_type, $shortcode_snippet)
+{
+    $log_file = $GLOBALS['unmapped_log_file'];
+    $timestamp = date('Y-m-d H:i:s');
+    $entry = sprintf("[%s] Post ID: %d | Type: %s | Title: '%s' | Unmapped Shortcode: %s\n", $timestamp, $post_id, $post_type, $post_title, $shortcode_snippet);
+    file_put_contents($log_file, $entry, FILE_APPEND);
+}
+
+engine_log("==========================================");
+engine_log("Starting EKK Flagship Content Migration Engine: " . date('Y-m-d H:i:s'));
+engine_log("==========================================");
+
+$db_config = eka_get_db_config();
+$mysqli = new mysqli($db_config['host'], $db_config['user'], $db_config['pass'], $db_config['name']);
+if ($mysqli->connect_error) {
+    engine_log("Database connection failed: " . $mysqli->connect_error, "ERROR");
+    die("Connection failed: " . $mysqli->connect_error . "\n");
+}
+$mysqli->set_charset("utf8mb4");
+
+// Track detailed metrics for log report
+$metrics = [
+    'total_scanned'             => 0,
+    'posts_count'               => 0,
+    'pages_count'               => 0,
+    'mfn_pages_scanned'         => 0,
+    'mfn_pages_converted'       => 0,
+    'shortcodes_found'          => [
+        'layerslider'      => 0,
+        'gallery_slideshow'=> 0,
+        'contact_form_7'   => 0,
+        'pdf_embedder'     => 0,
+        'buttons'          => 0,
+        'display_posts'    => 0,
+        'map'              => 0,
+        'embed_video'      => 0,
+        'testimonials'     => 0,
+        'wpbakery_vc'      => 0,
+        'other'            => 0,
+    ],
+    'shortcodes_converted'      => 0,
+    'unmapped_shortcodes_logged'=> 0,
+    'successfully_converted'    => 0,
+    'skipped_unchanged'         => 0,
+    'failed_ast_validation'     => 0,
+    'failed_post_ids'           => [],
+];
+
+// ----------------------------------------------------------------------
+// Helper: Muffin Builder Item Transformer
+// Converts MFN Builder item structures into Gutenberg block HTML
+// ----------------------------------------------------------------------
+function transform_mfn_builder_structure($mfn_structure, $is_homepage = false)
+{
+    if (!is_array($mfn_structure)) {
+        return '';
     }
-    $logger->log($msg, $level);
-}
 
-eka_engine_log("==========================================");
-eka_engine_log("Starting Migration Content Engine: " . date('Y-m-d H:i:s'));
-eka_engine_log("==========================================");
+    $blocks_html = '';
 
-if (!defined('EKA_TEST_MODE') || !EKA_TEST_MODE) {
-    $db_config = eka_get_db_config();
-    $mysqli = new mysqli($db_config['host'], $db_config['user'], $db_config['pass'], $db_config['name']);
-    if ($mysqli->connect_error) {
-        eka_engine_log("Database connection failed: " . $mysqli->connect_error, "ERROR");
-        die("Connection failed: " . $mysqli->connect_error . "\n");
+    foreach ($mfn_structure as $section) {
+        if (!is_array($section) || empty($section['wraps']) || !is_array($section['wraps'])) {
+            continue;
+        }
+
+        foreach ($section['wraps'] as $wrap) {
+            if (!is_array($wrap) || empty($wrap['items']) || !is_array($wrap['items'])) {
+                continue;
+            }
+
+            foreach ($wrap['items'] as $item) {
+                if (!is_array($item) || empty($item['type'])) {
+                    continue;
+                }
+
+                $type = $item['type'];
+                $fields = isset($item['fields']) ? $item['fields'] : [];
+
+                switch ($type) {
+                    case 'column':
+                        $content = isset($fields['content']) ? trim($fields['content']) : '';
+                        $title   = isset($fields['title']) ? trim($fields['title']) : '';
+                        if (!empty($title)) {
+                            $blocks_html .= sprintf("<!-- wp:heading {\"level\":3} -->\n<h3>%s</h3>\n<!-- /wp:heading -->\n", esc_html($title));
+                        }
+                        if (!empty($content)) {
+                            $blocks_html .= $content . "\n";
+                        }
+                        break;
+
+                    case 'fancy_heading':
+                        $heading_title = isset($fields['title']) ? trim($fields['title']) : '';
+                        $slogan        = isset($fields['slogan']) ? trim($fields['slogan']) : '';
+                        if (!empty($heading_title)) {
+                            $blocks_html .= sprintf("<!-- wp:heading {\"level\":2} -->\n<h2>%s</h2>\n<!-- /wp:heading -->\n", esc_html($heading_title));
+                        }
+                        if (!empty($slogan)) {
+                            $blocks_html .= sprintf("<!-- wp:paragraph -->\n<p><em>%s</em></p>\n<!-- /wp:paragraph -->\n", esc_html($slogan));
+                        }
+                        break;
+
+                    case 'contact_box':
+                        $c_title     = isset($fields['title']) ? trim($fields['title']) : '';
+                        $address     = isset($fields['address']) ? trim($fields['address']) : '';
+                        $tel         = isset($fields['telephone']) ? trim($fields['telephone']) : '';
+                        $tel2        = isset($fields['telephone_2']) ? trim($fields['telephone_2']) : '';
+                        $fax         = isset($fields['fax']) ? trim($fields['fax']) : '';
+                        $email       = isset($fields['email']) ? trim($fields['email']) : '';
+                        $www         = isset($fields['www']) ? trim($fields['www']) : '';
+
+                        $box_html = '<div class="wp-block-group contact-box-card">';
+                        if ($c_title) $box_html .= '<h4>' . esc_html($c_title) . '</h4>';
+                        if ($address) $box_html .= '<p>' . nl2br(esc_html($address)) . '</p>';
+                        if ($tel) $box_html .= '<p>Τηλ: ' . esc_html($tel) . ($tel2 ? ' / ' . esc_html($tel2) : '') . '</p>';
+                        if ($fax) $box_html .= '<p>Fax: ' . esc_html($fax) . '</p>';
+                        if ($email) $box_html .= '<p>Email: <a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a></p>';
+                        if ($www) $box_html .= '<p>Website: <a href="http://' . esc_attr($www) . '" target="_blank">' . esc_html($www) . '</a></p>';
+                        $box_html .= '</div>';
+
+                        $blocks_html .= sprintf("<!-- wp:group -->\n%s\n<!-- /wp:group -->\n", $box_html);
+                        break;
+
+                    case 'slider_plugin':
+                        if ($is_homepage) {
+                            // Homepage slider bypassed as homepage is redesigned from scratch
+                            engine_log("Homepage slider_plugin item bypassed per redesign rules.");
+                        } else {
+                            $layer_id = isset($fields['layer']) ? trim($fields['layer']) : '';
+                            if ($layer_id) {
+                                $blocks_html .= sprintf("[layerslider id=\"%s\"]\n", esc_attr($layer_id));
+                            }
+                        }
+                        break;
+
+                    case 'blog':
+                    case 'blog_slider':
+                        $cat = isset($fields['category']) ? trim($fields['category']) : '';
+                        $count = isset($fields['count']) ? (int)$fields['count'] : 6;
+                        $query_json = json_encode([
+                            'queryId' => rand(10, 99),
+                            'query'   => [
+                                'perPage'    => $count,
+                                'pages'      => 0,
+                                'offset'     => 0,
+                                'postType'   => 'post',
+                                'order'      => 'desc',
+                                'orderBy'    => 'date',
+                                'author'     => '',
+                                'search'     => '',
+                                'exclude'    => [],
+                                'sticky'     => '',
+                                'inherit'    => false,
+                                'taxQuery'   => $cat ? ['category' => [$cat]] : [],
+                            ],
+                        ]);
+                        $blocks_html .= sprintf(
+                            "<!-- wp:query %s -->\n<div class=\"wp-block-query\">\n<!-- wp:post-template -->\n<!-- wp:post-title {\"isLink\":true} /-->\n<!-- wp:post-excerpt /-->\n<!-- /wp:post-template -->\n</div>\n<!-- /wp:query -->\n",
+                            $query_json
+                        );
+                        break;
+
+                    default:
+                        // Extract any raw content field inside item
+                        if (!empty($fields['content'])) {
+                            $blocks_html .= trim($fields['content']) . "\n";
+                        }
+                        break;
+                }
+            }
+        }
     }
-    $mysqli->set_charset("utf8mb4");
-}
 
-function parse_fraction_width($width_str)
-{
-    $transformer = new ContentTransformer();
-    return $transformer->parseFractionWidth((string)$width_str);
-}
-
-function clean_html_inline_styles($html)
-{
-    $transformer = new ContentTransformer();
-    return $transformer->cleanHtmlInlineStyles((string)$html);
-}
-
-function eka_process_front_page_content($content, $post_id)
-{
-    $transformer = new ContentTransformer();
-    return $transformer->processFrontPageContent((string)$content, (int)$post_id);
+    return $blocks_html;
 }
 
 // ----------------------------------------------------------------------
-// Phase 3A: Replace Sliders ([rev_slider], [layerslider])
+// Phase 3A: Transform Sliders ([layerslider], [gallery])
 // ----------------------------------------------------------------------
-function step_3a_transform_sliders($content, $post_id)
+function step_3a_transform_sliders($content, $post_id, &$metrics, $db_sliders = [])
 {
-    // Exception pages: Hero slider is handled natively by FSE templates. Strip shortcode & wrapper container completely.
-    $exception_pages = [13236, 16894, 16892, 18, 16920, 16923];
-    if (in_array((int) $post_id, $exception_pages, true)) {
-        $content = preg_replace('/\[vc_row[^\]]*\]\s*(?:\[vc_column[^\]]*\])?\s*\[(?:rev_slider|rev_slider_vc|layerslider)[^\]]*\]\s*(?:\[\/vc_column\])?\s*\[\/vc_row\]/is', '', $content);
-        $content = preg_replace('/\[(?:rev_slider|rev_slider_vc|layerslider)[^\]]*\]/i', '', $content);
-        return $content;
+    static $transformer = null;
+    if ($transformer === null) {
+        $transformer = new \EkaAlexandria\Migration\Content\ContentTransformer();
     }
 
-    if (strpos($content, 'wp:query') !== false || strpos($content, 'wp:gallery') !== false) {
-        // Skip if already converted
+    // Scan for LayerSliders
+    if (preg_match_all('/\[layerslider[^\]]*\]/i', $content, $matches)) {
+        $metrics['shortcodes_found']['layerslider'] += count($matches[0]);
+        $content = preg_replace_callback(
+            '/\[layerslider\s+(?:(?:id|title)=["\']([^"\']+)["\']|([0-9]+))[^\]]*\]/i',
+            function ($m) use (&$metrics, $db_sliders, $transformer) {
+                $slider_id = !empty($m[1]) ? $m[1] : (!empty($m[2]) ? $m[2] : '0');
+                $metrics['shortcodes_converted']++;
+
+                $images = [];
+                if (!empty($db_sliders)) {
+                    foreach ($db_sliders as $slider) {
+                        if ((int)$slider['slider_id'] === (int)$slider_id || (isset($slider['name']) && strtolower($slider['name']) === strtolower($slider_id))) {
+                            foreach ($slider['slides'] as $slide) {
+                                if (!empty($slide['background_image_url'])) {
+                                    $images[] = [
+                                        'id'  => (int)($slide['background_att_id'] ?? 0),
+                                        'url' => $slide['background_image_url']
+                                    ];
+                                }
+                                if (!empty($slide['sublayer_images'])) {
+                                    foreach ($slide['sublayer_images'] as $sub_img) {
+                                        if (!empty($sub_img['src_url'])) {
+                                            $images[] = [
+                                                'id'  => (int)($sub_img['db_attachment_id'] ?? 0),
+                                                'url' => $sub_img['src_url']
+                                            ];
+                                        }
+                                    }
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                return $transformer->buildGutenbergGalleryBlock($images, 'layerslider-replaced ekk-carousel', "LayerSlider ID: {$slider_id}");
+            },
+            $content
+        );
     }
 
-    $dynamic_pages = [8934, 17194, 17215, 17219];
-    $query_loop_block = '<!-- wp:query {"queryId":1,"query":{"perPage":5,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
+    // Scan for Static Gallery Sliders
+    if (preg_match_all('/\[gallery[^\]]*type=["\']slideshow["\'][^\]]*\]/i', $content, $gmatches)) {
+        $metrics['shortcodes_found']['gallery_slideshow'] += count($gmatches[0]);
+        $content = preg_replace_callback(
+            '/\[gallery\s+[^\]]*ids=["\']?([0-9,]+)["\']?[^\]]*\]/i',
+            function ($gm) use (&$metrics, $transformer) {
+                $ids = array_map('intval', explode(',', $gm[1]));
+                $metrics['shortcodes_converted']++;
+                $images = array_map(function ($id) { return ['id' => $id, 'url' => '']; }, $ids);
+                return $transformer->buildGutenbergGalleryBlock($images, 'static-slideshow-converted ekk-carousel', 'Static Gallery Slideshow');
+            },
+            $content
+        );
+    }
+
+    return $content;
+}
+
+// ----------------------------------------------------------------------
+// Phase 3B: Media & Plugin Shortcodes Migration
+// ----------------------------------------------------------------------
+function step_3b_transform_media_and_plugins($content, &$metrics)
+{
+    // 1. PDF Embedder ([pdf-embedder url="..."]) - Preserved for native plugin handling
+    if (preg_match_all('/\[pdf-embedder[^\]]*\]/i', $content, $pdf_matches)) {
+        $metrics['shortcodes_found']['pdf_embedder'] += count($pdf_matches[0]);
+    }
+
+    // 2. BeTheme Button Shortcodes ([button title="..." link="..."]) -> core/buttons
+    if (preg_match_all('/\[button[^\]]*\]/i', $content, $btn_matches)) {
+        $metrics['shortcodes_found']['buttons'] += count($btn_matches[0]);
+        $content = preg_replace_callback(
+            '/\[button\s+[^\]]*\]/i',
+            function ($m) use (&$metrics) {
+                $btn_tag = $m[0];
+                $title = 'Download';
+                $link  = '#';
+                if (preg_match('/title=["\']([^"\']*)["\']/i', $btn_tag, $tm)) {
+                    if (!empty(trim($tm[1]))) $title = trim($tm[1]);
+                }
+                if (preg_match('/link=["\']([^"\']*)["\']/i', $btn_tag, $lm)) {
+                    if (!empty(trim($lm[1]))) $link = trim($lm[1]);
+                }
+                $metrics['shortcodes_converted']++;
+                return sprintf(
+                    '<!-- wp:buttons --><div class="wp-block-buttons"><!-- wp:button --><div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="%s" target="_blank">%s</a></div><!-- /wp:button --></div><!-- /wp:buttons -->',
+                    esc_url($link), esc_html($title)
+                );
+            },
+            $content
+        );
+    }
+
+    // 3. Contact Form 7
+    if (preg_match_all('/\[contact-form-7[^\]]*\]/i', $content, $matches)) {
+        $metrics['shortcodes_found']['contact_form_7'] += count($matches[0]);
+        $content = preg_replace_callback(
+            '/\[contact-form-7\s+([^\]]+)\]/i',
+            function ($m) use (&$metrics) {
+                $metrics['shortcodes_converted']++;
+                return '<!-- wp:shortcode -->[contact-form-7 ' . $m[1] . ']<!-- /wp:shortcode -->';
+            },
+            $content
+        );
+    }
+
+    // 4. Contact Box shortcode ([contact_box ...])
+    $content = preg_replace_callback(
+        '/\[contact_box\s+([^\]]+)\]/i',
+        function ($m) use (&$metrics) {
+            $tag = $m[1];
+            $title   = preg_match('/title=["\']([^"\']*)["\']/i', $tag, $tm) ? $tm[1] : '';
+            $address = preg_match('/address=["\']([^"\']*)["\']/i', $tag, $am) ? $am[1] : '';
+            $tel     = preg_match('/telephone=["\']([^"\']*)["\']/i', $tag, $t1m) ? $t1m[1] : '';
+            $email   = preg_match('/email=["\']([^"\']*)["\']/i', $tag, $em) ? $em[1] : '';
+
+            $metrics['shortcodes_converted']++;
+            $box_html = '<div class="wp-block-group contact-box-card">';
+            if ($title) $box_html .= '<h4>' . esc_html($title) . '</h4>';
+            if ($address) $box_html .= '<p>' . nl2br(esc_html($address)) . '</p>';
+            if ($tel) $box_html .= '<p>Τηλ: ' . esc_html($tel) . '</p>';
+            if ($email) $box_html .= '<p>Email: <a href="mailto:' . esc_attr($email) . '">' . esc_html($email) . '</a></p>';
+            $box_html .= '</div>';
+            return '<!-- wp:group -->' . $box_html . '<!-- /wp:group -->';
+        },
+        $content
+    );
+
+    // 5. Display Posts Shortcode
+    if (preg_match_all('/\[display-posts[^\]]*\]/i', $content, $matches)) {
+        $metrics['shortcodes_found']['display_posts'] += count($matches[0]);
+        $content = preg_replace_callback(
+            '/\[display-posts[^\]]*\]/i',
+            function ($m) use (&$metrics) {
+                $metrics['shortcodes_converted']++;
+                return '<!-- wp:query {"queryId":3,"query":{"perPage":4,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
 <div class="wp-block-query">
 <!-- wp:post-template -->
 <!-- wp:post-title {"isLink":true} /-->
-<!-- wp:post-excerpt {"moreText":"Read more"} /-->
 <!-- wp:post-date /-->
 <!-- /wp:post-template -->
 </div>
 <!-- /wp:query -->';
-
-    if (in_array((int) $post_id, $dynamic_pages, true)) {
-        if (preg_match('/\[(rev_slider|rev_slider_vc|layerslider)[^\]]*\]/i', $content)) {
-            $content = preg_replace('/\[(rev_slider|rev_slider_vc)[^\]]*\]/i', $query_loop_block, $content);
-            $content = preg_replace('/\[layerslider[^\]]*\]/i', $query_loop_block, $content);
-            return $content;
-        }
+            },
+            $content
+        );
     }
 
-    $gallery_groups = [
-        ['ids' => [7821, 7822, 7823], 'pages' => [7820, 17129, 17133]],
-        ['ids' => [7813, 7814, 7815], 'pages' => [7811, 17137, 17139]],
-        ['ids' => [10329, 7667, 7668, 7669, 7670, 7671, 7672, 7673], 'pages' => [3442, 17023, 17027, 17155]],
-        ['ids' => [7935, 7936, 7937, 7938, 7940, 7941, 7942], 'pages' => [7756, 17150]],
-        ['ids' => [10328], 'pages' => [7390, 17018, 17020]],
-    ];
-    $static_galleries = [];
-    foreach ($gallery_groups as $group) {
-        foreach ($group['pages'] as $pid) {
-            $static_galleries[$pid] = $group['ids'];
-        }
+    // 6. Map Shortcode
+    if (preg_match_all('/\[map[^\]]*\]/i', $content, $matches)) {
+        $metrics['shortcodes_found']['map'] += count($matches[0]);
+        $content = preg_replace_callback(
+            '/\[map\s+[^\]]*?lat=["\']([^"\']+)["\']\s+lng=["\']([^"\']+)["\'][^\]]*\]/i',
+            function ($m) use (&$metrics) {
+                $lat = esc_attr($m[1]);
+                $lng = esc_attr($m[2]);
+                $metrics['shortcodes_converted']++;
+                return '<!-- wp:html --><iframe src="https://maps.google.com/maps?q=' . $lat . ',' . $lng . '&amp;output=embed" width="100%" height="400" frameborder="0"></iframe><!-- /wp:html -->';
+            },
+            $content
+        );
     }
 
-    if (isset($static_galleries[(int) $post_id])) {
-        $media_ids = $static_galleries[(int) $post_id];
-        $gallery_block = '<!-- wp:gallery {"linkTo":"none"} -->
-<figure class="wp-block-gallery has-nested-images columns-default is-cropped">';
-        foreach ($media_ids as $media_id) {
-            $img_url = wp_get_attachment_url($media_id) ?: '';
-            $gallery_block .= sprintf(
-                '<!-- wp:image {"id":%d,"sizeSlug":"full","linkDestination":"none"} -->' . "\n" .
-                '<figure class="wp-block-image size-full"><img src="%s" alt="" class="wp-image-%d"/></figure>' . "\n" .
-                '<!-- /wp:image -->',
-                $media_id,
-                esc_url($img_url),
-                $media_id
-            );
-        }
-        $gallery_block .= '</figure>
-<!-- /wp:gallery -->';
-
-        if (preg_match('/\[(rev_slider|rev_slider_vc|layerslider)[^\]]*\]/i', $content)) {
-            $content = preg_replace('/\[(rev_slider|rev_slider_vc)[^\]]*\]/i', $gallery_block, $content);
-            $content = preg_replace('/\[layerslider[^\]]*\]/i', $gallery_block, $content);
-            return $content;
-        }
+    // 7. Embed & Video
+    if (preg_match_all('/\[(?:embed|video)[^\]]*\]/i', $content, $matches)) {
+        $metrics['shortcodes_found']['embed_video'] += count($matches[0]);
+        $content = preg_replace_callback(
+            '/\[embed[^\]]*\]\s*(https?:\/\/[^\s<]+)\s*\[\/embed\]/i',
+            function ($m) use (&$metrics) {
+                $url = esc_url(trim($m[1]));
+                $metrics['shortcodes_converted']++;
+                return '<!-- wp:embed {"url":"' . $url . '","type":"rich","providerNameSlug":"embed"} --><figure class="wp-block-embed"><div class="wp-block-embed__wrapper">' . $url . '</div></figure><!-- /wp:embed -->';
+            },
+            $content
+        );
     }
-
-    // Generic slider fallback
-    $content = preg_replace_callback(
-        '/\[(?:rev_slider|rev_slider_vc)\s+(?:(?:alias|title|id)=["\']([^"\']+)["\']|([a-zA-Z0-9_-]+))[^\]]*\]/i',
-        function ($matches) {
-            $alias = !empty($matches[1]) ? $matches[1] : (!empty($matches[2]) ? $matches[2] : 'default');
-            $alias = htmlspecialchars($alias, ENT_QUOTES, 'UTF-8');
-            return '<!-- wp:gallery {"className":"rev-slider-replaced"} --><figure class="wp-block-gallery has-nested-images columns-default is-cropped rev-slider-replaced"><!-- wp:paragraph --><p>Slider: ' . $alias . '</p><!-- /wp:paragraph --></figure><!-- /wp:gallery -->';
-        },
-        $content
-    );
-
-    $content = preg_replace_callback(
-        '/\[layerslider\s+(?:(?:id|title)=["\']([^"\']+)["\']|([a-zA-Z0-9_-]+))[^\]]*\]/i',
-        function ($matches) {
-            $id = !empty($matches[1]) ? $matches[1] : (!empty($matches[2]) ? $matches[2] : 'default');
-            $id = htmlspecialchars($id, ENT_QUOTES, 'UTF-8');
-            return '<!-- wp:gallery {"className":"layerslider-replaced"} --><figure class="wp-block-gallery has-nested-images columns-default is-cropped layerslider-replaced"><!-- wp:paragraph --><p>LayerSlider ID: ' . $id . '</p><!-- /wp:paragraph --></figure><!-- /wp:gallery -->';
-        },
-        $content
-    );
 
     return $content;
 }
 
 // ----------------------------------------------------------------------
-// Phase 3B: Replace Testimonials ([testimonials])
+// Phase 3C: WPBakery / Residual Shortcode Clean-Up & Unmapped Audit
 // ----------------------------------------------------------------------
-function step_3b_transform_testimonials($content)
+function step_3c_transform_residual_and_audit($content, $post_id, $post_title, $post_type, &$metrics)
 {
-    if (strpos($content, '[testimonials') === false) {
-        return $content;
-    }
-
-    $board_query = '<!-- wp:query {"queryId":2,"query":{"perPage":50,"pages":0,"offset":0,"postType":"board_member","order":"asc","orderBy":"menu_order","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
-<div class="wp-block-query">
-<!-- wp:post-template {"layout":{"type":"grid","columnCount":3},"className":"board-members-list"} -->
-<!-- wp:group {"className":"board-member-card"} -->
-<div class="wp-block-group board-member-card">
-<!-- wp:post-featured-image {"isLink":false} /-->
-<!-- wp:post-title {"level":3} /-->
-<!-- wp:post-content /-->
-</div>
-<!-- /wp:group -->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->';
-
-    $content = preg_replace('/<!-- wp:shortcode -->\s*\[testimonials[^\]]*\]\s*<!-- \/wp:shortcode -->/is', $board_query, $content);
-    $content = preg_replace('/\[testimonials[^\]]*\]/is', $board_query, $content);
-
-    return $content;
-}
-
-// ----------------------------------------------------------------------
-// Phase 3C: Subpages Query Loop Shortcodes & vc_posts_grid
-// ----------------------------------------------------------------------
-function step_3c_transform_vc_posts_grid($content, $post_id = 0)
-{
-    $transformer = new ContentTransformer();
-    $content = $transformer->transformVcPostsGrid((string)$content, (int)$post_id);
-
-    // Convert standalone numeric shortcodes outside Gutenberg block comments into subpage query loops
-    $tokens = preg_split('/(<!--\s+\/?wp:[^>]+-->)/s', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
-    $in_block = false;
-    $output = '';
-
-    foreach ($tokens as $token) {
-        if (preg_match('/^<!--\s+wp:/s', $token)) {
-            $in_block = true;
-            $output .= $token;
-        } elseif (preg_match('/^<!--\s+\/wp:/s', $token)) {
-            $in_block = false;
-            $output .= $token;
-        } else {
-            if (!$in_block) {
-                $token = preg_replace_callback(
-                    '/\[(\d+)\]/',
-                    function ($m) {
-                        $pid = (int) $m[1];
-                        return '<!-- wp:query {"queryId":4,"query":{"perPage":1,"pages":0,"offset":0,"postType":"page","order":"asc","orderBy":"menu_order","author":"","search":"","exclude":[],"sticky":"","inherit":false,"include":[' . $pid . ']}} -->
-<div class="wp-block-query">
-<!-- wp:post-template -->
-<!-- wp:post-featured-image {"isLink":true} /-->
-<!-- wp:post-title {"isLink":true,"level":3} /-->
-<!-- wp:post-excerpt /-->
-<!-- /wp:post-template -->
-</div>
-<!-- /wp:query -->';
-                    },
-                    $token
-                );
-            }
-            $output .= $token;
-        }
-    }
-
-    return $output;
-}
-
-// ----------------------------------------------------------------------
-// Phase 3G: Media Embeds & Plugin Shortcodes Migration
-// ----------------------------------------------------------------------
-function step_3g_transform_media_and_plugins($content)
-{
-    $transformer = new ContentTransformer();
-    $content = $transformer->transformMediaAndPlugins((string)$content);
-
-    // 1. [embed]url[/embed] -> core/embed
-    $content = preg_replace_callback(
-        '/\[embed[^\]]*\]\s*(https?:\/\/[^\s<]+)\s*\[\/embed\]/i',
-        function ($matches) {
-            $url = htmlspecialchars(trim($matches[1]), ENT_QUOTES, 'UTF-8');
-            return '<!-- wp:embed {"url":"' . $url . '","type":"rich","providerNameSlug":"embed"} --><figure class="wp-block-embed"><div class="wp-block-embed__wrapper">' . $url . '</div></figure><!-- /wp:embed -->';
-        },
-        $content
-    );
-
-    // 2. [video src="url"] -> core/video
-    $content = preg_replace_callback(
-        '/\[video\s+[^\]]*?src=["\']([^"\']+)["\'][^\]]*\]/i',
-        function ($matches) {
-            $url = htmlspecialchars(trim($matches[1]), ENT_QUOTES, 'UTF-8');
-            return '<!-- wp:video --><figure class="wp-block-video"><video controls src="' . $url . '"></video></figure><!-- /wp:video -->';
-        },
-        $content
-    );
-
-    // 3. [map lat="LAT" lng="LNG" ...] -> core/html iframe
-    $content = preg_replace_callback(
-        '/\[map\s+[^\]]*?lat=["\']([^"\']+)["\']\s+lng=["\']([^"\']+)["\'][^\]]*\]/i',
-        function ($matches) {
-            $lat = $matches[1];
-            $lng = $matches[2];
-            return '<!-- wp:html --><iframe src="https://maps.google.com/maps?q=' . $lat . ',' . $lng . '&amp;output=embed" width="100%" height="400" frameborder="0"></iframe><!-- /wp:html -->';
-        },
-        $content
-    );
-
-    // 4. [gview file="URL"] -> core/file
-    $content = preg_replace_callback(
-        '/\[gview\s+[^\]]*?file=["\']([^"\']+)["\'][^\]]*\]/i',
-        function ($matches) {
-            $url = htmlspecialchars(trim($matches[1]), ENT_QUOTES, 'UTF-8');
-            return '<!-- wp:file {"href":"' . $url . '","displayPreview":true} --><div class="wp-block-file"><object class="wp-block-file__embed" data="' . $url . '" type="application/pdf" style="width:100%;height:600px"></object><a href="' . $url . '">Download Document</a></div><!-- /wp:file -->';
-        },
-        $content
-    );
-
-    // 5. [mc4wp_form] -> [eka_mailchimp_form]
-    $content = str_replace('[mc4wp_form]', '[eka_mailchimp_form]', $content);
-
-    // 6. [our_team_list] -> remove completely
-    $content = preg_replace('/\[our_team_list[^\]]*\]/i', '', $content);
-
-    return $content;
-}
-
-// ----------------------------------------------------------------------
-// Phase 3D: Structural WPBakery & Caption Shortcodes
-// ----------------------------------------------------------------------
-function step_3d_transform_wpbakery_and_caption($content, $mysqli = null)
-{
-    $transformer = new ContentTransformer();
-    return $transformer->transformWpbakeryAndCaption((string)$content, $mysqli);
-}
-
-// ----------------------------------------------------------------------
-// Phase 3E: Residual Shortcode Clean-Up & Block Comment Isolation
-// ----------------------------------------------------------------------
-function step_3e_transform_residual_shortcodes($content)
-{
+    // Clean legacy column/builder shortcode wrappers
     $content = preg_replace('/\[\/?vc_[^\]]*\]/', '', $content);
     $content = preg_replace('/\[\/?mfn_[^\]]*\]/', '', $content);
+    $content = preg_replace('/\[\/?(?:one_half|one_third|two_third|one_fourth|three_fourth|tabs|tab)[^\]]*\]/', '', $content);
 
-    $ignored_tags = ['wp', 'caption', 'vc_row', 'vc_column', 'vc_column_text', 'vc_single_image', 'vc_raw_html', 'our_team', 'rev_slider', 'rev_slider_vc', 'layerslider', 'testimonials', 'vc_posts_grid', 'eka_mailchimp_form', 'polylang_langswitcher', 'metadata', 'sigma', 'greek'];
+    // Known allowed shortcodes wrapped in block comments
+    $known_tags = ['wp', 'caption', 'contact-form-7', 'pdf-embedder', 'pdf-embedder-vc', 'gallery', 'image', 'heading', 'paragraph', 'quote', 'list', 'table', 'html', 'embed', 'video', 'file', 'query', 'buttons', 'button', 'if', 'endif'];
 
-    // Split content by Gutenberg HTML comments to prevent JSON attributes inside <!-- wp:... --> comments from being transformed
+    // Scan for unmapped shortcodes outside Gutenberg block comments
     $tokens = preg_split('/(<!--\s+\/?wp:[^>]+-->)/s', $content, -1, PREG_SPLIT_DELIM_CAPTURE);
     $in_block = false;
-    $output = '';
 
     foreach ($tokens as $token) {
         if (preg_match('/^<!--\s+wp:/s', $token)) {
             $in_block = true;
-            $output .= $token;
         } elseif (preg_match('/^<!--\s+\/wp:/s', $token)) {
             $in_block = false;
-            $output .= $token;
         } else {
-            if ($in_block) {
-                $output .= $token;
-            } else {
-                // Split by HTML tags to avoid modifying attributes like href="...search_coll[metadata]=1..."
-                $parts = preg_split('/(<[^>]+>)/s', $token, -1, PREG_SPLIT_DELIM_CAPTURE);
-                foreach ($parts as $part) {
-                    if (preg_match('/^<[^>]+>$/s', $part)) {
-                        // Inside an HTML tag - keep 100% untouched
-                        $output .= $part;
-                    } else {
-                        // Text outside HTML tags
-                        $output .= preg_replace_callback(
-                            '/\[([a-zA-Z0-9_-]+)([^\]]*)\]/s',
-                            function ($m) use ($ignored_tags) {
-                                $tag = strtolower($m[1]);
-                                if (in_array($tag, $ignored_tags, true)) {
-                                    return $m[0];
-                                }
-                                return '<!-- wp:html -->' . $m[0] . '<!-- /wp:html -->';
-                            },
-                            $part
-                        );
+            if (!$in_block) {
+                if (preg_match_all('/\[([a-zA-Z0-9_-]+)([^\]]*)\]/s', $token, $m_matches, PREG_SET_ORDER)) {
+                    foreach ($m_matches as $mm) {
+                        $tag = strtolower($mm[1]);
+                        if (!in_array($tag, $known_tags, true)) {
+                            log_unmapped_shortcode($post_id, $post_title, $post_type, $mm[0]);
+                            $metrics['unmapped_shortcodes_logged']++;
+                        }
                     }
                 }
             }
         }
     }
 
-    return $output;
+    return $content;
 }
 
 // ----------------------------------------------------------------------
-// Phase 3F: Classic HTML AST Block Conversion & Inline CSS Allowlist
+// Phase 3D: Classic HTML to Gutenberg Block Conversion
 // ----------------------------------------------------------------------
 function convert_html_elements_to_blocks($html)
 {
     $rules = [
         '/<h([1-6])(\s+[^>]*)?>(.*?)<\/h\1>/is' => function ($m) {
             $level = (int) $m[1];
-            $tag_html = clean_html_inline_styles("<h{$level}" . ($m[2] ?? '') . ">{$m[3]}</h{$level}>");
+            $tag_html = "<h{$level}>" . strip_tags($m[3], '<a><strong><em><span>') . "</h{$level}>";
             return "<!-- wp:heading {\"level\":{$level}} -->{$tag_html}<!-- /wp:heading -->";
         },
         '/<ul(\s+[^>]*)?>(.*?)<\/ul>/is' => function ($m) {
-            $tag_html = clean_html_inline_styles("<ul" . ($m[1] ?? '') . ">{$m[2]}</ul>");
-            return "<!-- wp:list -->{$tag_html}<!-- /wp:list -->";
+            return "<!-- wp:list --><ul>{$m[2]}</ul><!-- /wp:list -->";
         },
         '/<ol(\s+[^>]*)?>(.*?)<\/ol>/is' => function ($m) {
-            $tag_html = clean_html_inline_styles("<ol" . ($m[1] ?? '') . ">{$m[2]}</ol>");
-            return "<!-- wp:list {\"ordered\":true} -->{$tag_html}<!-- /wp:list -->";
+            return "<!-- wp:list {\"ordered\":true} --><ol>{$m[2]}</ol><!-- /wp:list -->";
         },
         '/<table(\s+[^>]*)?>(.*?)<\/table>/is' => function ($m) {
-            $tag_html = clean_html_inline_styles("<table" . ($m[1] ?? '') . ">{$m[2]}</table>");
-            return "<!-- wp:table --><figure class=\"wp-block-table\">{$tag_html}</figure><!-- /wp:table -->";
+            return "<!-- wp:table --><figure class=\"wp-block-table\"><table>{$m[2]}</table></figure><!-- /wp:table -->";
         },
         '/<blockquote(\s+[^>]*)?>(.*?)<\/blockquote>/is' => function ($m) {
-            $tag_html = clean_html_inline_styles("<blockquote class=\"wp-block-quote\"" . ($m[1] ?? '') . ">{$m[2]}</blockquote>");
-            return "<!-- wp:quote -->{$tag_html}<!-- /wp:quote -->";
+            return "<!-- wp:quote --><blockquote class=\"wp-block-quote\">{$m[2]}</blockquote><!-- /wp:quote -->";
         },
         '/<img(\s+[^>]*)?\/?>/is' => function ($m) {
-            $raw_img = "<img" . ($m[1] ?? '') . " />";
-            $clean_img = clean_image_tag($raw_img);
             $img_id = 0;
             if (preg_match('/wp-image-(\d+)/i', $m[1] ?? '', $id_match)) {
                 $img_id = (int)$id_match[1];
             }
+            $src = '';
+            if (preg_match('/src=["\']([^"\']+)["\']/i', $m[1] ?? '', $src_match)) {
+                $src = esc_url($src_match[1]);
+            }
             $json_attr = $img_id > 0 ? " {\"id\":{$img_id}}" : "";
-            return "<!-- wp:image{$json_attr} --><figure class=\"wp-block-image\">{$clean_img}</figure><!-- /wp:image -->";
+            return "<!-- wp:image{$json_attr} --><figure class=\"wp-block-image\"><img src=\"{$src}\" alt=\"\" class=\"wp-image-{$img_id}\"/></figure><!-- /wp:image -->";
         },
         '/<p(\s+[^>]*)?>(.*?)<\/p>/is' => function ($m) {
             $inner = trim($m[2]);
@@ -402,7 +483,7 @@ function convert_html_elements_to_blocks($html)
     return $html;
 }
 
-function step_3f_process_classic_html($content)
+function convert_html_to_blocks($content)
 {
     if (empty(trim($content))) {
         return $content;
@@ -436,88 +517,136 @@ function step_3f_process_classic_html($content)
     return $output;
 }
 
-// ----------------------------------------------------------------------
-// Main Transformation Pipeline Execution
-// ----------------------------------------------------------------------
+// Load LayerSlider database inventory for slide image resolution
+$slider_scoping_file = $base_dir . '/ai-work/scopings/detailed-sliders-inventory.json';
+$db_sliders = [];
+if (file_exists($slider_scoping_file)) {
+    $inventory_data = json_decode(file_get_contents($slider_scoping_file), true);
+    $db_sliders = $inventory_data['all_database_layersliders'] ?? [];
+}
 
-$sql = "SELECT ID, post_title, post_content FROM wp_posts WHERE post_type IN ('page', 'post', 'testimonial', 'board_member', 'alx_tachydromos') AND post_status IN ('publish', 'draft', 'private', 'pending', 'future')";
+// ----------------------------------------------------------------------
+// Main Migration Loop
+// ----------------------------------------------------------------------
+$sql = "SELECT ID, post_title, post_type, post_content FROM wp_posts WHERE post_type IN ('page', 'post') AND post_status IN ('publish', 'draft', 'private', 'pending', 'future')";
 $res = $mysqli->query($sql);
 
 if (!$res) {
-    eka_engine_log("Query failed: " . $mysqli->error, "ERROR");
+    engine_log("Database query failed: " . $mysqli->error, "ERROR");
     exit(1);
 }
 
-$total_scanned = $res->num_rows;
-eka_engine_log("Scanning {$total_scanned} posts across 6-step transformation pipeline...");
-
-$converted_count = 0;
-$skipped_count = 0;
-$failed_ast_count = 0;
-$failed_post_ids = [];
+$front_page_id = (int)get_option('page_on_front');
+$transformer = new \EkaAlexandria\Migration\Content\ContentTransformer();
 
 while ($row = $res->fetch_assoc()) {
-    $id = (int) $row['ID'];
-    $original_content = $row['post_content'];
+    $id         = (int)$row['ID'];
+    $title      = $row['post_title'];
+    $type       = $row['post_type'];
+    $orig_body  = $row['post_content'];
+    $is_front   = ($id === $front_page_id);
 
-    $front_page_ids = [13236, 16894, 16892];
-    if (in_array($id, $front_page_ids, true)) {
-        // Front page content extraction (remove all shortcodes, extract text, sanitize and convert to Gutenberg)
-        $content = eka_process_front_page_content($original_content, $id);
-    } else {
-        // Optimized Sequence: 3A -> 3B -> 3C -> 3D -> 3G -> 3F -> 3E
-        $content = step_3a_transform_sliders($original_content, $id);
-        $content = step_3b_transform_testimonials($content);
-        $content = step_3c_transform_vc_posts_grid($content, $id);
-        $content = step_3d_transform_wpbakery_and_caption($content, $mysqli);
-        $content = step_3g_transform_media_and_plugins($content);
-        $content = step_3f_process_classic_html($content);
-        $content = step_3e_transform_residual_shortcodes($content);
+    if ($type === 'page') $metrics['pages_count']++;
+    if ($type === 'post') $metrics['posts_count']++;
+
+    // 1. Check for Muffin Builder postmeta ('mfn-page-items')
+    $stmt_mfn = $mysqli->prepare("SELECT meta_value FROM wp_postmeta WHERE post_id = ? AND meta_key = 'mfn-page-items'");
+    $mfn_raw = '';
+    if ($stmt_mfn) {
+        $stmt_mfn->bind_param("i", $id);
+        if ($stmt_mfn->execute()) {
+            $res_mfn = $stmt_mfn->get_result();
+            if ($r_mfn = $res_mfn->fetch_assoc()) {
+                $mfn_raw = $r_mfn['meta_value'];
+            }
+        }
+        $stmt_mfn->close();
     }
 
-    if ($content === $original_content) {
-        $skipped_count++;
+    $content = $orig_body;
+
+    if (!empty($mfn_raw)) {
+        $metrics['mfn_pages_scanned']++;
+        $mfn_html = $transformer->transformMfnBuilder($mfn_raw, $is_front);
+        if (!empty(trim($mfn_html))) {
+            $content = $mfn_html;
+            $metrics['mfn_pages_converted']++;
+        }
+    }
+
+    // 2. Step 3A: Sliders (LayerSliders & RevSliders)
+    $content = $transformer->transformLayerSliders($content, $id, $db_sliders);
+    $content = $transformer->transformRevSliders($content, $id);
+
+    // 3. Step 3B: Media & Plugin Shortcodes
+    $content = step_3b_transform_media_and_plugins($content, $metrics);
+
+    // 4. Step 3C: Residual Clean-Up & Unmapped Audit
+    $content = step_3c_transform_residual_and_audit($content, $id, $title, $type, $metrics);
+
+    // 5. Step 3D: Convert Classic HTML to Gutenberg Blocks
+    $content = convert_html_to_blocks($content);
+
+    // Skip if content unchanged
+    if (trim($content) === trim($orig_body)) {
+        $metrics['skipped_unchanged']++;
         continue;
     }
 
     // AST Validation
     if (!eka_validate_blocks_ast($content)) {
-        eka_engine_log("AST Validation failed for post ID {$id} ('{$row['post_title']}'). Skipping update.", "WARNING");
-        $failed_ast_count++;
-        $failed_post_ids[] = $id;
+        engine_log("AST Validation failed for Post ID {$id} ('{$title}'). Skipping update.", "WARNING");
+        $metrics['failed_ast_validation']++;
+        $metrics['failed_post_ids'][] = $id;
         continue;
     }
 
-    $stmt = $mysqli->prepare("UPDATE wp_posts SET post_content = ? WHERE ID = ?");
-    if ($stmt) {
-        $stmt->bind_param("si", $content, $id);
-        if ($stmt->execute()) {
-            $converted_count++;
+    // Update wp_posts
+    $stmt_upd = $mysqli->prepare("UPDATE wp_posts SET post_content = ? WHERE ID = ?");
+    if ($stmt_upd) {
+        $stmt_upd->bind_param("si", $content, $id);
+        if ($stmt_upd->execute()) {
+            $metrics['successfully_converted']++;
         } else {
-            eka_engine_log("Failed to update Post ID {$id}: " . $stmt->error, "ERROR");
-            $failed_ast_count++;
-            $failed_post_ids[] = $id;
+            engine_log("Failed to update Post ID {$id}: " . $stmt_upd->error, "ERROR");
+            $metrics['failed_ast_validation']++;
+            $metrics['failed_post_ids'][] = $id;
         }
-        $stmt->close();
+        $stmt_upd->close();
     }
 }
 
 // ----------------------------------------------------------------------
-// Metrics Summary
+// Detailed Migration Metrics Report Log
 // ----------------------------------------------------------------------
-eka_engine_log("==========================================");
-eka_engine_log(" MIGRATION SUMMARY: Shortcode & Block Remediation");
-eka_engine_log("==========================================");
-eka_engine_log(" Total Posts Scanned   : {$total_scanned}");
-eka_engine_log(" Successfully Converted: {$converted_count}");
-eka_engine_log(" Skipped / Unchanged   : {$skipped_count}");
-eka_engine_log(" Failed AST Validation : {$failed_ast_count}");
-if (!empty($failed_post_ids)) {
-    eka_engine_log(" Failed Post IDs       : [" . implode(', ', $failed_post_ids) . "]");
+engine_log("==========================================");
+engine_log(" DETAILED MIGRATION METRICS REPORT");
+engine_log("==========================================");
+engine_log(" Total Items Scanned       : " . $metrics['total_scanned']);
+engine_log("   - Pages Scanned         : " . $metrics['pages_count']);
+engine_log("   - Posts Scanned         : " . $metrics['posts_count']);
+engine_log(" MFN Builder Pages Scanned : " . $metrics['mfn_pages_scanned']);
+engine_log(" MFN Builder Pages Converted: " . $metrics['mfn_pages_converted']);
+engine_log(" Shortcodes Found by Type:");
+engine_log("   - LayerSliders          : " . $metrics['shortcodes_found']['layerslider']);
+engine_log("   - Static Gallery Sliders: " . $metrics['shortcodes_found']['gallery_slideshow']);
+engine_log("   - PDF Embedders         : " . $metrics['shortcodes_found']['pdf_embedder']);
+engine_log("   - Button Shortcodes     : " . $metrics['shortcodes_found']['buttons']);
+engine_log("   - Contact Form 7        : " . $metrics['shortcodes_found']['contact_form_7']);
+engine_log("   - Display Posts         : " . $metrics['shortcodes_found']['display_posts']);
+engine_log("   - Google Maps           : " . $metrics['shortcodes_found']['map']);
+engine_log("   - Embeds & Video        : " . $metrics['shortcodes_found']['embed_video']);
+engine_log(" Total Shortcodes Converted : " . $metrics['shortcodes_converted']);
+engine_log(" Unmapped Shortcodes Logged: " . $metrics['unmapped_shortcodes_logged']);
+engine_log(" Successfully Converted    : " . $metrics['successfully_converted']);
+engine_log(" Skipped / Unchanged       : " . $metrics['skipped_unchanged']);
+engine_log(" Failed AST Validation     : " . $metrics['failed_ast_validation']);
+if (!empty($metrics['failed_post_ids'])) {
+    engine_log(" Failed Post IDs           : [" . implode(', ', $metrics['failed_post_ids']) . "]");
 } else {
-    eka_engine_log(" Failed Post IDs       : []");
+    engine_log(" Failed Post IDs           : []");
 }
-eka_engine_log("==========================================");
+engine_log("==========================================");
 
 $mysqli->close();
-eka_engine_log("Content engine pipeline execution completed successfully.");
+engine_log("Stage 02 Content Engine Execution Completed Successfully.");
