@@ -1,13 +1,14 @@
 # Phase 3 Task List: Content Migration Engine & Gutenberg Conversion
 
-- [ ] Task 1: Database Scoping & Legacy Content Audit Execution
-  - [ ] Run `bin/scope-betheme-config.php` and `bin/scope-legacy-items.php`
-  - [ ] Audit installed plugins against the Plugin Audit & Disregard Matrix
-  - [ ] Verify scoping outputs in `ai-work/scopings/`
-  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [x] Task 1: Database Scoping & Legacy Content Audit Execution
+  - [x] Run `bin/scope-betheme-config.php`, `bin/scope-legacy-items.php`, and `bin/scope-detailed-sliders.php`
+  - [x] Extract detailed LayerSlider and static slider inventory (`ai-work/scopings/detailed-sliders-inventory.json`)
+  - [x] Audit installed plugins against the Plugin Audit & Disregard Matrix
+  - [x] Verify scoping outputs in `ai-work/scopings/`
+  - [x] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
   - [ ] Update `bin/02-migrate-content.sh` with correct paths (`/var/www/backstage.ekkairo.org` & `ekkairo-flagship`)
-  - [ ] Update `bin/migration-content-engine.php` with Muffin Builder transforms & LayerSlider handling
+  - [ ] Update `bin/migration-content-engine.php` with Muffin Builder transforms & page/post migration rules
   - [ ] Implement `ai-work/logs/unmapped-shortcodes.log` logging protocol
   - [ ] Execute `bin/02-migrate-content.sh`
   - [ ] **Human Verification Gate**: Present results for human review before git commit
@@ -17,7 +18,7 @@
   - [ ] Ensure 0 block editor invalid content warnings
   - [ ] **Human Verification Gate**: Present results for human review before git commit
 - [ ] Task 4: Polylang & Legacy Plugin Deactivation, Theme Activation & Nginx Switch
-  - [ ] Safely deactivate `polylang` and `polylang-theme-strings`
+  - [ ] Safely deactivate `polylang` and `polylang-theme-strings`, purge English draft, set locale to Greek (`el_GR`)
   - [ ] Deactivate 17 legacy plugins identified in Disregard Matrix via WP-CLI
   - [ ] Activate `ekkairo-flagship` block theme
   - [ ] Reconfigure Nginx site handler to `php8.2-fpm.sock` and reload

@@ -1,0 +1,2101 @@
+[
+    {
+        "post_id": 6,
+        "title": "Αρχική",
+        "post_type": "page",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/",
+        "metrics": {
+            "sections": 4,
+            "wraps": 6,
+            "items": 8
+        },
+        "raw_meta_size_bytes": 8268,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "10",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "slider_plugin",
+                                "size": "1/1",
+                                "fields": {
+                                    "rev": "0",
+                                    "layer": "32",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "9",
+                                    "style": "grid",
+                                    "columns": "3",
+                                    "category": "",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "1",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": "home_grid"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "divider",
+                        "items": "",
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "Focus",
+                    "bg_color": "#CCCCCC",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": "0"
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/focus/\"><b>Focus</b></a></h3>",
+                                    "align": "left",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "1",
+                                    "style": "photo",
+                                    "columns": "2",
+                                    "category": "focus",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "0",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": "focus"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"4\" offset=\"9\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"4\" offset=\"14\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/agios-konstantinos-kai-eleni/\"><b>Ναός Αγίων Κωνσταντίνου και Ελένης</b></a></h3>",
+                                    "align": "left",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": "small-news"
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "blog_slider",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "count": "3",
+                                    "category": "agios-konstantinos-kai-eleni",
+                                    "category_multi": "",
+                                    "more": "1",
+                                    "style": "flat",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "#CCCCCC",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "40px",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 77,
+        "title": "Επικοινωνία",
+        "post_type": "page",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/%ce%b5%cf%80%ce%b9%ce%ba%ce%bf%ce%b9%ce%bd%cf%89%ce%bd%ce%af%ce%b1/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 1,
+            "items": 4
+        },
+        "raw_meta_size_bytes": 3784,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "50",
+                    "padding_bottom": "10",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "2/3",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<div class=\"content_box\">\r\n[map lat=\"30.055255\" lng=\"31.243791\" height=\"330\" zoom=\"13\" icon=\"http://ekkairo.org/wp-content/uploads/2017/06/EKK-logo-50x50.png\"]\r\n</div>\r\n",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "contact_box",
+                                "size": "1/3",
+                                "fields": {
+                                    "title": "",
+                                    "address": "Τα Κεντρικά Γραφεία βρίσκονται στην οδό Εμάντ Ελ Ντίν, αρ. 15.\r\nΚάιρο, Αίγυπτος\r\n",
+                                    "telephone": "02-25913945",
+                                    "telephone_2": "02-25933372",
+                                    "fax": "02-25884652",
+                                    "email": "",
+                                    "www": "ekkairo.org",
+                                    "image": "",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "2/3",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<div class=\"content_box\">\r\n[contact-form-7 id=\"4\" title=\"Επικοινωνία\"]\r\n</div>",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/3",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<div class=\"content_box\">\r\n<p style=\"font-style: italic; font-family: Georgia, serif;\"> Καλώς ήλθατε στην σελίδα της Ελληνική Κοινότητα Καΐρου. Εδώ θα μπορείτε να παρακολουθείτε την επικαιρότητα και τις εκδηλώσεις της Ελληνικής παροικίας στο Κάιρο.</p>\r\n</div>\r\n",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 198,
+        "title": "Οικονομικών, Επενδύσεων και Μελλοντικού Σχεδιασμού",
+        "post_type": "page",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/epitropes/oikonomikon-ependiseon-kai-mellontikou-sxediasmou/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 572,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    },
+    {
+        "post_id": 368,
+        "title": "Διπλωματικές Αρχές στο Κάιρο",
+        "post_type": "page",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/%ce%b4%ce%b9%cf%80%ce%bb%cf%89%ce%bc%ce%b1%cf%84%ce%b9%ce%ba%ce%ad%cf%82-%ce%b1%cf%81%cf%87%ce%ad%cf%82-%cf%83%cf%84%ce%bf-%ce%ba%ce%ac%ce%b9%cf%81%ce%bf/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 2,
+            "items": 5
+        },
+        "raw_meta_size_bytes": 4176,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "fancy_heading",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "Διπλωματικές Αρχές στο Κάιρο",
+                                    "h1": "0",
+                                    "icon": "",
+                                    "slogan": "",
+                                    "content": "",
+                                    "style": "icon",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            },
+                            {
+                                "type": "contact_box",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "Ελληνική Πρεσβεία στο Κάιρο",
+                                    "address": "18 Aisha El Taymuria, Garden City, Cairo, 11451",
+                                    "telephone": "(00202) 27955915 ",
+                                    "telephone_2": "(00202) 27951074",
+                                    "fax": "(00202) 27963903",
+                                    "email": "gremb.cai@mfa.gr",
+                                    "www": "www.mfa.gr/egypt",
+                                    "image": "",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            },
+                            {
+                                "type": "contact_box",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "Γραφείο Οικονομικών και Εμπορικών υποθέσεων ",
+                                    "address": "18 Aisha El Taymuria, Garden City, Cairo, 11451",
+                                    "telephone": "(00202) 27952036 ",
+                                    "telephone_2": "(00202) 27948482 ",
+                                    "fax": "(00202) 27940684",
+                                    "email": "ecocom-cairo@mfa.gr",
+                                    "www": "",
+                                    "image": "",
+                                    "animate": "",
+                                    "classes": "equateme"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "contact_box",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "Γενικό Προξενείο της Ελλάδας στο Κάιρο",
+                                    "address": "14 Srilanka str., Zamalek, Cairo ",
+                                    "telephone": "(00202) 2735 5851",
+                                    "telephone_2": "(00202) 2735 5898",
+                                    "fax": "(00202) 2735 5818",
+                                    "email": "grgencon.cai@mfa.gr",
+                                    "www": "",
+                                    "image": "",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            },
+                            {
+                                "type": "contact_box",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "Πρεσβεία της Κύπρου στο Κάιρο ",
+                                    "address": "23B, Mohamed Mazhar, Zamalek, Cairo, 11211",
+                                    "telephone": "(00202) 27377012",
+                                    "telephone_2": "(00202) 27377014 ",
+                                    "fax": "(00202) 27377016",
+                                    "email": "cairoembasy@mfa.gov.cy",
+                                    "www": "",
+                                    "image": "",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 951,
+        "title": "Sliders",
+        "post_type": "page",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/sliders/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 1,
+            "items": 2
+        },
+        "raw_meta_size_bytes": 1188,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "placeholder",
+                                "size": "1/6"
+                            },
+                            {
+                                "type": "slider_plugin",
+                                "size": "2/3",
+                                "fields": {
+                                    "rev": "0",
+                                    "layer": "18",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 4816,
+        "title": "Νέο Φως 19.03.2018",
+        "post_type": "post",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/2018/03/19/%ce%bd%ce%ad%ce%bf-%cf%86%cf%89%cf%82-19-03-2018/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 572,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    },
+    {
+        "post_id": 4843,
+        "title": "Αρχική",
+        "post_type": "page",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/%ce%b1%cf%81%cf%87%ce%b9%ce%ba%ce%ae-2/",
+        "metrics": {
+            "sections": 2,
+            "wraps": 2,
+            "items": 3
+        },
+        "raw_meta_size_bytes": 3892,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "fancy_heading",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "Καλώς ήλθατε στην Ελληνική Κοινότητα Καΐρου",
+                                    "h1": "1",
+                                    "icon": "",
+                                    "slogan": "",
+                                    "content": "",
+                                    "style": "icon",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            },
+                            {
+                                "type": "slider_plugin",
+                                "size": "1/1",
+                                "fields": {
+                                    "rev": "0",
+                                    "layer": "19",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "20px 0",
+                            "column_margin": "0px",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "60",
+                    "padding_bottom": "20",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "2/3",
+                                "fields": {
+                                    "title": "Διπλωματικές Αρχές στο Κάιρο",
+                                    "content": "<div class=\"content_box\">\r\n<a href=\"διπλωματικές-αρχές-στο-κάιρο\">\r\n<h3 style=\"color: #dfd7c6;\"><img style=\"position: relative; top: 4px; margin-right: 10px;\" src=\"http://ekkairo.org/wp-content/uploads/2014/11/home_museum_icon3.png\" alt=\"\" />Διπλωματικές Αρχές στο Κάιρο</h3>\r\n<p class=\"big\" style=\"margin: 0; color: #ababad;\">\r\nΕλληνική Πρεσβεία στο Κάιρο <br/>\r\nΓραφείο Οικονομικών και Εμπορικών υποθέσεων<br/>\r\nΓενικό Προξενείο της Ελλάδας στο Κάιρο <br/>\r\nΠρεσβεία της Κύπρου στο Κάιρο<br/>\r\n</a>\r\n</div>",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 7685,
+        "title": "Home",
+        "post_type": "page",
+        "post_status": "draft",
+        "permalink": "https://backstage.ekkairo.org/en/home/",
+        "metrics": {
+            "sections": 3,
+            "wraps": 3,
+            "items": 5
+        },
+        "raw_meta_size_bytes": 8920,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "fancy_heading",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "Καλώς ήλθατε στην Ελληνική Κοινότητα Καΐρου",
+                                    "h1": "1",
+                                    "icon": "",
+                                    "slogan": "",
+                                    "content": "",
+                                    "style": "icon",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "20px 0",
+                            "column_margin": "0px",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "#55555d",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "Είμαστε στον αέρα !",
+                                    "content": "<div style=\"border-right: 1px solid rgba(255,255,255,.1); padding: 20px 20px; text-align: justify;\">\r\n<h3 style=\"color: #dfd7c6; text-align: center;\"><img style=\"position: relative; top: 4px; margin-right: 10px;\" src=\"http://ekkairo.org/wp-content/uploads/2014/11/home_museum_icon1.png\" alt=\"\" />Είμαστε στον αέρα !</h3>\r\n<p style=\"margin: 0; color: #ababad;\">Μετά από ομαδική εργασία σήμερα Κυριακή 15 Οκτωβρίου 2017, μπορούμε να μοιραστούμε μαζί σας τη χαρά μας λέγοντας '' Είμαστε στον αέρα''. Εδώ και λίγη ώρα, η Ελληνική Κοινότητα Καΐρου έχει πλέον τη δική της επίσημη διαδικτυακή στέγη όπου είστε όλοι ευπρόσδεκτοι κάθε στιγμή της ημέρας να ενημερωθείτε έγκαιρα και έγκυρα για οτιδήποτε αφορά τον απανταχού Αιγυπτιώτη Ελληνισμό</p>\r\n</div>",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "Διπλωματικές Αρχές στο Κάιρο",
+                                    "content": "<a href=\"διπλωματικές-αρχές-στο-κάιρο\">\r\n<div style=\"border-right: 1px solid rgba(255,255,255,.1); padding: 20px 20px; text-align: center;\">\r\n<h3 style=\"color: #dfd7c6;\"><img style=\"position: relative; top: 4px; margin-right: 10px;\" src=\"http://ekkairo.org/wp-content/uploads/2014/11/home_museum_icon3.png\" alt=\"\" />Διπλωματικές Αρχές στο Κάιρο</h3>\r\n<p class=\"big\" style=\"margin: 0; color: #ababad;\">\r\nΕλληνική Πρεσβεία στο Κάιρο <br/>\r\nΓραφείο Οικονομικών και Εμπορικών υποθέσεων<br/>\r\nΓενικό Προξενείο της Ελλάδας στο Κάιρο <br/>\r\nΠρεσβεία της Κύπρου στο Κάιρο<br/>\r\n</div>\r\n</a>",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "0px",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "60",
+                    "padding_bottom": "20",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/3",
+                                "fields": {
+                                    "title": "Boxes",
+                                    "content": "<div class=\"content_box\">\r\n<h3 class=\"title\">Ίδρυση – Σκοπός</h3>\r\n<p style=\"font-style: italic; font-family: Georgia, serif;\">Την 29η Απριλίου 1904, ιδρύεται η «Ελληνική Κοινότητα Καΐρου», «η Κοινότης».</p>\r\n<a href=\"ίδρυση/σκοποί-ίδρυση\">Διαβάστε περισσότερα</a>\r\n</div>\r\n\r\n<div class=\"content_box\">\r\n<p>Καλώς ήλθατε στη σελίδα της Ελληνικής Κοινότητας Καΐρου. Εδώ θα μπορείτε να παρακολουθείτε την επικαιρότητα και τις εκδηλώσεις της Ελληνικής παροικίας στο Κάιρο.</p>\r\n</div>\r\n",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "2/3",
+                                "fields": {
+                                    "title": "Νέα",
+                                    "content": "<div class=\"content_box\">\r\n<h3 class=\"title\">Νέα</h3>\r\n[blog count=\"3\" style=\"classic\"]\r\n[button title=\"Περισσότερα νέα\" icon=\"icon-newspaper\" icon_position=\"left\" link=\"νέα\" target=\"\" color=\"#2991d6\" font_color=\"#ffffff\" large=\"0\" class=\"\" download=\"\" onclick=\"\"]\r\n</div>",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 10257,
+        "title": "Αρχική",
+        "post_type": "page",
+        "post_status": "draft",
+        "permalink": "https://backstage.ekkairo.org/?page_id=10257",
+        "metrics": {
+            "sections": 2,
+            "wraps": 5,
+            "items": 7
+        },
+        "raw_meta_size_bytes": 6400,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "10",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "9",
+                                    "style": "grid",
+                                    "columns": "3",
+                                    "category": "",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "1",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/agios-konstantinos-kai-eleni/\"><b>Ναός Αγίων Κωνσταντίνου και Ελένης</b></a></h3>",
+                                    "align": "center",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "blog_slider",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "count": "1",
+                                    "category": "agios-konstantinos-kai-eleni",
+                                    "category_multi": "",
+                                    "more": "1",
+                                    "style": "flat",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "#CCCCCC",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "40px",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "divider",
+                        "items": "",
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"5\" offset=\"9\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"5\" offset=\"14\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": "1"
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "fancy_heading",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "Αξίζουν",
+                                    "h1": "0",
+                                    "icon": "",
+                                    "slogan": "",
+                                    "content": "",
+                                    "style": "icon",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            },
+                            {
+                                "type": "image",
+                                "size": "1/1",
+                                "fields": {
+                                    "src": "",
+                                    "width": "",
+                                    "height": "",
+                                    "align": "center",
+                                    "border": "1",
+                                    "margin": "",
+                                    "link_image": "",
+                                    "link": "",
+                                    "target": "0",
+                                    "hover": "",
+                                    "alt": "",
+                                    "caption": "Caption for media",
+                                    "greyscale": "0",
+                                    "animate": "",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 14067,
+        "title": "Αρχική",
+        "post_type": "page",
+        "post_status": "draft",
+        "permalink": "https://backstage.ekkairo.org/?page_id=14067",
+        "metrics": {
+            "sections": 2,
+            "wraps": 6,
+            "items": 8
+        },
+        "raw_meta_size_bytes": 7148,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "10",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "slider_plugin",
+                                "size": "1/1",
+                                "fields": {
+                                    "rev": "0",
+                                    "layer": "32",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "9",
+                                    "style": "grid",
+                                    "columns": "3",
+                                    "category": "",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "1",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": "home_grid"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/agios-konstantinos-kai-eleni/\"><b>Ναός Αγίων Κωνσταντίνου και Ελένης</b></a></h3>",
+                                    "align": "left",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "blog_slider",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "count": "1",
+                                    "category": "agios-konstantinos-kai-eleni",
+                                    "category_multi": "",
+                                    "more": "1",
+                                    "style": "flat",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "#CCCCCC",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "40px",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "divider",
+                        "items": "",
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"4\" offset=\"9\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"4\" offset=\"14\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": "small-news"
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "Focus",
+                    "bg_color": "#CCCCCC",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": "0"
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/focus/\"><b>Focus</b></a></h3>",
+                                    "align": "left",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "1",
+                                    "style": "photo",
+                                    "columns": "2",
+                                    "category": "focus",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "0",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": "focus"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 17536,
+        "title": "To video της πορείας των εργασιών του Ι.Ν των Αγ. Κωνσταντίνου και Ελένης (Official)",
+        "post_type": "post",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/2019/09/30/to-video-tis-poreias-ton-ergasion-tou-ierou-naou-ton-agion-konstantinou-kai-elenis-video/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 572,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    },
+    {
+        "post_id": 20407,
+        "title": "Kαλή Χρονιά: 2020 ευχές από την Ελληνική Κοινότητα Καΐρου",
+        "post_type": "post",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/2020/01/01/kali-xronia-2020-efxes-apo-tin-elliniki-koinotita-kairou/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 572,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    },
+    {
+        "post_id": 25121,
+        "title": "«Αγία Σοφία»: Συναρπαστικό ταξίδι στο ναό – σύμβολο της Ορθοδοξίας από τη «Μηχανή του Χρόνου» (Video)",
+        "post_type": "post",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/2020/07/11/agia-sofia-sinarpastiko-taxidi-sto-nao-simvolo-tis-orthodoxias-apo-ti-mixani-tou-xronou-video/",
+        "metrics": {
+            "sections": 2,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 1136,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    },
+    {
+        "post_id": 42395,
+        "title": "Αρχική",
+        "post_type": "page",
+        "post_status": "draft",
+        "permalink": "https://backstage.ekkairo.org/?page_id=42395",
+        "metrics": {
+            "sections": 4,
+            "wraps": 6,
+            "items": 8
+        },
+        "raw_meta_size_bytes": 8268,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "10",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "slider_plugin",
+                                "size": "1/1",
+                                "fields": {
+                                    "rev": "0",
+                                    "layer": "32",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "9",
+                                    "style": "grid",
+                                    "columns": "3",
+                                    "category": "",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "1",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": "home_grid"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    },
+                    {
+                        "size": "divider",
+                        "items": "",
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "Focus",
+                    "bg_color": "#CCCCCC",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": "0"
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/focus/\"><b>Focus</b></a></h3>",
+                                    "align": "left",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "blog",
+                                "size": "1/1",
+                                "fields": {
+                                    "count": "1",
+                                    "style": "photo",
+                                    "columns": "2",
+                                    "category": "focus",
+                                    "category_multi": "",
+                                    "exclude_id": "",
+                                    "more": "0",
+                                    "filters": "0",
+                                    "pagination": "0",
+                                    "load_more": "0",
+                                    "greyscale": "0",
+                                    "classes": "focus"
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"4\" offset=\"9\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/2",
+                                "fields": {
+                                    "title": "",
+                                    "content": " [display-posts posts_per_page=\"4\" offset=\"14\"  image_size=\"thumbnail\" ignore_sticky_posts]",
+                                    "align": "",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "",
+                                    "padding": "",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            },
+                            {
+                                "type": "column",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "content": "<h3><a href=\"https://ekkairo.org/category/agios-konstantinos-kai-eleni/\"><b>Ναός Αγίων Κωνσταντίνου και Ελένης</b></a></h3>",
+                                    "align": "left",
+                                    "column_bg": "",
+                                    "bg_image": "",
+                                    "bg_position": "no-repeat;center top;;",
+                                    "margin_bottom": "0px",
+                                    "padding": "0",
+                                    "animate": "",
+                                    "classes": "",
+                                    "style": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "",
+                            "column_margin": "",
+                            "vertical_align": "top",
+                            "class": "small-news"
+                        }
+                    }
+                ]
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": [
+                    {
+                        "size": "1/1",
+                        "items": [
+                            {
+                                "type": "blog_slider",
+                                "size": "1/1",
+                                "fields": {
+                                    "title": "",
+                                    "count": "3",
+                                    "category": "agios-konstantinos-kai-eleni",
+                                    "category_multi": "",
+                                    "more": "1",
+                                    "style": "flat",
+                                    "classes": ""
+                                }
+                            }
+                        ],
+                        "attr": {
+                            "bg_color": "#CCCCCC",
+                            "bg_image": "",
+                            "bg_position": "no-repeat;center top;;",
+                            "padding": "10px",
+                            "column_margin": "40px",
+                            "vertical_align": "middle",
+                            "class": ""
+                        }
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "post_id": 48048,
+        "title": "Αναζητήστε και διαβάστε το ΝΕΟ ΦΩΣ που κυκλοφορεί σήμερα 6.11.2023",
+        "post_type": "post",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/2023/11/06/%ce%b1%ce%bd%ce%b1%ce%b6%ce%b7%cf%84%ce%ae%cf%83%cf%84%ce%b5-%ce%ba%ce%b1%ce%b9-%ce%b4%ce%b9%ce%b1%ce%b2%ce%ac%cf%83%cf%84%ce%b5-%cf%84%ce%bf-%ce%bd%ce%b5%ce%bf-%cf%86%cf%89%cf%83-%cf%80%ce%bf-28/",
+        "metrics": {
+            "sections": 1,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 572,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    },
+    {
+        "post_id": 65470,
+        "title": "Το χρονικό της ανακομιδής των Αγίων Λειψάνων του Αγίου Νεκταρίου",
+        "post_type": "post",
+        "post_status": "publish",
+        "permalink": "https://backstage.ekkairo.org/2025/09/02/anakomidi_agios_nektarios/",
+        "metrics": {
+            "sections": 4,
+            "wraps": 0,
+            "items": 0
+        },
+        "raw_meta_size_bytes": 2260,
+        "builder_structure": [
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            },
+            {
+                "attr": {
+                    "title": "",
+                    "bg_color": "",
+                    "bg_image": "",
+                    "bg_position": "no-repeat;center top;;",
+                    "bg_video_mp4": "",
+                    "bg_video_ogv": "",
+                    "padding_top": "0",
+                    "padding_bottom": "0",
+                    "divider": "",
+                    "navigation": "",
+                    "style": "",
+                    "class": "",
+                    "section_id": "",
+                    "visibility": "",
+                    "hide": ""
+                },
+                "wraps": ""
+            }
+        ]
+    }
+]

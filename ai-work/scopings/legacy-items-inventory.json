@@ -1,0 +1,152 @@
+[
+    {
+        "page_id": 10051,
+        "page_title": "Το Αρχείο της Ελληνικής Κοινότητας Καΐρου άνοιξε τις πύλες του στις Προξενικές Αρχές (Photos)",
+        "page_url": "https://backstage.ekkairo.org/2018/12/14/to-arxeio-tis-ellinikis-koinotitas-kairou-anoixe-tis-piles-tou-stis-proxenikes-arxes/",
+        "post_type": "post",
+        "item_type": "static_slider",
+        "item_identifier": "gallery",
+        "raw_snippet": "[gallery type=\"slideshow\" columns=\"2\" size=\"large\" ids=\"10066,10070\"]",
+        "proposed_remediation": "Replace with core/gallery block"
+    },
+    {
+        "page_id": 10051,
+        "page_title": "Το Αρχείο της Ελληνικής Κοινότητας Καΐρου άνοιξε τις πύλες του στις Προξενικές Αρχές (Photos)",
+        "page_url": "https://backstage.ekkairo.org/2018/12/14/to-arxeio-tis-ellinikis-koinotitas-kairou-anoixe-tis-piles-tou-stis-proxenikes-arxes/",
+        "post_type": "post",
+        "item_type": "static_slider",
+        "item_identifier": "gallery",
+        "raw_snippet": "[gallery type=\"slideshow\" columns=\"2\" size=\"large\" ids=\"10077,10074,10075,10058\"]",
+        "proposed_remediation": "Replace with core/gallery block"
+    },
+    {
+        "page_id": 10051,
+        "page_title": "Το Αρχείο της Ελληνικής Κοινότητας Καΐρου άνοιξε τις πύλες του στις Προξενικές Αρχές (Photos)",
+        "page_url": "https://backstage.ekkairo.org/2018/12/14/to-arxeio-tis-ellinikis-koinotitas-kairou-anoixe-tis-piles-tou-stis-proxenikes-arxes/",
+        "post_type": "post",
+        "item_type": "static_slider",
+        "item_identifier": "gallery",
+        "raw_snippet": "[gallery columns=\"2\" size=\"large\" ids=\"10054,10063\"]",
+        "proposed_remediation": "Replace with core/gallery block"
+    },
+    {
+        "page_id": 10001,
+        "page_title": "Ο Πατριάρχης Αλεξανδρείας ξεναγείται στο Ίδρυμα Πολιτισμού Σταύρος Νιάρχος από τη Λυδία Κονιόρδου (Photos)",
+        "page_url": "https://backstage.ekkairo.org/2018/12/13/patriarxis-alexandreias-theodoros-xenageitai-sto-idrima-politismou-stavros-niarxos-apo-ti-lidia-koniordou/",
+        "post_type": "post",
+        "item_type": "static_slider",
+        "item_identifier": "gallery",
+        "raw_snippet": "[gallery type=\"slideshow\" columns=\"2\" size=\"large\" ids=\"10007,10006,10008,10009,10005,10003\"]",
+        "proposed_remediation": "Replace with core/gallery block"
+    },
+    {
+        "page_id": 8215,
+        "page_title": "Εντυπωσιακές εικόνες από την επίσκεψη του Πατριάρχη Αλεξανδρείας στην Πολωνία",
+        "page_url": "https://backstage.ekkairo.org/2018/09/23/entyposiakes-eikones-apo-tin-episkepsi-toy-patriarxi-alexandreias-stin-polonia/",
+        "post_type": "post",
+        "item_type": "layerslider",
+        "item_identifier": "26",
+        "raw_snippet": "[layerslider id=\"26\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 8035,
+        "page_title": "Ευχές για πρόοδο και χαμόγελα στον Αγιασμό των Ελληνικών σχολείων Καΐρου (Video/Photos)",
+        "page_url": "https://backstage.ekkairo.org/2018/09/15/efxes-gia-proodo-kai-xamogela-kata-ton-agiasmos-ton-ellinikon-sxoleion-sto-kairo/",
+        "post_type": "post",
+        "item_type": "layerslider",
+        "item_identifier": "23",
+        "raw_snippet": "[layerslider id=\"23\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 7962,
+        "page_title": "Διπλή εορτή για τους Κύπριους του Καΐρου - Συγκίνηση στο μνημόσυνο του μακαριστού Πατριάρχη Πέτρου (Video/Photos)",
+        "page_url": "https://backstage.ekkairo.org/2018/09/10/%ce%b4%ce%b9%cf%80%ce%bb%ce%ae-%ce%b5%ce%bf%cf%81%cf%84%ce%ae-%ce%b3%ce%b9%ce%b1-%cf%84%ce%bf%cf%85%cf%82-%ce%ba%cf%8d%cf%80%cf%81%ce%b9%ce%bf%cf%85%cf%82-%cf%84%ce%bf%cf%85-%ce%ba%ce%b1%ce%90%cf%81/",
+        "post_type": "post",
+        "item_type": "layerslider",
+        "item_identifier": "20",
+        "raw_snippet": "[layerslider id=\"20\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 406,
+        "page_title": "Επικοινωνίας Πολιτισμού & Αρχείων",
+        "page_url": "https://backstage.ekkairo.org/eforeies/epikoinonias-kai-politismou/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "13",
+        "raw_snippet": "[layerslider id=\"13\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 406,
+        "page_title": "Επικοινωνίας Πολιτισμού & Αρχείων",
+        "page_url": "https://backstage.ekkairo.org/eforeies/epikoinonias-kai-politismou/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "9",
+        "raw_snippet": "[layerslider id=\"9\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 321,
+        "page_title": "Mεταφραστικού & Αρχείου",
+        "page_url": "https://backstage.ekkairo.org/eforeies/metafrastikou-kai-arxeiou/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "9",
+        "raw_snippet": "[layerslider id=\"9\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 207,
+        "page_title": "Ακίνητης Περιουσίας",
+        "page_url": "https://backstage.ekkairo.org/eforeies/%ce%b1%ce%ba%ce%af%ce%bd%ce%b7%cf%84%ce%b7%cf%82-%cf%80%ce%b5%cf%81%ce%b9%ce%bf%cf%85%cf%83%ce%af%ce%b1%cf%82/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "8",
+        "raw_snippet": "[layerslider id=\"8\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 204,
+        "page_title": "Νεολαίας Αθλητισμού και Υποτροφιών",
+        "page_url": "https://backstage.ekkairo.org/eforeies/%ce%bd%ce%b5%ce%bf%ce%bb%ce%b1%ce%af%ce%b1%cf%82-%ce%b1%ce%b8%ce%bb%ce%b7%cf%84%ce%b9%cf%83%ce%bc%ce%bf%cf%8d-%ce%ba%ce%b1%ce%b9-%cf%85%cf%80%ce%bf%cf%84%cf%81%ce%bf%cf%86%ce%b9%cf%8e%ce%bd/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "11",
+        "raw_snippet": "[layerslider id=\"11\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 196,
+        "page_title": "Υγείας και Οίκου Ευγηρίας",
+        "page_url": "https://backstage.ekkairo.org/eforeies/igeias-kai-oikou-evgireias-2/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "14",
+        "raw_snippet": "[layerslider id=\"14\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 192,
+        "page_title": "Παιδείας & Υποτροφιών",
+        "page_url": "https://backstage.ekkairo.org/eforeies/%cf%80%ce%b1%ce%b9%ce%b4%ce%b5%ce%af%ce%b1%cf%82/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "12",
+        "raw_snippet": "[layerslider id=\"12\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    },
+    {
+        "page_id": 189,
+        "page_title": "Ναών και  Κοιμητηρίων",
+        "page_url": "https://backstage.ekkairo.org/eforeies/naon-koimitirion-kai-sigxoneftheison-koinotiton/",
+        "post_type": "page",
+        "item_type": "layerslider",
+        "item_identifier": "10",
+        "raw_snippet": "[layerslider id=\"10\"]",
+        "proposed_remediation": "Replace with core/gallery, core/cover, or custom FSE block"
+    }
+]
