@@ -5,9 +5,9 @@
 
 set -euo pipefail
 
-STAGING_DIR="/var/www/backstage.ekalexandria.org"
+STAGING_DIR="/var/www/backstage.ekkairo.org"
 WP_DIR="$STAGING_DIR/public"
-THEME_DIR="$WP_DIR/wp-content/themes/ekalexandria-flagship"
+THEME_DIR="$WP_DIR/wp-content/themes/ekkairo-flagship"
 LOG_DIR="$THEME_DIR/ai-work/logs"
 MAIN_LOG="$LOG_DIR/03-assign-templates.log"
 
