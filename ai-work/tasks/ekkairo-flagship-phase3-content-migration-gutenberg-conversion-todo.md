@@ -3,15 +3,21 @@
 - [ ] Task 1: Database Scoping & Legacy Content Audit Execution
   - [ ] Run `bin/scope-betheme-config.php` and `bin/scope-legacy-items.php`
   - [ ] Verify scoping outputs in `ai-work/scopings/`
-- [ ] Task 2: Automated Migration Engine Adaptation & Unmapped Shortcode Logging
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
+  - [ ] Update `bin/02-migrate-content.sh` with correct paths (`/var/www/backstage.ekkairo.org` & `ekkairo-flagship`)
   - [ ] Update `bin/migration-content-engine.php` with Muffin Builder transforms & LayerSlider handling
   - [ ] Implement `ai-work/logs/unmapped-shortcodes.log` logging protocol
-  - [ ] Execute content engine under PHP 7.4
-- [ ] Task 3: Gutenberg AST & DOM Markup Validation
+  - [ ] Execute `bin/02-migrate-content.sh`
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 3: Iterative Migration, AST & DOM Markup Validation Cycle
   - [ ] Run `bin/test-fse-sanitizer.php` and `bin/validate-ast.js`
+  - [ ] Iterative loop: Scoping → Migration → Inspect Results → Adapt Engine → Re-run
   - [ ] Ensure 0 block editor invalid content warnings
-- [ ] Task 4: Runtime Transition, Plugin Cleanup & Nginx Switch
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 4: Legacy Plugin Deactivation, Theme Activation & Nginx Switch
   - [ ] Run plugin deactivations via WP-CLI and activate `ekkairo-flagship`
   - [ ] Reconfigure Nginx site handler to `php8.2-fpm.sock` and reload
-- [ ] Task 5: Gate 3 Verification & Human Review Sign-Off
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 5: Gate 3 Verification & Final Human Review Sign-Off
   - [ ] Present Gate 3 report and `unmapped-shortcodes.log` to human supervisor

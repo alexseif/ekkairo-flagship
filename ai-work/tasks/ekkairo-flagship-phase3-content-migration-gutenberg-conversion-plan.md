@@ -7,17 +7,18 @@
 
 ## 1. Objective
 
-Execute the automated content transformation pipeline on `backstage_ekk`. Scan legacy Betheme Muffin Builder & LayerSlider data, convert shortcodes to valid Gutenberg block markup under PHP 7.4, log unmapped shortcodes to `ai-work/logs/unmapped-shortcodes.log`, deactivate legacy plugins/themes, validate block AST integrity, and transition Nginx to `php8.2-fpm.sock`.
+Execute the iterative content transformation pipeline on `backstage.ekkairo.org` (`backstage_ekk`). Adapt `bin/02-migrate-content.sh` and `bin/migration-content-engine.php` to scan legacy Betheme Muffin Builder & LayerSlider data, convert shortcodes to valid Gutenberg block markup, log unmapped shortcodes to `ai-work/logs/unmapped-shortcodes.log`, deactivate legacy plugins/themes, validate block AST integrity, and transition Nginx to `php8.2-fpm.sock`.
 
 ---
 
 ## 2. Assumptions & Architecture Options
 
 ### Stated Assumptions
-1. **Migration Runtime**: Content migration scripts run under PHP 7.4 to maintain compatibility with legacy Betheme classes/unserialization routines before switching the web server environment to PHP 8.2.
-2. **Database Target**: Migration operates on the `backstage_ekk` staging database.
-3. **Block Integrity**: Converted post content must produce zero "This block contains invalid content" recovery warnings when loaded in the WordPress Block Editor.
-4. **Unmapped Shortcode Safety Protocol**: Any unmapped shortcodes or unknown Muffin Builder elements must not be silently discarded; they must be logged to `ai-work/logs/unmapped-shortcodes.log` for human audit.
+1. **Pre-flight Baseline**: `bin/01-backstage-setup.sh` has already executed and the `backstage_ekk` database is initialized and ready.
+2. **Orchestration Script Adaptation**: `bin/02-migrate-content.sh` (previously pointing to `ekalexandria`) will be updated to target `/var/www/backstage.ekkairo.org` and `ekkairo-flagship`.
+3. **Migration Engine Runtime**: Content migration scripts execute via WP-CLI under PHP 7.4/8.2 to process legacy Muffin Builder serialized meta before switching the web server environment to PHP 8.2-FPM.
+4. **Human Verification Gate before Commit**: After completing each task, verification output will be presented to the human supervisor for explicit approval BEFORE committing changes to git.
+5. **Iterative Incremental Workflow**: Migration is performed iteratively: **Scoping → Migration Run → Inspect Results → Adapt Engine → Re-run**.
 
 ### Architecture Trade-Off Options (Presented for Awareness)
 - **Option A (Direct AST/DOM Block Construction - Recommended)**: Parse Muffin Builder grid/wrappers directly into native Gutenberg block structure comment nodes (`<!-- wp:columns -->`, `<!-- wp:heading -->`) using a clean transform pipeline. Ensures exact block schema adherence.
@@ -32,45 +33,43 @@ Execute the automated content transformation pipeline on `backstage_ekk`. Scan l
   - Run `bin/scope-betheme-config.php` and `bin/scope-legacy-items.php` via WP-CLI on `backstage_ekk`.
   - Generate scoping reports: `ai-work/scopings/betheme-config-scoping.json`, `ai-work/scopings/mfn-pages.json`, `ai-work/scopings/legacy-items-inventory.json`, and `ai-work/scopings/betheme-custom-css.css`.
 - **Acceptance Criteria**:
-  - All 4 scoping JSON/CSS files created and populated without fatal PHP errors.
+  - All 4 scoping JSON/CSS files created and populated without PHP errors.
   - Inventory accurately counts pages, MFN builder wrappers, sliders, and shortcodes.
-- **Verification**: Verify file existence and inspect JSON metrics in `ai-work/scopings/`.
+- **Verification**: Verify file existence and inspect JSON metrics in `ai-work/scopings/`. Stop for human verification before git commit.
 
-### Task 2: Automated Migration Engine Adaptation & Unmapped Shortcode Logging
+### Task 2: Migration Orchestrator Adaptation & Content Engine Refinement
 - **Deliverables**:
-  - Adapt `bin/migration-content-engine.php` to handle Muffin Builder grids, columns, headings, text, buttons, and LayerSlider components.
-  - Implement Unmapped Shortcode Protocol: log any unhandled shortcodes/tags to `ai-work/logs/unmapped-shortcodes.log`.
-  - Execute migration engine under PHP 7.4.
+  - Update `bin/02-migrate-content.sh` to fix project paths (`/var/www/backstage.ekkairo.org`, theme `ekkairo-flagship`, log directory `ai-work/logs`).
+  - Adapt `bin/migration-content-engine.php` for Muffin Builder sections/wraps/items, headings, text, buttons, and LayerSlider components.
+  - Implement Unmapped Shortcode Protocol: log any unhandled shortcodes to `ai-work/logs/unmapped-shortcodes.log`.
 - **Acceptance Criteria**:
-  - `migration-content-engine.php` runs to completion with zero fatal errors under PHP 7.4.
-  - Post contents updated in DB with structured `wp:` block markup.
-  - `ai-work/logs/unmapped-shortcodes.log` generated with detailed audit entries for human review.
-- **Verification**: Run `bin/migration-content-engine.php` and review execution output and log files.
+  - `bin/02-migrate-content.sh` executes cleanly without path or WP-CLI errors.
+  - `ai-work/logs/unmapped-shortcodes.log` populated with detailed audit entries for human review.
+- **Verification**: Run `bin/02-migrate-content.sh` and inspect execution logs. Stop for human verification before git commit.
 
-### Task 3: Gutenberg AST & DOM Markup Validation
+### Task 3: Iterative Migration, AST & DOM Markup Validation Cycle
 - **Deliverables**:
   - Execute AST validator (`bin/validate-ast.js`) and FSE block sanitizer (`bin/test-fse-sanitizer.php`).
-  - Audit block syntax against WordPress Gutenberg block schemas (`core/columns`, `core/heading`, `core/paragraph`, `core/image`, `core/button`).
+  - Perform iterative refinement: Scoping → Migration Run → Inspect Results → Adapt Engine → Re-run until 0 invalid block errors remain.
 - **Acceptance Criteria**:
-  - Zero syntax errors or malformed block comments (`<!-- wp:... -->`) found.
-  - All posts pass block editor validation without triggering invalid block recovery prompts.
-- **Verification**: Run `bin/test-fse-sanitizer.php` and `bin/validate-ast.js`.
+  - Zero syntax errors or malformed block comments (`<!-- wp:... -->`) found across migrated posts/pages.
+  - Gutenberg block editor validation passes without invalid content warnings.
+- **Verification**: Execute `bin/test-fse-sanitizer.php` and `bin/validate-ast.js`. Stop for human verification before git commit.
 
-### Task 4: Runtime Transition, Plugin Cleanup & Nginx Switch
+### Task 4: Legacy Plugin Deactivation, Theme Activation & Nginx PHP 8.2 Switch
 - **Deliverables**:
-  - Execute setup and plugin management script (`bin/01-backstage-setup.sh`).
   - Deactivate legacy Betheme theme, Betheme-Child, LayerSlider, Muffin Builder, Jetpack, and obsolete plugins via WP-CLI.
   - Activate `ekkairo-flagship` block theme.
-  - Update Nginx configuration (`backstage.ekkairo.org.conf`) to target `php8.2-fpm.sock` and reload Nginx service.
+  - Update Nginx site handler `backstage.ekkairo.org.conf` from `php7.4-fpm.sock` to `php8.2-fpm.sock` and reload Nginx service.
 - **Acceptance Criteria**:
   - Legacy plugins and themes deactivated; `ekkairo-flagship` active.
   - Site `backstage.ekkairo.org` responds HTTP 200 running on PHP 8.2-FPM.
-- **Verification**: `wp theme status`, `wp plugin list`, and Nginx PHP status check (`php -v` / socket test).
+- **Verification**: `wp theme status`, `wp plugin list`, and Nginx PHP socket check. Stop for human verification before git commit.
 
-### Task 5: Gate 3 Verification & Human Review Sign-Off
+### Task 5: Gate 3 Verification & Final Human Review Sign-Off
 - **Deliverables**:
   - Complete full Gate 3 verification checklist.
-  - Present `unmapped-shortcodes.log` and migration stats to human supervisor.
+  - Present `unmapped-shortcodes.log` and final migration metrics to human supervisor.
 - **Acceptance Criteria**: All 7 criteria from `spec-phase3.md` Section 3 satisfied.
 
 ---
@@ -79,10 +78,10 @@ Execute the automated content transformation pipeline on `backstage_ekk`. Scan l
 
 ```mermaid
 graph TD
-    T1[Task 1: Database Scoping & Legacy Content Audit] --> T2[Task 2: Automated Migration Engine & Shortcode Logger]
-    T2 --> T3[Task 3: Gutenberg AST & Markup Validation]
+    T1[Task 1: Database Scoping & Content Audit] --> T2[Task 2: Adapt 02-migrate-content.sh & Content Engine]
+    T2 --> T3[Task 3: Iterative Migration & AST/DOM Validation Cycle]
     T3 --> T4[Task 4: Plugin Cleanup, Theme Activation & Nginx PHP 8.2 Switch]
-    T4 --> T5[Task 5: Gate 3 Verification & Human Review Sign-off]
+    T4 --> T5[Task 5: Gate 3 Verification & Final Sign-off]
 ```
 
 ---
@@ -92,22 +91,23 @@ graph TD
 | Task / Phase Step | Estimated Input Tokens | Estimated Output Tokens | Estimated Total Tokens | Estimated Cost (USD) |
 | :--- | :--- | :--- | :--- | :--- |
 | **Task 1: Database Scoping & Content Audit** | ~15,000 | ~3,000 | ~18,000 | ~$0.09 |
-| **Task 2: Migration Engine & Shortcode Protocol** | ~35,000 | ~10,000 | ~45,000 | ~$0.26 |
-| **Task 3: Gutenberg AST & Block Validation** | ~20,000 | ~5,000 | ~25,000 | ~$0.14 |
+| **Task 2: Migration Orchestrator & Content Engine** | ~35,000 | ~10,000 | ~45,000 | ~$0.26 |
+| **Task 3: Iterative Migration & Block Validation** | ~25,000 | ~7,000 | ~32,000 | ~$0.18 |
 | **Task 4: Runtime Transition & Nginx Switch** | ~18,000 | ~4,000 | ~22,000 | ~$0.11 |
 | **Task 5: Gate 3 Verification & Sign-off** | ~12,000 | ~3,000 | ~15,000 | ~$0.08 |
-| **Total Estimated Phase 3 Cost** | **~100,000** | **~25,000** | **~125,000** | **~$0.68** |
+| **Total Estimated Phase 3 Cost** | **~105,000** | **~27,000** | **~132,000** | **~$0.72** |
 
 *Note: Calculations based on standard blended LLM API rates ($3.00/1M input, $15.00/1M output tokens).*
 
 ---
 
-## 6. Git Workflow
+## 6. Git & Approval Workflow
 
+- **Human Approval Gate**: After completing each Task (Task 1 to Task 5), execution outputs and verification results will be submitted to the human supervisor. Git commit will ONLY occur upon explicit human approval.
 - Working Branch: `phase-3-migration`
 - Commit Milestones:
   - Task 1: `feat(migration): execute database scoping and legacy inventory audit`
-  - Task 2: `feat(migration): adapt content engine and implement unmapped shortcode logger`
-  - Task 3: `test(gutenberg): validate block markup AST and DOM sanitizer compliance`
+  - Task 2: `feat(migration): adapt 02-migrate-content.sh orchestrator and content engine`
+  - Task 3: `test(gutenberg): complete iterative migration and AST/DOM block validation`
   - Task 4: `ops(runtime): deactivate legacy plugins, activate flagship theme, switch to php8.2-fpm`
   - Task 5: `docs(gate3): complete Phase 3 migration verification and sign-off report`
