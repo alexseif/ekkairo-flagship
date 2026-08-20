@@ -2,7 +2,7 @@
 
 ## 1. Objective
 
-Phase 4 implements the approved visual UI/UX redesign based on the Readdy preview (`https://readdy.cc/preview/d01020de-11e8-4981-a1f2-d6c605048fa1/11457682/`) and the specifications from `Rebirth Meeting 2026-07-29.md`.
+Phase 4 implements the approved visual UI/UX redesign based on the Readdy preview (`https://readdy.cc/preview/1d954d61-ec69-4ca4-9643-e0a7fc396a55/12913398/`) and the specifications from `Rebirth Meeting 2026-07-29.md`.
 
 ---
 
@@ -21,7 +21,7 @@ Phase 4 implements the approved visual UI/UX redesign based on the Readdy previe
 2. **Dedicated Pages & Header/Footer**:
    - **Community Publications Page (`templates/page-publications.html`)**: Dedicated page layout showcasing community publications, historical archives, and acquisition inquiry buttons.
    - **Contact Page**: 3-language discovery layout (Greek, Arabic, English text blocks for location/contact info).
-   - **Header Template Part (`parts/header.html`)**: Fluid logo scaling, navigation menu, and clean header utility links.
+   - **Header Template Part (`parts/header.html`)**: Fluid logo scaling, navigation menu, clean header utility links. Sticky/overlay header behavior (starts transparent over full-width hero carousel, animates to solid white background with crisp contrast on scroll).
    - **Footer Template Part (`parts/footer.html`)**: Community links, copyright, and institutional footer layout.
 
 3. **Block Patterns (`patterns/`)**:

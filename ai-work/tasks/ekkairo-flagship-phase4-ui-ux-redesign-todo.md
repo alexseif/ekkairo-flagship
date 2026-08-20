@@ -1,0 +1,27 @@
+# Phase 4 Task List: UI/UX Redesign Implementation (Readdy Design System)
+
+- [ ] Task 1: Core Header, Footer & Global Design System Polish
+  - [ ] Update `parts/header.html` with fluid logo scaling, responsive navigation, utility links
+  - [ ] Implement sticky transparent-to-white header scroll transition (`src/index.js` & `src/index.scss`)
+  - [ ] Update `parts/footer.html` with community links, copyright, social channels layout
+  - [ ] Refine `src/index.scss` and compile via `npm run build`
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 2: Custom Gutenberg Blocks Development (`blocks/`)
+  - [ ] Implement `blocks/hero-slider` (dynamic PHP render, 3 latest sticky/featured posts, dark gradient overlay, slider transitions)
+  - [ ] Implement `blocks/news-grid` (dynamic PHP render, 7 latest posts + 8th archive CTA card)
+  - [ ] Implement `blocks/subscribe-card` (Neo Fos newsletter subscription card)
+  - [ ] Implement `blocks/publications-banner` (Community Publications banner with inquiry CTA link)
+  - [ ] Register block render callbacks and verify block API compliance
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 3: Homepage Template Assembly & Legacy Removal (`templates/front-page.html`)
+  - [ ] Assemble 7 homepage sections in `templates/front-page.html` (Hero Slider, Welcome, 7+1 News Grid, About/Embassies, Neo Fos Subscribe, Social Media Banner, Publications Banner)
+  - [ ] Confirm complete deletion of focus section, churches section, weather widget, and sidebars
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 4: Dedicated Templates & Reusable Block Patterns (`templates/page-publications.html`, Contact Layout, `patterns/`)
+  - [ ] Create `templates/page-publications.html` for community publications and historical archives
+  - [ ] Create Contact page 3-language discovery layout (Greek, Arabic, English text blocks)
+  - [ ] Register reusable FSE block patterns in `patterns/`
+  - [ ] **Human Verification Gate**: Present results for human review before git commit
+- [ ] Task 5: Gate 4 Verification & Human Review Sign-Off
+  - [ ] Validate all Gate 4 checklist criteria from `spec-phase4.md`
+  - [ ] Present Phase 4 completion report to human supervisor
