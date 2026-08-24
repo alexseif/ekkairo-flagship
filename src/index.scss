@@ -96,12 +96,71 @@ a {
 }
 
 /* ==========================================================================
-   Hero Query Loop Carousel Block Layout & Controls
+   Hero Query Loop Carousel — Edge-to-Edge Full Width & Bottom-Left White Title
    ========================================================================== */
+.hero-slider-section {
+	margin-top: 0 !important;
+	padding-top: 0 !important;
+	width: 100% !important;
+	max-width: none !important;
+}
+
 .hero-query-carousel {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+	margin-top: 0;
+
+	.hero-slide-item {
+		position: relative;
+		width: 100%;
+		height: 34.375rem; /* 550px edge to edge */
+		overflow: hidden;
+	}
+
+	.hero-slide-img img {
+		width: 100% !important;
+		height: 34.375rem !important;
+		object-fit: cover !important;
+		object-position: top !important;
+		display: block;
+	}
+
+	.hero-slide-overlay {
+		position: absolute;
+		inset: 0;
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.1) 100%);
+		pointer-events: none;
+		display: flex;
+		align-items: flex-end;
+	}
+
+	.hero-slide-caption {
+		width: 100%;
+		pointer-events: auto;
+		text-align: left;
+		padding: 1.5rem 2rem 2.5rem;
+	}
+
+	.hero-slide-title {
+		margin: 0;
+
+		a {
+			color: var(--wp--preset--color--white, #ffffff) !important;
+			font-weight: 700;
+			text-decoration: none;
+			text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.6);
+			transition: none !important;
+
+			/* No hover text effect */
+			&:hover,
+			&:focus,
+			&:active {
+				color: var(--wp--preset--color--white, #ffffff) !important;
+				text-decoration: none !important;
+			}
+		}
+	}
 
 	&.is-initialized-carousel {
 		.wp-block-post-template,
@@ -109,7 +168,7 @@ a {
 			display: block;
 			position: relative;
 			width: 100%;
-			min-height: 34.375rem; /* 550px */
+			height: 34.375rem;
 			margin: 0;
 			padding: 0;
 			list-style: none;
@@ -169,7 +228,7 @@ a {
 
 	.hero-carousel-dots {
 		position: absolute;
-		bottom: 1.25rem;
+		bottom: 1.5rem;
 		right: 2rem;
 		z-index: 20;
 		display: flex;
