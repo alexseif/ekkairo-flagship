@@ -27,14 +27,15 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+/* Link default color: oklch(0.42 0 0) = #4d4d4d | Link hover color: oklch(0.61 0.17 30) = #d65141 */
 a {
-	color: var(--wp--preset--color--primary, #003366);
+	color: #4d4d4d;
 	text-decoration: none;
 	transition: color 0.2s ease-in-out;
 
 	&:hover,
 	&:focus {
-		color: var(--wp--preset--color--secondary, #c5a059);
+		color: #d65141;
 	}
 }
 
@@ -47,7 +48,7 @@ a {
 }
 
 /* ==========================================================================
-   Header Sticky Scroll Dynamics
+   Header Sticky Scroll Dynamics & Transparent/Scrolled Typography States
    ========================================================================== */
 .site-header {
 	position: fixed;
@@ -60,9 +61,36 @@ a {
 	border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.2);
 	transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
+	/* Transparent header: bold white text & links */
+	color: #ffffff;
+	font-weight: 700;
+
+	a {
+		color: #ffffff;
+		font-weight: 700;
+
+		&:hover,
+		&:focus {
+			color: #d65141;
+		}
+	}
+
+	/* Scrolled header: solid white background with default link colors (#4d4d4d / #d65141) */
 	&.is-scrolled {
-		background-color: var(--wp--preset--color--white, #ffffff);
-		border-bottom-color: var(--wp--preset--color--border-gray, #e5e7eb);
+		background-color: #ffffff;
+		border-bottom-color: #e5e7eb;
 		box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
+		color: #111827;
+		font-weight: 400;
+
+		a {
+			color: #4d4d4d;
+			font-weight: 400;
+
+			&:hover,
+			&:focus {
+				color: #d65141;
+			}
+		}
 	}
 }
