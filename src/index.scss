@@ -4,22 +4,8 @@
  */
 
 /* ==========================================================================
-   Global Resets & Design Token References
+   Global Resets & Base Link Styles
    ========================================================================== */
-:root {
-	--ekk-primary: var(--wp--preset--color--primary, #003366);
-	--ekk-primary-dark: var(--wp--preset--color--primary-dark, #002244);
-	--ekk-primary-light: var(--wp--preset--color--primary-light, #e6ecf2);
-	--ekk-secondary: var(--wp--preset--color--secondary, #c5a059);
-	--ekk-accent: var(--wp--preset--color--accent, #d32f2f);
-	--ekk-dark: var(--wp--preset--color--dark-neutral, #111827);
-	--ekk-light: var(--wp--preset--color--light-neutral, #f8f9fa);
-	--ekk-border: var(--wp--preset--color--border-gray, #e5e7eb);
-	--ekk-muted: var(--wp--preset--color--muted, #6b7280);
-	--ekk-header-height-mobile: 4rem;
-	--ekk-header-height-desktop: 5.5rem;
-}
-
 *,
 *::before,
 *::after {
@@ -27,7 +13,7 @@
 }
 
 html {
-	font-size: 100%; /* 16px default */
+	font-size: 100%; /* 16px root baseline */
 	scroll-behavior: smooth;
 }
 
@@ -41,19 +27,17 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
-/* Base link styling */
 a {
-	color: var(--ekk-primary);
+	color: var(--wp--preset--color--primary, #003366);
 	text-decoration: none;
-	transition: color 0.2s ease-in-out, opacity 0.2s ease-in-out;
+	transition: color 0.2s ease-in-out;
 
 	&:hover,
 	&:focus {
-		color: var(--ekk-secondary);
+		color: var(--wp--preset--color--secondary, #c5a059);
 	}
 }
 
-/* Layout Utilities */
 .wp-block-template-part {
 	width: 100%;
 }
@@ -63,7 +47,7 @@ a {
 }
 
 /* ==========================================================================
-   Section 0: Header Architecture & Mobile-First Transparent-to-Solid Scroll
+   Header Sticky Scroll Dynamics
    ========================================================================== */
 .site-header {
 	position: fixed;
@@ -76,406 +60,9 @@ a {
 	border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.2);
 	transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
-	/* Transparent default state link & text styling */
-	.header-top-link,
-	.header-search-link,
-	.site-title-heading a,
-	.site-tagline-subheading,
-	.header-navigation a {
-		color: rgba(255, 255, 255, 0.9);
-	}
-
-	.header-top-sep {
-		color: rgba(255, 255, 255, 0.4);
-	}
-
-	.site-title-heading {
-		font-family: var(--wp--preset--font-family--serif, serif);
-		font-weight: 700;
-		font-size: 0.9375rem;
-		line-height: 1.2;
-		margin: 0;
-
-		a {
-			text-decoration: none;
-		}
-	}
-
-	.site-tagline-subheading {
-		font-size: 0.75rem;
-		line-height: 1.2;
-		margin: 0;
-		opacity: 0.85;
-	}
-
-	/* Top utility bar */
-	.header-top-bar {
-		display: none; /* Mobile first hidden */
-		border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.15);
-		font-size: 0.75rem;
-
-		@media (min-width: 48rem) {
-			display: block;
-		}
-	}
-
-	.header-top-inner {
-		max-width: 80rem;
-		margin: 0 auto;
-		padding: 0.375rem 1.5rem;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-	}
-
-	.header-top-links,
-	.header-top-actions {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-
-		a {
-			display: inline-flex;
-			align-items: center;
-			font-size: 0.75rem;
-		}
-	}
-
-	/* Main bar */
-	.header-main-bar {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: 0.5rem 1rem;
-		max-width: 80rem;
-		margin: 0 auto;
-
-		@media (min-width: 48rem) {
-			padding: 0.75rem 1.5rem;
-		}
-	}
-
-	.header-brand {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.header-navigation {
-		.wp-block-navigation__container {
-			display: flex;
-			gap: 0.5rem;
-			align-items: center;
-		}
-
-		.wp-block-navigation-item a {
-			padding: 0.375rem 0.75rem;
-			font-size: 0.875rem;
-			border-radius: 0.25rem;
-			transition: background-color 0.2s ease, color 0.2s ease;
-
-			&:hover {
-				background-color: rgba(255, 255, 255, 0.15);
-				color: #ffffff;
-			}
-		}
-	}
-
-	/* Scrolled state: Solid white background with contrast text */
 	&.is-scrolled {
-		background-color: #ffffff;
-		border-bottom-color: var(--ekk-border);
+		background-color: var(--wp--preset--color--white, #ffffff);
+		border-bottom-color: var(--wp--preset--color--border-gray, #e5e7eb);
 		box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.08);
-
-		.header-top-bar {
-			border-bottom-color: var(--ekk-border);
-		}
-
-		.header-top-link,
-		.header-search-link {
-			color: var(--ekk-muted);
-
-			&:hover {
-				color: var(--ekk-primary);
-			}
-		}
-
-		.header-top-sep {
-			color: var(--ekk-border);
-		}
-
-		.site-title-heading a {
-			color: var(--ekk-primary);
-		}
-
-		.site-tagline-subheading {
-			color: var(--ekk-dark);
-		}
-
-		.header-navigation {
-			.wp-block-navigation-item a {
-				color: var(--ekk-dark);
-
-				&:hover {
-					background-color: var(--wp--preset--color--primary-light, #e6ecf2);
-					color: var(--ekk-primary);
-				}
-			}
-		}
-	}
-}
-
-/* ==========================================================================
-   Section 9: Institutional Footer & Legal Bar matching Readdy Prototype
-   ========================================================================== */
-.site-footer {
-	background-color: #f8f9fa;
-	border-top: 0.0625rem solid var(--ekk-border);
-	margin-top: 4rem;
-	padding: 0;
-
-	.footer-primary-content {
-		max-width: 80rem;
-		margin: 0 auto;
-		padding: 2.5rem 1rem 2rem;
-
-		@media (min-width: 48rem) {
-			padding: 3rem 1.5rem 2.5rem;
-		}
-	}
-
-	.footer-inner-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-
-		@media (min-width: 48rem) {
-			grid-template-columns: 1.2fr 1fr 1fr;
-			gap: 2.5rem;
-		}
-	}
-
-	.footer-col-about {
-		.footer-brand-header {
-			display: flex;
-			align-items: center;
-			gap: 0.75rem;
-			margin-bottom: 1rem;
-		}
-
-		.footer-logo-img {
-			width: 2.5rem;
-			height: 2.5rem;
-			object-fit: contain;
-		}
-
-		.footer-brand-title {
-			font-family: var(--wp--preset--font-family--serif, serif);
-			font-weight: 700;
-			font-size: 0.9375rem;
-			margin: 0;
-			line-height: 1.2;
-			color: var(--ekk-primary);
-		}
-
-		.footer-brand-subtitle {
-			font-family: var(--wp--preset--font-family--serif, serif);
-			font-size: 0.75rem;
-			margin: 0;
-			line-height: 1.2;
-			color: var(--ekk-muted);
-		}
-
-		.footer-desc {
-			font-size: 0.8125rem;
-			color: #4b5563;
-			line-height: 1.6;
-			margin-bottom: 1.25rem;
-		}
-
-		.footer-social-wrapper {
-			.footer-social-label {
-				font-size: 0.75rem;
-				font-weight: 600;
-				text-transform: uppercase;
-				letter-spacing: 0.05em;
-				margin-bottom: 0.5rem;
-				color: var(--ekk-dark);
-			}
-
-			.footer-social-icons {
-				display: flex;
-				gap: 0.625rem;
-
-				.social-icon {
-					display: inline-flex;
-					align-items: center;
-					justify-content: center;
-					width: 2rem;
-					height: 2rem;
-					border-radius: 50%;
-					background-color: #ffffff;
-					border: 0.0625rem solid var(--ekk-border);
-					color: #4b5563;
-					transition: all 0.2s ease-in-out;
-
-					&.facebook:hover {
-						background-color: #1877f2;
-						border-color: #1877f2;
-						color: #ffffff;
-					}
-
-					&.instagram:hover {
-						background-color: #e4405f;
-						border-color: #e4405f;
-						color: #ffffff;
-					}
-
-					&.youtube:hover {
-						background-color: #ff0000;
-						border-color: #ff0000;
-						color: #ffffff;
-					}
-
-					&.twitter:hover {
-						background-color: #000000;
-						border-color: #000000;
-						color: #ffffff;
-					}
-				}
-			}
-		}
-	}
-
-	.footer-heading {
-		font-family: var(--wp--preset--font-family--serif, serif);
-		font-weight: 700;
-		font-size: 0.875rem;
-		margin-top: 0;
-		margin-bottom: 1rem;
-		color: #111827;
-		border-bottom: 0.0625rem solid var(--ekk-border);
-		padding-bottom: 0.5rem;
-
-		&.footer-sub-title {
-			margin-top: 1.25rem;
-		}
-	}
-
-	.footer-nav-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 0.5rem 1rem;
-
-		a {
-			font-size: 0.8125rem;
-			color: #4b5563;
-
-			&:hover {
-				color: var(--ekk-primary);
-			}
-		}
-	}
-
-	.footer-search-form {
-		display: flex;
-		gap: 0.5rem;
-		margin-bottom: 1rem;
-
-		.footer-search-input {
-			flex: 1;
-			padding: 0.4375rem 0.75rem;
-			border: 0.0625rem solid var(--ekk-border);
-			border-radius: 0.375rem;
-			font-size: 0.75rem;
-			background-color: #ffffff;
-			color: #111827;
-			outline: none;
-
-			&:focus {
-				border-color: var(--ekk-primary);
-			}
-		}
-
-		.footer-search-submit {
-			display: inline-flex;
-			align-items: center;
-			justify-content: center;
-			padding: 0.4375rem 0.75rem;
-			background-color: var(--ekk-primary);
-			color: #ffffff;
-			border-radius: 0.375rem;
-			border: none;
-			cursor: pointer;
-
-			&:hover {
-				background-color: var(--ekk-secondary);
-			}
-		}
-	}
-
-	.footer-subscribe-desc {
-		font-size: 0.8125rem;
-		color: #4b5563;
-		margin-bottom: 0.75rem;
-		line-height: 1.5;
-	}
-
-	.footer-subscribe-btn {
-		display: inline-flex;
-		align-items: center;
-		padding: 0.5rem 1rem;
-		background-color: var(--ekk-primary);
-		color: #ffffff;
-		border-radius: 0.375rem;
-		font-size: 0.8125rem;
-		font-weight: 600;
-		text-decoration: none;
-		transition: background-color 0.2s ease;
-
-		&:hover {
-			background-color: var(--ekk-secondary);
-			color: #ffffff;
-		}
-	}
-
-	.footer-bottom-bar {
-		background-color: rgba(229, 231, 235, 0.4);
-		border-top: 0.0625rem solid var(--ekk-border);
-		padding: 1rem;
-
-		.footer-bottom-inner {
-			max-width: 80rem;
-			margin: 0 auto;
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			justify-content: space-between;
-			gap: 0.5rem;
-
-			@media (min-width: 48rem) {
-				flex-direction: row;
-			}
-		}
-
-		.footer-copyright {
-			font-size: 0.75rem;
-			color: #6b7280;
-			margin: 0;
-		}
-
-		.footer-legal-links {
-			display: flex;
-			gap: 1rem;
-
-			a {
-				font-size: 0.75rem;
-				color: #6b7280;
-
-				&:hover {
-					color: var(--ekk-primary);
-				}
-			}
-		}
 	}
 }
