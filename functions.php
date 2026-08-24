@@ -81,6 +81,12 @@ function ekkairo_flagship_register_block_styles(): void {
 		'label'      => __( 'Narrow Width (48em)', 'ekkairo-flagship' ),
 		'is_default' => false,
 	) );
+
+	register_block_style( 'core/heading', array(
+		'name'       => 'bordered-heading',
+		'label'      => __( 'Left Border Accent', 'ekkairo-flagship' ),
+		'is_default' => false,
+	) );
 }
 add_action( 'init', 'ekkairo_flagship_register_block_styles' );
 
