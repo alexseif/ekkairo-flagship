@@ -60,6 +60,14 @@ a {
 	overflow-x: hidden;
 }
 
+/* Container Width Utility (48em) */
+.max-w-narrow,
+.is-layout-narrow,
+.is-style-narrow-container {
+	max-width: 48em !important;
+	margin-inline: auto !important;
+}
+
 /* ==========================================================================
    Header Sticky Scroll Dynamics & Transparent/Scrolled Typography States
    ========================================================================== */

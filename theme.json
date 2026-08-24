@@ -6,7 +6,7 @@
 		"color": {
 			"palette": [
 				{
-					"color": "#003366",
+					"color": "#00366D",
 					"name": "Primary Blue",
 					"slug": "primary"
 				},
@@ -16,7 +16,7 @@
 					"slug": "primary-dark"
 				},
 				{
-					"color": "#E6ECF2",
+					"color": "#D1ECFF",
 					"name": "Primary Light",
 					"slug": "primary-light"
 				},

@@ -75,6 +75,12 @@ function ekkairo_flagship_register_block_styles(): void {
 		'label'      => __( 'News Carousel Slider', 'ekkairo-flagship' ),
 		'is_default' => false,
 	) );
+
+	register_block_style( 'core/group', array(
+		'name'       => 'narrow-container',
+		'label'      => __( 'Narrow Width (48em)', 'ekkairo-flagship' ),
+		'is_default' => false,
+	) );
 }
 add_action( 'init', 'ekkairo_flagship_register_block_styles' );
 
