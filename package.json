@@ -5,6 +5,7 @@
 	"main": "build/index.js",
 	"scripts": {
 		"build": "wp-scripts build",
+		"postbuild": "rm -f build/*-rtl.css",
 		"start": "wp-scripts start"
 	},
 	"devDependencies": {

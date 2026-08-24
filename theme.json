@@ -127,11 +127,11 @@
 		"elements": {
 			"link": {
 				"color": {
-					"text": "#4d4d4d"
+					"text": "var(--wp--preset--color--muted)"
 				},
 				":hover": {
 					"color": {
-						"text": "#d65141"
+						"text": "var(--wp--preset--color--accent)"
 					}
 				}
 			},
