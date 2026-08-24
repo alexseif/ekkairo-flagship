@@ -6,7 +6,8 @@
 	"scripts": {
 		"build": "wp-scripts build",
 		"postbuild": "rm -f build/*-rtl.css",
-		"start": "wp-scripts start"
+		"start": "wp-scripts start",
+		"test": "node scripts/test-templates.js"
 	},
 	"devDependencies": {
 		"@wordpress/block-serialization-default-parser": "^5.53.0",
