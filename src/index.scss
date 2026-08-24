@@ -27,6 +27,14 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+/* Main Content Container: Zero Top Margin & Padding */
+.site-main-content {
+	margin-top: 0 !important;
+	padding-top: 0 !important;
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
 /* Link default color: var(--wp--preset--color--muted) | Hover: var(--wp--preset--color--accent) */
 a {
 	color: var(--wp--preset--color--muted, #4d4d4d);
@@ -99,40 +107,57 @@ a {
    Hero Query Loop Carousel — Edge-to-Edge Full Width & Bottom-Left White Title
    ========================================================================== */
 .hero-slider-section {
-	margin-top: 0 !important;
-	padding-top: 0 !important;
+	margin: 0 !important;
+	padding: 0 !important;
 	width: 100% !important;
-	max-width: none !important;
+	max-width: 100% !important;
 }
 
 .hero-query-carousel {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	margin-top: 0;
+	margin: 0 !important;
+
+	.hero-slides-container {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
 
 	.hero-slide-item {
 		position: relative;
 		width: 100%;
-		height: 34.375rem; /* 550px edge to edge */
+		height: 35rem; /* 560px edge to edge */
 		overflow: hidden;
+		margin: 0;
+		padding: 0;
 	}
 
-	.hero-slide-img img {
-		width: 100% !important;
-		height: 34.375rem !important;
-		object-fit: cover !important;
-		object-position: top !important;
-		display: block;
+	.hero-slide-img {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+		height: 100%;
+
+		img {
+			width: 100% !important;
+			height: 35rem !important;
+			object-fit: cover !important;
+			object-position: top !important;
+			display: block;
+		}
 	}
 
 	.hero-slide-overlay {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.2) 50%, rgba(0, 0, 0, 0.1) 100%);
+		background: linear-gradient(to top, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.1) 100%);
 		pointer-events: none;
 		display: flex;
 		align-items: flex-end;
+		margin: 0;
+		padding: 0;
 	}
 
 	.hero-slide-caption {
@@ -168,7 +193,7 @@ a {
 			display: block;
 			position: relative;
 			width: 100%;
-			height: 34.375rem;
+			height: 35rem;
 			margin: 0;
 			padding: 0;
 			list-style: none;
