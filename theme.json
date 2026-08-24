@@ -123,7 +123,14 @@
 			"margin": true,
 			"padding": true,
 			"blockGap": true,
-			"units": ["rem", "em", "%", "px", "vw", "vh"],
+			"units": [
+				"rem",
+				"em",
+				"%",
+				"px",
+				"vw",
+				"vh"
+			],
 			"spacingScale": {
 				"operator": "*",
 				"increment": 1.5,
@@ -180,8 +187,8 @@
 			]
 		},
 		"layout": {
-			"contentSize": "75rem",
-			"wideSize": "80rem"
+			"contentSize": "80em",
+			"wideSize": "80em"
 		}
 	},
 	"styles": {
@@ -212,7 +219,7 @@
 				},
 				":hover": {
 					"color": {
-						"text": "var(--wp--preset--color--accent)"
+						"text": "var(--wp--preset--color--primary)"
 					}
 				}
 			},
