@@ -13,8 +13,7 @@
 }
 
 html {
-	font-size: 100%;
-	/* 16px root baseline */
+	font-size: 100%; /* 16px root baseline */
 	scroll-behavior: smooth;
 }
 
@@ -28,6 +27,17 @@ body {
 	-webkit-font-smoothing: antialiased;
 }
 
+/* Link default color: var(--wp--preset--color--muted) | Hover: var(--wp--preset--color--accent) */
+a {
+	color: var(--wp--preset--color--muted, #4d4d4d);
+	text-decoration: none;
+	transition: color 0.2s ease-in-out;
+
+	&:hover,
+	&:focus {
+		color: var(--wp--preset--color--accent, #d65141);
+	}
+}
 
 .wp-block-template-part {
 	width: 100%;
@@ -49,15 +59,15 @@ body {
 	z-index: 1000;
 	background-color: transparent;
 	border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.2);
-	transition: all 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+	transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 
 	/* Transparent header: bold white text & links */
 	color: var(--wp--preset--color--white, #ffffff);
-	// font-weight: 700;
+	font-weight: 700;
 
 	a {
 		color: var(--wp--preset--color--white, #ffffff);
-		// font-weight: 700;
+		font-weight: 700;
 
 		&:hover,
 		&:focus {
@@ -81,6 +91,105 @@ body {
 			&:focus {
 				color: var(--wp--preset--color--accent, #d65141);
 			}
+		}
+	}
+}
+
+/* ==========================================================================
+   Hero Query Loop Carousel Block Layout & Controls
+   ========================================================================== */
+.hero-query-carousel {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+
+	&.is-initialized-carousel {
+		.wp-block-post-template,
+		.hero-slides-container {
+			display: block;
+			position: relative;
+			width: 100%;
+			min-height: 34.375rem; /* 550px */
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+
+		.hero-carousel-slide {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			transition: opacity 0.8s ease, visibility 0.8s ease;
+
+			&.is-active-slide {
+				opacity: 1;
+				visibility: visible;
+				z-index: 10;
+			}
+
+			&.is-inactive-slide {
+				opacity: 0;
+				visibility: hidden;
+				z-index: 0;
+			}
+		}
+	}
+
+	.hero-carousel-prev,
+	.hero-carousel-next {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 20;
+		width: 2.75rem;
+		height: 2.75rem;
+		border-radius: 50%;
+		background-color: rgba(0, 0, 0, 0.4);
+		color: var(--wp--preset--color--white, #ffffff);
+		border: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: background-color 0.2s ease;
+
+		&:hover {
+			background-color: rgba(0, 0, 0, 0.7);
+		}
+	}
+
+	.hero-carousel-prev {
+		left: 1.5rem;
+	}
+
+	.hero-carousel-next {
+		right: 1.5rem;
+	}
+
+	.hero-carousel-dots {
+		position: absolute;
+		bottom: 1.25rem;
+		right: 2rem;
+		z-index: 20;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.hero-carousel-dot {
+		width: 0.625rem;
+		height: 0.625rem;
+		border-radius: 50%;
+		background-color: rgba(255, 255, 255, 0.5);
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		transition: transform 0.2s ease, background-color 0.2s ease;
+
+		&.is-active {
+			background-color: var(--wp--preset--color--white, #ffffff);
+			transform: scale(1.3);
 		}
 	}
 }
