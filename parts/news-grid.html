@@ -1,0 +1,48 @@
+<!-- wp:group {"tagName":"section","className":"news-grid-section max-w-7xl mx-auto px-4 py-8","layout":{"type":"constrained"}} -->
+<section class="wp-block-group news-grid-section max-w-7xl mx-auto px-4 py-8">
+	<!-- wp:heading {"level":2,"className":"news-grid-title font-heading font-bold text-xl text-primary mb-6"} -->
+	<h2 class="wp-block-heading news-grid-title font-heading font-bold text-xl text-primary mb-6"><a href="/category/news/">Ειδήσεις</a></h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:query {"query":{"perPage":7,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false},"className":"news-query-grid"} -->
+	<div class="wp-block-query news-query-grid">
+		<!-- wp:post-template {"layout":{"type":"grid","columnCount":4},"className":"news-post-template"} -->
+			<!-- wp:group {"className":"news-card-item","style":{"border":{"radius":"0.5rem"}}} -->
+			<div class="wp-block-group news-card-item">
+				<!-- wp:post-featured-image {"isLink":true,"className":"news-card-thumb"} /-->
+				<!-- wp:group {"className":"news-card-body","layout":{"type":"flex","orientation":"vertical"}} -->
+				<div class="wp-block-group news-card-body">
+					<!-- wp:post-date {"className":"news-card-date","fontSize":"xs"} /-->
+					<!-- wp:post-title {"isLink":true,"className":"news-card-title","fontSize":"small"} /-->
+					<!-- wp:post-excerpt {"excerptLength":18,"className":"news-card-excerpt","fontSize":"xs"} /-->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+	</div>
+	<!-- /wp:query -->
+
+	<!-- wp:group {"className":"news-archive-cta-wrapper mt-6","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group news-archive-cta-wrapper mt-6">
+		<!-- wp:group {"className":"news-cta-box p-6 text-center","style":{"border":{"radius":"0.5rem"}},"backgroundColor":"primary-light"} -->
+		<div class="wp-block-group news-cta-box p-6 text-center has-primary-light-background-color has-background">
+			<!-- wp:heading {"level":3,"className":"text-base text-primary font-bold mb-2"} -->
+			<h3 class="wp-block-heading text-base text-primary font-bold mb-2">Όλες οι Ειδήσεις</h3>
+			<!-- /wp:heading -->
+			<!-- wp:paragraph {"className":"text-xs text-muted mb-4"} -->
+			<p class="text-xs text-muted mb-4">Διαβάστε όλα τα άρθρα και τα νέα της Κοινότητας</p>
+			<!-- /wp:paragraph -->
+			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+			<div class="wp-block-buttons">
+				<!-- wp:button {"className":"is-style-outline"} -->
+				<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="/category/news/">Προς τις ειδήσεις &rarr;</a></div>
+				<!-- /wp:button -->
+			</div>
+			<!-- /wp:buttons -->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+</section>
+<!-- /wp:group -->

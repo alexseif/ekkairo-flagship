@@ -1,0 +1,20 @@
+<!-- wp:group {"tagName":"section","className":"neo-fos-grid-section max-w-7xl mx-auto px-4 py-8","layout":{"type":"constrained"}} -->
+<section class="wp-block-group neo-fos-grid-section max-w-7xl mx-auto px-4 py-8">
+	<!-- wp:heading {"level":2,"className":"neo-fos-title font-heading font-bold text-xl text-primary mb-6"} -->
+	<h2 class="wp-block-heading neo-fos-title font-heading font-bold text-xl text-primary mb-6"><a href="/category/neo-fos/">Νέο Φως — Τελευταία τεύχη</a></h2>
+	<!-- /wp:heading -->
+
+	<!-- wp:query {"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false},"className":"neo-fos-query"} -->
+	<div class="wp-block-query neo-fos-query">
+		<!-- wp:post-template {"layout":{"type":"grid","columnCount":3},"className":"neo-fos-template"} -->
+			<!-- wp:group {"className":"neo-fos-card p-4 bg-white border border-border-gray","style":{"border":{"radius":"0.5rem"}}} -->
+			<div class="wp-block-group neo-fos-card p-4 bg-white border border-border-gray">
+				<!-- wp:post-title {"isLink":true,"className":"neo-fos-card-title","fontSize":"small"} /-->
+				<!-- wp:post-date {"className":"neo-fos-card-date","fontSize":"xs"} /-->
+			</div>
+			<!-- /wp:group -->
+		<!-- /wp:post-template -->
+	</div>
+	<!-- /wp:query -->
+</section>
+<!-- /wp:group -->

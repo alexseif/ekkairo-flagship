@@ -1,9 +1,25 @@
 /**
- * Main Theme Asset Entrypoint (Source)
- * Compiled via @wordpress/scripts into build/index.js
+ * Main Theme Asset Entrypoint
+ * Handles sticky transparent-to-white header scroll transitions
  */
 
 import './index.scss';
 
-// Theme JS initialization
-console.log('EKK Flagship Theme initialized.');
+document.addEventListener('DOMContentLoaded', () => {
+	const header = document.querySelector('.site-header');
+
+	if (!header) {
+		return;
+	}
+
+	const handleScroll = () => {
+		if (window.scrollY > 40) {
+			header.classList.add('is-scrolled');
+		} else {
+			header.classList.remove('is-scrolled');
+		}
+	};
+
+	handleScroll();
+	window.addEventListener('scroll', handleScroll, { passive: true });
+});

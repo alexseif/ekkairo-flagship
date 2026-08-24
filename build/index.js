@@ -1,1 +1,1 @@
-(()=>{"use strict";console.log("EKK Flagship Theme initialized.")})();
+(()=>{"use strict";document.addEventListener("DOMContentLoaded",()=>{const e=document.querySelector(".site-header");if(!e)return;const s=()=>{window.scrollY>40?e.classList.add("is-scrolled"):e.classList.remove("is-scrolled")};s(),window.addEventListener("scroll",s,{passive:!0})})})();

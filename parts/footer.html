@@ -1,7 +1,102 @@
-<!-- wp:group {"tagName":"footer","align":"full","layout":{"type":"flex","justifyContent":"space-between"}} -->
-<footer class="wp-block-group alignfull">
-	<!-- wp:paragraph {"fontSize":"small"} -->
-	<p class="has-small-font-size">&copy; <!-- wp:site-title /-->. All rights reserved.</p>
-	<!-- /wp:paragraph -->
+<!-- wp:group {"tagName":"footer","className":"site-footer","layout":{"type":"constrained"}} -->
+<footer class="wp-block-group site-footer">
+	<!-- wp:group {"className":"footer-primary-content max-w-7xl mx-auto px-4 py-10","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group footer-primary-content max-w-7xl mx-auto px-4 py-10">
+		<!-- wp:columns {"className":"footer-inner-grid"} -->
+		<div class="wp-block-columns footer-inner-grid">
+			<!-- Column 1: Brand & About -->
+			<!-- wp:column {"width":"35%","className":"footer-col footer-col-about"} -->
+			<div class="wp-block-column footer-col footer-col-about" style="flex-basis:35%">
+				<!-- wp:group {"className":"footer-brand-header","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+				<div class="wp-block-group footer-brand-header">
+					<!-- wp:site-logo {"width":40,"shouldSyncIcon":false} /-->
+					<!-- wp:group {"className":"footer-brand-titles","layout":{"type":"flex","orientation":"vertical"}} -->
+					<div class="wp-block-group footer-brand-titles">
+						<!-- wp:site-title {"level":4,"className":"footer-brand-title"} /-->
+						<!-- wp:site-tagline {"className":"footer-brand-subtitle"} /-->
+					</div>
+					<!-- /wp:group -->
+				</div>
+				<!-- /wp:group -->
+
+				<!-- wp:paragraph {"className":"footer-desc text-xs text-muted mb-4"} -->
+				<p class="footer-desc text-xs text-muted mb-4">Η Ελληνική Κοινότητα Καΐρου ιδρύθηκε στις 29 Απριλίου 1904 και αποτελεί τον επίσημο εκπρόσωπο του Ελληνισμού στην Αίγυπτο.</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:group {"className":"footer-social-wrapper","layout":{"type":"constrained"}} -->
+				<div class="wp-block-group footer-social-wrapper">
+					<!-- wp:paragraph {"className":"footer-social-label text-xs font-semibold uppercase tracking-wider mb-2"} -->
+					<p class="footer-social-label text-xs font-semibold uppercase tracking-wider mb-2">Follow Us</p>
+					<!-- /wp:paragraph -->
+					<!-- wp:social-links {"iconColor":"dark-neutral","iconColorValue":"#111827","size":"has-small-icon-size","className":"footer-social-icons"} -->
+					<ul class="wp-block-social-links has-small-icon-size has-icon-color footer-social-icons">
+						<!-- wp:social-link {"url":"https://www.facebook.com/ekkairo","service":"facebook"} /-->
+						<!-- wp:social-link {"url":"https://www.instagram.com/ekkairo/","service":"instagram"} /-->
+						<!-- wp:social-link {"url":"https://www.youtube.com/channel/UCJHXNXad4QPVnB37JP-4yLA","service":"youtube"} /-->
+						<!-- wp:social-link {"url":"https://twitter.com/ekkairo","service":"x"} /-->
+					</ul>
+					<!-- /wp:social-links -->
+				</div>
+				<!-- /wp:group -->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- Column 2: Navigation Links Grid -->
+			<!-- wp:column {"width":"35%","className":"footer-col footer-col-nav"} -->
+			<div class="wp-block-column footer-col footer-col-nav" style="flex-basis:35%">
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-2 mb-4"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-4">Πλοήγηση</h4>
+				<!-- /wp:heading -->
+
+				<!-- wp:navigation {"className":"footer-navigation-grid","layout":{"type":"flex","flexWrap":"wrap"}} /-->
+			</div>
+			<!-- /wp:column -->
+
+			<!-- Column 3: Search & Newsletter -->
+			<!-- wp:column {"width":"30%","className":"footer-col footer-col-subscribe"} -->
+			<div class="wp-block-column footer-col footer-col-subscribe" style="flex-basis:30%">
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-2 mb-4"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-4">Αναζήτηση</h4>
+				<!-- /wp:heading -->
+
+				<!-- wp:search {"label":"Αναζήτηση","showLabel":false,"placeholder":"Αναζήτηση...","buttonText":"Search","buttonUseIcon":true,"className":"footer-search-block mb-6"} /-->
+
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-2 mb-2"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-2">Εγγραφή</h4>
+				<!-- /wp:heading -->
+
+				<!-- wp:paragraph {"className":"text-xs text-muted mb-3"} -->
+				<p class="text-xs text-muted mb-3">Εγγραφείτε στο newsletter μας για να λαμβάνετε τα νέα και το Νέο Φως.</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:buttons -->
+				<div class="wp-block-buttons">
+					<!-- wp:button {"className":"is-style-fill"} -->
+					<div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button" href="#newsletter">Εγγραφή στο Newsletter &rarr;</a></div>
+					<!-- /wp:button -->
+				</div>
+				<!-- /wp:buttons -->
+			</div>
+			<!-- /wp:column -->
+		</div>
+		<!-- /wp:columns -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"footer-bottom-bar bg-border-gray/30 py-4","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group footer-bottom-bar bg-border-gray/30 py-4">
+		<!-- wp:group {"className":"footer-bottom-inner max-w-7xl mx-auto px-4","layout":{"type":"flex","justifyContent":"space-between"}} -->
+		<div class="wp-block-group footer-bottom-inner max-w-7xl mx-auto px-4">
+			<!-- wp:paragraph {"className":"text-xs text-muted"} -->
+			<p class="text-xs text-muted">All Rights Reserved &copy; 2026 Ελληνική Κοινότητα Καΐρου</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph {"className":"text-xs text-muted"} -->
+			<p class="text-xs text-muted"><a href="/privacy-policy/">Privacy Policy</a> &nbsp;|&nbsp; <a href="/contact/">Επικοινωνία</a></p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
 </footer>
 <!-- /wp:group -->

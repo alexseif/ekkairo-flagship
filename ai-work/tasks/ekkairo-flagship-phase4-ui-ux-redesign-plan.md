@@ -7,137 +7,67 @@
 
 ## 1. Objective
 
-Implement the complete visual UI/UX redesign for `ekkairo-flagship` on `backstage.ekkairo.org`, based on the approved Readdy design system preview (`https://readdy.cc/preview/1d954d61-ec69-4ca4-9643-e0a7fc396a55/12913398/`) and `Rebirth Meeting 2026-07-29.md`. Build custom dynamic Gutenberg blocks (`blocks/hero-slider`, `blocks/news-grid`, `blocks/subscribe-card`, `blocks/publications-banner`), assemble the complete 7-section homepage (`templates/front-page.html`), build dedicated template layouts (`templates/page-publications.html`, Contact page 3-language layout, Header/Footer parts), register reusable FSE patterns in `patterns/`, and strictly enforce the deletion of legacy elements (sidebars, weather widget, focus section, churches section).
+Implement the complete, section-by-section visual UI/UX redesign for `ekkairo-flagship` on `backstage.ekkairo.org`, matching 100% of the Readdy design system preview (`https://readdy.cc/preview/1d954d61-ec69-4ca4-9643-e0a7fc396a55/12913398/`), local export (`new/Ελληνική Κοινότητα Καΐρου - Επίσημη Ιστοσελίδα.html`), screenshot reference (`new/Ελληνική-Κοινότητα-Καΐρου-Επίσημη-Ιστοσελίδα-08-20-2026_06_53_PM.png`), and `spec-phase4.md`.
 
 ---
 
-## 2. Technical Deliverables & Architecture
+## 2. Comprehensive Section Inventory & Component Mapping
 
-### Custom Dynamic Gutenberg Blocks (`blocks/`)
-1. **Hero News Slider Block (`blocks/hero-slider`)**: Dynamic PHP block displaying the 3 latest sticky/featured news posts with featured image background, dark gradient overlay, typography overlay, slide controls, and smooth transition.
-2. **News Grid Block (`blocks/news-grid`)**: Dynamic PHP block displaying 7 latest news posts in a structured grid + an 8th card CTA leading to the full news archive (`/news` or category archive).
-3. **Neo Fos Subscribe Block (`blocks/subscribe-card`)**: Styled newsletter subscription card block for the "Neo Fos" publication.
-4. **Community Publications Banner (`blocks/publications-banner`)**: Visual banner block linking to the new Community Publications page with inquiry CTA.
-
-### Templates & Template Parts
-1. **Homepage Template (`templates/front-page.html`)**:
-   - Section 1: Hero News Slider Block (`blocks/hero-slider`)
-   - Section 2: Welcome Block (`Καλώς ήλθατε`)
-   - Section 3: News Grid Block (`blocks/news-grid`, 7 posts + 8th archive CTA card)
-   - Section 4: About / Purpose & Embassies Grid (`Ίδρυση – Σκοπός & Embassies`)
-   - Section 5: Neo Fos Subscribe Block (`blocks/subscribe-card`)
-   - Section 6: Social Media Attraction Banner (Facebook, Instagram, YouTube)
-   - Section 7: Community Publications Banner (`blocks/publications-banner`)
-   - **Enforced Deletions**: Sidebars, weather widget, churches section, and focus section completely absent.
-2. **Community Publications Page (`templates/page-publications.html`)**: Dedicated page layout displaying community publications, historical archives, and inquiry buttons.
-3. **Contact Page Layout**: 3-language discovery block (Greek, Arabic, English text blocks for location/contact info).
-4. **Header Template Part (`parts/header.html`)**: Fluid logo scaling, primary navigation menu, clean header utility links. Includes sticky overlay behavior: starts transparent over full-width hero carousel and animates/transitions to solid white background on page scroll.
-5. **Footer Template Part (`parts/footer.html`)**: Community links, institutional copyright, social icons footer layout.
-
-### Reusable Block Patterns (`patterns/`)
-- Register FSE patterns for hero sections, news cards, publication banners, and content callouts.
+| Section # | Visual Component Name | Target File / Location | Key Design & Architecture Specifications |
+| :--- | :--- | :--- | :--- |
+| **Section 0** | **Header & Navigation Bar** | `parts/header.html` & `src/` | Fixed overlay starting transparent over Hero carousel (`bg-transparent`, text light), transitioning via JS scroll listener to solid white (`.is-scrolled`, `#ffffff`, dark text). Top utility bar (`Ειδήσεις`, `Νέο Φως`, Search), brand logo + titles, responsive navigation menu. |
+| **Section 1** | **Hero News Carousel** | `blocks/hero-slider/` | Dynamic PHP block querying 3 latest sticky/featured news posts. Full-width slider container (480px mobile / 600px desktop height), dark gradient overlay (`from-black/60 via-black/20 to-black/10`), post title text with drop shadow, prev/next arrows, dot indicators. |
+| **Section 2** | **Welcome Intro Card** | `patterns/welcome-card.php` / `templates/front-page.html` | Centered welcome box (`max-w-3xl`) with light primary background (`bg-primary-50/70`), subtle border (`border-primary-100/60`), intro text starting with bold "Καλώς ήλθατε". |
+| **Section 3** | **News Grid (7 + 1 CTA Card)** | `blocks/news-grid/` | Dynamic PHP block querying 7 latest news posts. 4-column responsive grid: 7 post cards (image `h-40`, date icon, title line-clamp 2, excerpt line-clamp 2, "Διαβάστε περισσότερα" link) + 8th Card CTA box leading to `/category/news/` ("Όλες οι Ειδήσεις", "Προς τις ειδήσεις ->"). |
+| **Section 4** | **About / Purpose Box** | `patterns/about-purpose.php` / `templates/front-page.html` | Section heading with red vertical bar (`bg-accent-500`), white card container, 1904 founding history & mission text, "Διαβάστε περισσότερα" link to `/idrysi-skopos/`. |
+| **Section 5** | **Publications Promo Banner** | `blocks/publications-banner/` | Dark navy blue card (`bg-primary-800`), background image overlay (`L1003234_preview-1024x683.jpg`), book cover thumbnail (`NEO_FOS-1.jpg`), "Βιβλία" badge, heading "Βιβλία που Εκδόθηκαν από την Κοινότητα", red CTA button ("Μετάβαση στις Εκδόσεις" linking to `/publications/`). |
+| **Section 6** | **Neo Fos Subscribe Card** | `blocks/subscribe-card/` | Newsletter subscription block with dark gradient background, "Newsletter" badge, title "Εγγραφείτε στο Νέο Φως", Name & Email input fields, red submit button ("Εγγραφή"). |
+| **Section 7** | **Social Media Attraction Card** | `patterns/social-attraction.php` / `templates/front-page.html` | White card box with share icon badge, title "Μείνετε συνδεδεμένοι", 4 circular brand social buttons: Facebook (`#1877F2`), Instagram (gradient), YouTube (`#FF0000`), Twitter/X (`#000000`). |
+| **Section 8** | **Neo Fos Issues Quick Grid** | `patterns/neo-fos-grid.php` / `templates/front-page.html` | Section heading "Νέο Φως — Τελευταία τεύχη", 3-column grid of 6 newspaper issue cards with `ri-newspaper-line` icon, issue title, and link "-> Διαβάστε". |
+| **Section 9** | **Institutional Footer & Legal Bar** | `parts/footer.html` & `src/` | Light background (`#F8F9FA` / `bg-background-100`). 3-column grid: Col 1 EKK Logo + About text + Follow Us icons; Col 2 Navigation grid (14 links in 2 columns); Col 3 Search form + Newsletter button. Bottom legal bar (`bg-background-200/50`) with Copyright and Privacy Policy / Contact links. |
 
 ---
 
-## 3. Assumptions & Architecture Options
+## 3. Work Breakdown & Vertical Slices
 
-### Stated Assumptions
-1. **Phase 3 Baseline**: Phase 3 content migration and plugin cleanup are complete; site runs on PHP 8.2-FPM with `ekkairo-flagship` active.
-2. **Dynamic PHP Blocks**: Dynamic blocks will be registered using `@wordpress/scripts` / `block.json` with PHP `render_callback` or `render.php` files under `blocks/`.
-3. **Header Scroll Dynamics**: Header is positioned over the hero carousel starting fully transparent with white/light text and transitions via scroll listener (`src/index.js` / CSS class toggle) to a solid white background with dark navigation text.
-4. **Strict Scope discipline**: Legacy sidebars, weather widget, churches section, and focus section are fully deleted from all main templates.
-5. **Human Review Gate**: Verification output for each task will be presented to the human supervisor before proceeding or committing code.
+### Task 1: Design Tokens, CSS Utility System & Theme Reset
+- Reset theme assets to clean baseline while preserving `new/` directory.
+- Update `theme.json` with exact Readdy color palette (`primary`, `primary-dark`, `secondary`, `accent`, `dark-neutral`, `light-neutral`, `border-gray`, `muted`), typography presets (`Inter` sans-serif, `Source Serif 4` serif), fluid spacing, and layout sizes.
+- Setup `src/index.scss` with CSS design token references and base resets.
 
----
+### Task 2: Core Header & Footer Template Parts (`parts/header.html`, `parts/footer.html`)
+- Rebuild `parts/header.html` with top bar utility links, brand logo/titles, and responsive navigation.
+- Implement Option A sticky header scroll dynamics (`src/index.js` scroll listener toggling `.is-scrolled`).
+- Rebuild `parts/footer.html` matching Readdy 3-column layout + legal bottom bar.
 
-## 4. Vertical Work Slices & Tasks
+### Task 3: Custom Gutenberg Blocks Development (`blocks/`)
+- **Block 1**: `blocks/hero-slider` (Dynamic PHP block, 3 sticky/featured posts, slider controls, dot indicators, gradient overlay).
+- **Block 2**: `blocks/news-grid` (Dynamic PHP block, 7 latest posts + 8th archive CTA card).
+- **Block 3**: `blocks/publications-banner` (Community Publications banner block with book thumbnail & red CTA).
+- **Block 4**: `blocks/subscribe-card` (Neo Fos newsletter subscription card with inputs & submit button).
+- Register all blocks in `functions.php` and verify render callbacks via WP-CLI.
 
-### Task 1: Core Header, Footer & Global Design System Polish (including Header Scroll Transition)
-- **Deliverables**:
-  - Update `parts/header.html` with fluid logo scaling, responsive navigation, and header utility links.
-  - Implement sticky transparent-to-white scroll transition in `src/index.js` & `src/index.scss` (header starts transparent over full-width carousel and animates to white background on scroll).
-  - Update `parts/footer.html` with community links, copyright, social icons layout.
-  - Refine global design system CSS in `src/index.scss` and compile via `@wordpress/scripts` (`npm run build`).
-- **Acceptance Criteria**:
-  - Header starts transparent over hero carousel and smoothly transitions to solid white on scroll down.
-  - Header and footer render cleanly with fluid responsive scaling across mobile/desktop viewports.
-  - Build script completes with zero errors (`build/index.css` and `build/index.js` generated).
-- **Verification**: DOM & JS scroll trigger verification of `parts/header.html` and header class toggling plus asset compilation check.
+### Task 4: Block Patterns & Template Assembly (`patterns/`, `templates/front-page.html`, `templates/page-publications.html`)
+- Register reusable block patterns for Section 2 (Welcome), Section 4 (About/Purpose), Section 7 (Social Attraction), and Section 8 (Neo Fos Issues Grid).
+- Assemble complete 9-section homepage template in `templates/front-page.html`.
+- Build dedicated Community Publications page template (`templates/page-publications.html`).
+- Build Contact page 3-language layout (Greek, Arabic, English text blocks).
+- Enforce deletion of legacy sidebars, weather widget, focus section, and churches section.
 
-### Task 2: Custom Gutenberg Blocks Development (`blocks/`)
-- **Deliverables**:
-  - Implement `blocks/hero-slider` (dynamic PHP render querying 3 latest sticky/featured news posts, image overlays, transitions).
-  - Implement `blocks/news-grid` (dynamic PHP render querying 7 posts + 8th card archive CTA).
-  - Implement `blocks/subscribe-card` (Neo Fos newsletter subscription block).
-  - Implement `blocks/publications-banner` (Community Publications banner block).
-  - Enqueue block styles/scripts and test block rendering.
-- **Acceptance Criteria**:
-  - All 4 dynamic blocks registered and render correctly in both block editor and frontend.
-  - `hero-slider` displays 3 latest posts with images; `news-grid` displays 7 posts + 8th archive CTA card.
-- **Verification**: Test block PHP render callbacks via WP-CLI / REST API or test page rendering.
-
-### Task 3: Homepage Template Assembly & Legacy Removal (`templates/front-page.html`)
-- **Deliverables**:
-  - Rebuild `templates/front-page.html` with all 7 specified sections in exact order.
-  - Ensure complete removal of legacy focus section, churches section, weather widget, and sidebars.
-- **Acceptance Criteria**:
-  - Front page renders all 7 sections cleanly matching Readdy specifications.
-  - Zero legacy sidebar or retired widget elements present in DOM.
-- **Verification**: HTTP GET check on `https://backstage.ekkairo.org/` and DOM structure analysis.
-
-### Task 4: Dedicated Templates & Reusable Block Patterns (`templates/page-publications.html`, Contact Layout, `patterns/`)
-- **Deliverables**:
-  - Create `templates/page-publications.html` template layout for community publications and historical archives.
-  - Create Contact page 3-language discovery layout (Greek, Arabic, English text blocks).
-  - Register reusable block patterns in `patterns/` (hero sections, news cards, publication banners, content callouts).
-- **Acceptance Criteria**:
-  - `page-publications.html` template available and functional in Site Editor / page creation.
-  - Contact layout handles trilingual text blocks cleanly.
-  - Patterns registered and selectable in Gutenberg inserter.
-- **Verification**: Verify pattern registration via WP-CLI (`wp block-pattern list`) and inspect template file valid block syntax.
-
-### Task 5: Gate 4 Verification & Human Review Sign-Off
-- **Deliverables**:
-  - Run full audit against all 7 Gate 4 acceptance criteria in `spec-phase4.md`.
-  - Present verification report to human supervisor for explicit approval.
-- **Acceptance Criteria**: All Gate 4 checklist items passed.
+### Task 5: Gate 4 Verification & Quality Audit
+- Conduct full audit against all Gate 4 acceptance criteria in `spec-phase4.md`.
+- Verify mobile/tablet/desktop responsive scaling across viewports.
+- Compile production assets via `npm run build`.
+- Present Phase 4 completion report to human supervisor.
 
 ---
 
-## 5. Dependency Graph
+## 4. Git & Approval Workflow
 
-```mermaid
-graph TD
-    T1[Task 1: Core Header, Footer & Global Design Tokens] --> T2[Task 2: Custom Gutenberg Blocks Development]
-    T2 --> T3[Task 3: Homepage Template Assembly & Legacy Removal]
-    T3 --> T4[Task 4: Dedicated Templates & Reusable Block Patterns]
-    T4 --> T5[Task 5: Gate 4 Verification & Human Sign-Off]
-```
-
----
-
-## 6. Token Cost & Optimization Analysis
-
-| Task / Phase Step | Estimated Input Tokens | Estimated Output Tokens | Estimated Total Tokens | Estimated Cost (USD) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Task 1: Header, Footer & Tokens** | ~20,000 | ~4,500 | ~24,500 | ~$0.13 |
-| **Task 2: Gutenberg Blocks Development** | ~40,000 | ~12,000 | ~52,000 | ~$0.30 |
-| **Task 3: Homepage Template Assembly** | ~30,000 | ~8,000 | ~38,000 | ~$0.21 |
-| **Task 4: Dedicated Templates & Patterns** | ~25,000 | ~7,000 | ~32,000 | ~$0.18 |
-| **Task 5: Gate 4 Verification & Sign-off** | ~15,000 | ~4,000 | ~19,000 | ~$0.10 |
-| **Total Estimated Phase 4 Cost** | **~130,000** | **~35,500** | **~165,500** | **~$0.92** |
-
-*Note: Calculations based on standard blended LLM API rates ($3.00/1M input, $15.00/1M output tokens).*
-
----
-
-## 7. Git & Approval Workflow
-
-- **Human Approval Gate**: After completing each task, execution outputs will be submitted for human review. Git commits will occur ONLY upon explicit human approval.
-- Working Branch: `master` (or `phase-4-ui-redesign`)
+- **Human Review Gate**: Every task requires explicit human review and approval ("yes" or "proceed") before git commit or advancing to the next task.
 - Commit Milestones:
-  - Task 1: `feat(theme): polish header and footer template parts with fluid scaling design system`
-  - Task 2: `feat(blocks): implement custom dynamic gutenberg blocks hero-slider, news-grid, subscribe-card, publications-banner`
-  - Task 3: `feat(templates): assemble 7-section front-page template and remove legacy widgets/sections`
-  - Task 4: `feat(patterns): create publications template, contact page layout and reusable block patterns`
+  - Task 1: `feat(theme): configure theme.json design tokens and CSS base resets`
+  - Task 2: `feat(parts): implement header scroll dynamics and 3-column footer part`
+  - Task 3: `feat(blocks): implement dynamic Gutenberg blocks hero-slider, news-grid, publications-banner, subscribe-card`
+  - Task 4: `feat(templates): assemble 9-section front-page and dedicated page templates`
   - Task 5: `docs(gate4): complete Phase 4 UI/UX redesign verification and sign-off report`

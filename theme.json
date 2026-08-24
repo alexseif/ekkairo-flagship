@@ -11,6 +11,16 @@
 					"slug": "primary"
 				},
 				{
+					"color": "#002244",
+					"name": "Primary Dark",
+					"slug": "primary-dark"
+				},
+				{
+					"color": "#E6ECF2",
+					"name": "Primary Light",
+					"slug": "primary-light"
+				},
+				{
 					"color": "#C5A059",
 					"name": "Gold",
 					"slug": "secondary"
@@ -21,14 +31,29 @@
 					"slug": "accent"
 				},
 				{
-					"color": "#1A1A1A",
+					"color": "#111827",
 					"name": "Dark Neutral",
 					"slug": "dark-neutral"
 				},
 				{
-					"color": "#F4F6F8",
+					"color": "#6B7280",
+					"name": "Muted Text",
+					"slug": "muted"
+				},
+				{
+					"color": "#F8F9FA",
 					"name": "Light Neutral",
 					"slug": "light-neutral"
+				},
+				{
+					"color": "#FAFAFA",
+					"name": "Background Alt",
+					"slug": "background-alt"
+				},
+				{
+					"color": "#E5E7EB",
+					"name": "Border Gray",
+					"slug": "border-gray"
 				},
 				{
 					"color": "#FFFFFF",
@@ -41,7 +66,7 @@
 					"slug": "base"
 				},
 				{
-					"color": "#1A1A1A",
+					"color": "#111827",
 					"name": "Contrast",
 					"slug": "contrast"
 				}
@@ -51,17 +76,22 @@
 			"fluid": true,
 			"fontFamilies": [
 				{
-					"fontFamily": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen-Sans, Ubuntu, Cantarell, \"Helvetica Neue\", sans-serif",
-					"name": "System Sans",
+					"fontFamily": "\"Inter\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif",
+					"name": "Sans Serif (Body)",
 					"slug": "sans-serif"
 				},
 				{
-					"fontFamily": "Georgia, Cambria, \"Times New Roman\", Times, serif",
-					"name": "Serif",
+					"fontFamily": "\"Source Serif 4\", Georgia, Cambria, \"Times New Roman\", Times, serif",
+					"name": "Serif (Heading)",
 					"slug": "serif"
 				}
 			],
 			"fontSizes": [
+				{
+					"name": "Xs",
+					"size": "0.75rem",
+					"slug": "xs"
+				},
 				{
 					"name": "Small",
 					"size": "0.875rem",
@@ -74,24 +104,29 @@
 				},
 				{
 					"name": "Large",
-					"size": "1.5rem",
+					"size": "1.25rem",
 					"slug": "large"
 				},
 				{
 					"name": "Extra Large",
-					"size": "2rem",
+					"size": "1.5rem",
 					"slug": "x-large"
 				},
 				{
 					"name": "XXL",
-					"size": "3rem",
+					"size": "2rem",
 					"slug": "xx-large"
+				},
+				{
+					"name": "Huge",
+					"size": "2.5rem",
+					"slug": "huge"
 				}
 			]
 		},
 		"layout": {
-			"contentSize": "1200px",
-			"wideSize": "1400px"
+			"contentSize": "75rem",
+			"wideSize": "80rem"
 		},
 		"spacing": {
 			"margin": true,
@@ -100,27 +135,42 @@
 			"spacingSizes": [
 				{
 					"name": "1",
+					"size": "0.25rem",
+					"slug": "10"
+				},
+				{
+					"name": "2",
 					"size": "0.5rem",
 					"slug": "20"
 				},
 				{
-					"name": "2",
-					"size": "1rem",
+					"name": "3",
+					"size": "0.75rem",
 					"slug": "30"
 				},
 				{
-					"name": "3",
-					"size": "1.5rem",
+					"name": "4",
+					"size": "1rem",
 					"slug": "40"
 				},
 				{
-					"name": "4",
-					"size": "2.5rem",
+					"name": "5",
+					"size": "1.5rem",
+					"slug": "50"
+				},
+				{
+					"name": "6",
+					"size": "2rem",
 					"slug": "60"
 				},
 				{
-					"name": "5",
-					"size": "4rem",
+					"name": "7",
+					"size": "2.5rem",
+					"slug": "70"
+				},
+				{
+					"name": "8",
+					"size": "3rem",
 					"slug": "80"
 				}
 			]
@@ -147,9 +197,9 @@
 					"text": "var(--wp--preset--color--primary)"
 				},
 				"typography": {
-					"fontFamily": "var(--wp--preset--font-family--sans-serif)",
+					"fontFamily": "var(--wp--preset--font-family--serif)",
 					"fontWeight": "700",
-					"lineHeight": "1.2"
+					"lineHeight": "1.25"
 				}
 			},
 			"button": {
@@ -158,14 +208,14 @@
 					"text": "var(--wp--preset--color--white)"
 				},
 				"border": {
-					"radius": "4px"
+					"radius": "0.375rem"
 				},
 				"spacing": {
 					"padding": {
-						"top": "0.75rem",
-						"bottom": "0.75rem",
-						"left": "1.5rem",
-						"right": "1.5rem"
+						"top": "0.625rem",
+						"bottom": "0.625rem",
+						"left": "1.25rem",
+						"right": "1.25rem"
 					}
 				}
 			}
@@ -177,7 +227,7 @@
 					"text": "var(--wp--preset--color--white)"
 				},
 				"border": {
-					"radius": "4px"
+					"radius": "0.375rem"
 				}
 			},
 			"core/heading": {
@@ -185,6 +235,7 @@
 					"text": "var(--wp--preset--color--primary)"
 				},
 				"typography": {
+					"fontFamily": "var(--wp--preset--font-family--serif)",
 					"fontWeight": "700"
 				}
 			},
@@ -196,8 +247,8 @@
 			"core/group": {
 				"spacing": {
 					"padding": {
-						"top": "var(--wp--preset--spacing--40)",
-						"bottom": "var(--wp--preset--spacing--40)"
+						"top": "var(--wp--preset--spacing--50)",
+						"bottom": "var(--wp--preset--spacing--50)"
 					}
 				}
 			}
