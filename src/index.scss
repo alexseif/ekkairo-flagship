@@ -109,25 +109,65 @@ a {
 }
 
 /* ==========================================================================
-   Hero Query Loop Carousel — Edge-to-Edge Full Width & Bottom-Left White Title
+   Hero Query Loop Carousel — Full Width Stacked Slide Layout & Absolute Overlay
    ========================================================================== */
 .hero-slider-section {
+	position: relative;
 	margin-bottom: 2rem;
 	padding: 0 !important;
 	width: 100% !important;
 	max-width: 100% !important;
-}
-
-.hero-query-carousel {
-	position: relative;
-	width: 100%;
 	overflow: hidden;
-	margin: 0 !important;
 
-	.hero-slides-container {
+	.wp-block-query {
+		position: relative;
+		width: 100%;
+		height: 40rem;
+		margin: 0 !important;
+		padding: 0 !important;
+		overflow: hidden;
+	}
+
+	.wp-block-post-template {
+		display: block;
+		position: relative;
+		width: 100%;
+		height: 40rem;
 		margin: 0;
 		padding: 0;
 		list-style: none;
+
+		> li,
+		.wp-block-post,
+		.hero-carousel-slide {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+			transition: opacity 0.8s ease, visibility 0.8s ease;
+
+			&:not(:first-child):not(.is-active-slide) {
+				opacity: 0;
+				visibility: hidden;
+				z-index: 0;
+			}
+
+			&:first-child,
+			&.is-active-slide {
+				opacity: 1;
+				visibility: visible;
+				z-index: 10;
+			}
+
+			&.is-inactive-slide {
+				opacity: 0;
+				visibility: hidden;
+				z-index: 0;
+			}
+		}
 	}
 
 	.hero-slide-item {
@@ -139,7 +179,8 @@ a {
 		padding: 0;
 	}
 
-	.hero-slide-img {
+	.hero-slide-img,
+	.wp-block-post-featured-image {
 		margin: 0;
 		padding: 0;
 		width: 100%;
@@ -189,40 +230,6 @@ a {
 			&:active {
 				color: var(--wp--preset--color--white, #ffffff) !important;
 				text-decoration: none !important;
-			}
-		}
-	}
-
-	&.is-initialized-carousel {
-		.wp-block-post-template,
-		.hero-slides-container {
-			display: block;
-			position: relative;
-			width: 100%;
-			height: 40rem;
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-
-		.hero-carousel-slide {
-			position: absolute;
-			inset: 0;
-			width: 100%;
-			height: 100%;
-			transition: opacity 0.8s ease, visibility 0.8s ease;
-			margin: 0;
-
-			&.is-active-slide {
-				opacity: 1;
-				visibility: visible;
-				z-index: 10;
-			}
-
-			&.is-inactive-slide {
-				opacity: 0;
-				visibility: hidden;
-				z-index: 0;
 			}
 		}
 	}
