@@ -7,8 +7,9 @@
 	<!-- wp:query {"query":{"perPage":7,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false},"className":"news-query-grid"} -->
 	<div class="wp-block-query news-query-grid">
 		<!-- wp:post-template {"layout":{"type":"grid","columnCount":4},"className":"news-post-template"} -->
+		<ul class="wp-block-post-template news-post-template">
 			<!-- wp:group {"className":"news-card-item","style":{"border":{"radius":"0.5rem"}}} -->
-			<div class="wp-block-group news-card-item">
+			<li class="wp-block-post wp-block-group news-card-item">
 				<!-- wp:post-featured-image {"isLink":true,"className":"news-card-thumb"} /-->
 				<!-- wp:group {"className":"news-card-body","layout":{"type":"flex","orientation":"vertical"}} -->
 				<div class="wp-block-group news-card-body">
@@ -17,8 +18,9 @@
 					<!-- wp:post-excerpt {"excerptLength":18,"className":"news-card-excerpt","fontSize":"xs"} /-->
 				</div>
 				<!-- /wp:group -->
-			</div>
+			</li>
 			<!-- /wp:group -->
+		</ul>
 		<!-- /wp:post-template -->
 	</div>
 	<!-- /wp:query -->

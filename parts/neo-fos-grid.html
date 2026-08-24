@@ -7,12 +7,14 @@
 	<!-- wp:query {"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","inherit":false},"className":"neo-fos-query"} -->
 	<div class="wp-block-query neo-fos-query">
 		<!-- wp:post-template {"layout":{"type":"grid","columnCount":3},"className":"neo-fos-template"} -->
+		<ul class="wp-block-post-template neo-fos-template">
 			<!-- wp:group {"className":"neo-fos-card p-4 bg-white border border-border-gray","style":{"border":{"radius":"0.5rem"}}} -->
-			<div class="wp-block-group neo-fos-card p-4 bg-white border border-border-gray">
+			<li class="wp-block-post wp-block-group neo-fos-card p-4 bg-white border border-border-gray">
 				<!-- wp:post-title {"isLink":true,"className":"neo-fos-card-title","fontSize":"small"} /-->
 				<!-- wp:post-date {"className":"neo-fos-card-date","fontSize":"xs"} /-->
-			</div>
+			</li>
 			<!-- /wp:group -->
+		</ul>
 		<!-- /wp:post-template -->
 	</div>
 	<!-- /wp:query -->
