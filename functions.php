@@ -65,3 +65,16 @@ function ekkairo_flagship_assets(): void {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'ekkairo_flagship_assets' );
+
+/**
+ * Register custom block styles.
+ */
+function ekkairo_flagship_register_block_styles(): void {
+	register_block_style( 'core/query', array(
+		'name'       => 'news-carousel',
+		'label'      => __( 'News Carousel Slider', 'ekkairo-flagship' ),
+		'is_default' => false,
+	) );
+}
+add_action( 'init', 'ekkairo_flagship_register_block_styles' );
+

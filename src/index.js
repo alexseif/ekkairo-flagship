@@ -21,13 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	// 2. Native FSE Query Loop Hero Carousel Controller
-	const heroSection = document.querySelector('.hero-slider-section');
-	if (heroSection) {
-		const container = heroSection.querySelector('.wp-block-post-template');
+	const carouselQueries = document.querySelectorAll('.is-style-news-carousel, .hero-slider-section');
+	carouselQueries.forEach((carouselQuery) => {
+		const container = carouselQuery.querySelector('.wp-block-post-template');
 		if (container) {
 			const slides = Array.from(container.children).filter((el) => el.nodeType === 1);
 			if (slides.length > 1) {
-				heroSection.classList.add('is-initialized-carousel');
+				carouselQuery.classList.add('is-initialized-carousel');
 
 				let currentIndex = 0;
 				let autoPlayTimer = null;
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				controlsWrapper.appendChild(prevBtn);
 				controlsWrapper.appendChild(nextBtn);
 				controlsWrapper.appendChild(dotsWrapper);
-				heroSection.appendChild(controlsWrapper);
+				carouselQuery.appendChild(controlsWrapper);
 
 				function goToSlide(targetIndex) {
 					if (targetIndex < 0) {
@@ -133,11 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
 					startAutoPlay();
 				});
 
-				heroSection.addEventListener('mouseenter', stopAutoPlay);
-				heroSection.addEventListener('mouseleave', startAutoPlay);
+				carouselQuery.addEventListener('mouseenter', stopAutoPlay);
+				carouselQuery.addEventListener('mouseleave', startAutoPlay);
 
 				startAutoPlay();
 			}
 		}
-	}
+	});
 });
