@@ -1,31 +1,36 @@
 <!-- wp:group {"tagName":"section","className":"subscribe-card-section","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"}} -->
-<section class="wp-block-group subscribe-card-section" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--80)">
-	<!-- wp:cover {"dimRatio":85,"overlayColor":"primary","isUserOverlayColor":true,"isDark":true,"style":{"border":{"radius":"0.5rem"}},"className":"subscribe-cover-box"} -->
-	<div class="wp-block-cover is-light subscribe-cover-box" style="border-radius:0.5rem">
-		<span aria-hidden="true" class="wp-block-cover__background has-primary-background-color has-background-dim-85 has-background-dim"></span>
-		<img class="wp-block-cover__image-background" alt="" src="/wp-content/themes/ekkairo-flagship/new/Ελληνική Κοινότητα Καΐρου - Επίσημη Ιστοσελίδα_files/L1003234_preview.jpg" />
+<section class="wp-block-group subscribe-card-section"
+	style="margin-top:0;margin-bottom:var(--wp--preset--spacing--80)">
+	<!-- wp:cover {"url":"https://backstage.ekkairo.org/wp-content/uploads/2026/08/search-image-1024x368.jpg","id":73932,"dimRatio":80,"overlayColor":"primary-dark","isUserOverlayColor":true,"sizeSlug":"large","className":"is-light subscribe-cover-box","style":{"border":{"radius":"1rem"}}} -->
+	<div class="wp-block-cover is-light subscribe-cover-box" style="border-radius:1rem"><img
+			class="wp-block-cover__image-background wp-image-73932 size-large" alt=""
+			src="https://backstage.ekkairo.org/wp-content/uploads/2026/08/search-image-1024x368.jpg"
+			data-object-fit="cover" /><span aria-hidden="true"
+			class="wp-block-cover__background has-primary-dark-background-color has-background-dim-80 has-background-dim"></span>
 		<div class="wp-block-cover__inner-container">
-			<!-- wp:group {"className":"subscribe-inner-wrapper max-w-2xl mx-auto text-center","layout":{"type":"constrained"}} -->
-			<div class="wp-block-group subscribe-inner-wrapper max-w-2xl mx-auto text-center">
-				<!-- wp:paragraph {"className":"text-white uppercase tracking-wider font-semibold","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|20"}}},"fontSize":"xs"} -->
-				<p class="text-white uppercase tracking-wider font-semibold has-xs-font-size" style="margin-bottom:var(--wp--preset--spacing--20)">&mdash; Newsletter &mdash;</p>
+			<!-- wp:group {"className":"subscribe-inner-wrapper max-w-xl mx-auto text-center","layout":{"type":"constrained"}} -->
+			<div class="wp-block-group subscribe-inner-wrapper max-w-xl mx-auto text-center">
+				<!-- wp:paragraph {"className":"subscribe-tag-pill","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|30"}}}} -->
+				<p class="subscribe-tag-pill" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)">NEWSLETTER</p>
 				<!-- /wp:paragraph -->
 
-				<!-- wp:heading {"level":2,"className":"font-heading font-bold text-2xl md:text-3xl text-white","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|30"}}}} -->
-				<h2 class="wp-block-heading font-heading font-bold text-2xl md:text-3xl text-white" style="margin-bottom:var(--wp--preset--spacing--30)">Εγγραφείτε στο Νέο Φως</h2>
+				<!-- wp:heading {"className":"subscribe-title font-heading font-bold text-white","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|30"}}}} -->
+				<h2 class="wp-block-heading subscribe-title font-heading font-bold text-white"
+					style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)">Εγγραφείτε στο <span class="has-accent-color" style="color:var(--wp--preset--color--accent,#d65141)">Νέο Φως</span></h2>
 				<!-- /wp:heading -->
 
-				<!-- wp:paragraph {"className":"text-white/80 leading-relaxed","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|60"}}},"fontSize":"small"} -->
-				<p class="text-white/80 leading-relaxed has-small-font-size" style="margin-bottom:var(--wp--preset--spacing--60)">Μείνετε συνδεδεμένοι με την Ελληνική Κοινότητα Καΐρου. Λάβετε το περιοδικό μας και τα τελευταία νέα απευθείας στο email σας.</p>
+				<!-- wp:paragraph {"className":"subscribe-desc leading-relaxed","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|50"}}}} -->
+				<p class="subscribe-desc leading-relaxed"
+					style="margin-top:0;margin-bottom:var(--wp--preset--spacing--50)">Μείνετε συνδεδεμένοι με την Ελληνική Κοινότητα Καΐρου. Λάβετε το περιοδικό μας και τα τελευταία νέα απευθείας στο email σας, κάθε εβδομάδα.</p>
 				<!-- /wp:paragraph -->
 
-				<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
-				<div class="wp-block-buttons">
-					<!-- wp:button {"className":"is-style-fill"} -->
-					<div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button" href="#newsletter">Εγγραφή στο Newsletter &rarr;</a></div>
-					<!-- /wp:button -->
-				</div>
-				<!-- /wp:buttons -->
+				<!-- wp:html -->
+				<form class="subscribe-form" method="post" action="#subscribe">
+					<input type="email" name="EMAIL" placeholder="Το email σας..." required class="subscribe-input" />
+					<button type="submit" class="subscribe-submit-btn">Εγγραφή</button>
+				</form>
+				<p class="subscribe-privacy-note">Δεν κοινοποιούμε το email σας. Μπορείτε να διαγραφείτε ανά πάσα στιγμή.</p>
+				<!-- /wp:html -->
 			</div>
 			<!-- /wp:group -->
 		</div>
