@@ -1,18 +1,29 @@
 <!-- wp:group {"tagName":"section","className":"neo-fos-grid-section","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"}} -->
 <section class="wp-block-group neo-fos-grid-section" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--80)">
-	<!-- wp:heading {"level":2,"className":"neo-fos-title font-heading font-bold text-xl text-primary","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} -->
-	<h2 class="wp-block-heading neo-fos-title font-heading font-bold text-xl text-primary" style="margin-bottom:var(--wp--preset--spacing--50)"><a href="/category/neo-fos/">Νέο Φως — Τελευταία τεύχη</a></h2>
+	<!-- wp:heading {"level":2,"className":"neo-fos-title font-heading font-bold text-xl text-dark-neutral","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} -->
+	<h2 class="wp-block-heading neo-fos-title font-heading font-bold text-xl text-dark-neutral" style="margin-bottom:var(--wp--preset--spacing--50)"><a
+			href="/category/neo-fos/">Νέο Φως</a> <span class="neo-fos-subtitle">— Τελευταία τεύχη</span></h2>
 	<!-- /wp:heading -->
 
-	<!-- wp:query {"queryId":3,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"neo-fos-query"} -->
+	<!-- wp:query {"queryId":3,"query":{"perPage":6,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false,"taxQuery":{"category":[13]}},"className":"neo-fos-query"} -->
 	<div class="wp-block-query neo-fos-query">
 		<!-- wp:post-template {"layout":{"type":"grid","columnCount":3},"className":"neo-fos-template"} -->
-			<!-- wp:group {"className":"neo-fos-card bg-white border border-border-gray","style":{"border":{"radius":"0.5rem","width":"1px"},"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}}}} -->
-			<div class="wp-block-group neo-fos-card bg-white border border-border-gray" style="border-width:1px;border-radius:0.5rem;padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)">
+		<!-- wp:group {"className":"neo-fos-card-item bg-white","style":{"border":{"radius":"0.5rem","width":"1px"},"spacing":{"blockGap":"0"}}} -->
+		<div class="wp-block-group neo-fos-card-item bg-white" style="border-width:1px;border-radius:0.5rem">
+			<!-- wp:post-featured-image {"isLink":true,"aspectRatio":"16/9","className":"neo-fos-card-thumb"} /-->
+
+			<!-- wp:group {"className":"neo-fos-card-body","style":{"spacing":{"padding":{"right":"var:preset|spacing|40","left":"var:preset|spacing|40","top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+			<div class="wp-block-group neo-fos-card-body"
+				style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)">
+				<!-- wp:post-date {"metadata":{"bindings":{"datetime":{"source":"core/post-data","args":{"field":"date"}}}},"className":"neo-fos-card-date","style":{"elements":{"link":{"color":{"text":"var:preset|color|muted"}}}},"textColor":"muted","fontSize":"xs"} /-->
+
 				<!-- wp:post-title {"isLink":true,"className":"neo-fos-card-title","fontSize":"small"} /-->
-				<!-- wp:post-date {"className":"neo-fos-card-date","fontSize":"xs"} /-->
+
+				<!-- wp:post-excerpt {"moreText":"Διαβάστε το τεύχος","excerptLength":18,"className":"neo-fos-card-excerpt","style":{"layout":{"selfStretch":"fixed","flexSize":""}},"fontSize":"xs"} /-->
 			</div>
 			<!-- /wp:group -->
+		</div>
+		<!-- /wp:group -->
 		<!-- /wp:post-template -->
 	</div>
 	<!-- /wp:query -->
