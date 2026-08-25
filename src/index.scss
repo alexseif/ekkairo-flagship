@@ -309,13 +309,25 @@ a {
 			display: flex;
 			flex-direction: column;
 			gap: 0.125rem;
+			max-width: 9.5rem;
 		}
 
 		.site-title-heading {
 			margin: 0;
+			font-family: var(--wp--preset--font-family--serif, serif);
 			font-size: 0.875rem !important;
 			font-weight: 600;
-			line-height: 1.2;
+			line-height: 1.15;
+
+			a {
+				color: var(--wp--preset--color--white, #ffffff) !important;
+				transition: color 0.2s ease;
+
+				&:hover,
+				&:focus {
+					color: var(--wp--preset--color--accent, #d65141) !important;
+				}
+			}
 		}
 	}
 
@@ -338,6 +350,15 @@ a {
 }
 
 .site-header.is-scrolled .header-main-bar {
+	.header-brand .site-title-heading a {
+		color: var(--wp--preset--color--primary, #00366d) !important;
+
+		&:hover,
+		&:focus {
+			color: var(--wp--preset--color--accent, #d65141) !important;
+		}
+	}
+
 	.wp-block-navigation .wp-block-navigation-item__content:hover {
 		background-color: rgba(0, 0, 0, 0.05);
 	}
