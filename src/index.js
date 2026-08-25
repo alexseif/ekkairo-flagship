@@ -175,4 +175,28 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 	}
+
+	// 4. Publications Book Cover Carousel Controller
+	const bookCarousels = document.querySelectorAll('.publications-book-carousel');
+	bookCarousels.forEach((carousel) => {
+		const slides = Array.from(carousel.querySelectorAll('.wp-block-image, .pub-book-slide'));
+		const targetSlides = slides.length > 0 ? slides : Array.from(carousel.querySelectorAll('img'));
+
+		if (targetSlides.length > 1) {
+			let currentBookIdx = 0;
+			targetSlides.forEach((slide, idx) => {
+				if (idx === 0) {
+					slide.classList.add('is-active-slide');
+				} else {
+					slide.classList.remove('is-active-slide');
+				}
+			});
+
+			setInterval(() => {
+				targetSlides[currentBookIdx].classList.remove('is-active-slide');
+				currentBookIdx = (currentBookIdx + 1) % targetSlides.length;
+				targetSlides[currentBookIdx].classList.add('is-active-slide');
+			}, 4000);
+		}
+	});
 });
