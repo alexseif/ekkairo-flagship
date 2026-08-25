@@ -14,7 +14,8 @@
 }
 
 html {
-	font-size: 100%; /* 16px root baseline */
+	font-size: 100%;
+	/* 16px root baseline */
 	scroll-behavior: smooth;
 	-webkit-text-size-adjust: 100%;
 }
@@ -136,6 +137,24 @@ a {
 	}
 }
 
+/* Account for WordPress Admin Bar when logged in */
+.admin-bar {
+	#wpadminbar {
+		position: fixed !important;
+	}
+
+	.site-header {
+		top: 2rem;
+		/* 32px desktop admin bar */
+
+		@media (max-width: 48.875em) {
+			/* 782px */
+			top: 2.875rem;
+			/* 46px tablet/mobile admin bar */
+		}
+	}
+}
+
 /* ==========================================================================
    Hero Query Loop Carousel
    Mobile-first: height 30rem (480px), Desktop: 37.5rem (600px)
@@ -164,7 +183,7 @@ a {
 		padding: 0;
 		list-style: none;
 
-		> li,
+		>li,
 		.wp-block-post,
 		.hero-carousel-slide {
 			position: absolute;
