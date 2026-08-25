@@ -1,3 +1,11 @@
+<?php
+/**
+ * Title: News Grid (7 Posts + Archive CTA)
+ * Slug: ekkairo-flagship/news-grid
+ * Categories: posts, ekkairo
+ * Description: Readdy 2x4 news grid displaying 7 latest posts and an integrated 8th archive CTA card.
+ */
+?>
 <!-- wp:group {"tagName":"section","className":"news-grid-section","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|80"}}},"layout":{"type":"constrained"}} -->
 <section class="wp-block-group news-grid-section" style="margin-top:0;margin-bottom:var(--wp--preset--spacing--80)">
 	<!-- wp:heading {"className":"news-grid-title font-heading font-bold text-xl text-primary","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|50"}}}} -->

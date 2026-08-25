@@ -71,6 +71,12 @@ add_action( 'wp_enqueue_scripts', 'ekkairo_flagship_assets' );
  */
 function ekkairo_flagship_register_block_styles(): void {
 	register_block_style( 'core/query', array(
+		'name'       => 'news-grid',
+		'label'      => __( 'News Grid (7 Posts + CTA)', 'ekkairo-flagship' ),
+		'is_default' => false,
+	) );
+
+	register_block_style( 'core/query', array(
 		'name'       => 'news-carousel',
 		'label'      => __( 'News Carousel Slider', 'ekkairo-flagship' ),
 		'is_default' => false,
@@ -89,4 +95,15 @@ function ekkairo_flagship_register_block_styles(): void {
 	) );
 }
 add_action( 'init', 'ekkairo_flagship_register_block_styles' );
+
+/**
+ * Register custom block pattern categories.
+ */
+function ekkairo_flagship_pattern_categories(): void {
+	register_block_pattern_category(
+		'ekkairo',
+		array( 'label' => __( 'EKK Flagship', 'ekkairo-flagship' ) )
+	);
+}
+add_action( 'init', 'ekkairo_flagship_pattern_categories' );
 
