@@ -140,4 +140,39 @@ document.addEventListener('DOMContentLoaded', () => {
 			}
 		}
 	});
+
+	// 3. Header Expandable Search Controller
+	const searchForm = document.querySelector('.header-search-expandable');
+	if (searchForm) {
+		const searchBtn = searchForm.querySelector('.wp-block-search__button');
+		const searchInput = searchForm.querySelector('.wp-block-search__input');
+
+		if (searchBtn && searchInput) {
+			searchBtn.addEventListener('click', (e) => {
+				if (!searchForm.classList.contains('is-open')) {
+					e.preventDefault();
+					searchForm.classList.add('is-open');
+					searchInput.focus();
+				} else if (searchInput.value.trim() === '') {
+					e.preventDefault();
+					searchForm.classList.remove('is-open');
+				}
+			});
+
+			document.addEventListener('click', (e) => {
+				if (!searchForm.contains(e.target) && searchForm.classList.contains('is-open')) {
+					if (searchInput.value.trim() === '') {
+						searchForm.classList.remove('is-open');
+					}
+				}
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && searchForm.classList.contains('is-open')) {
+					searchForm.classList.remove('is-open');
+					searchBtn.focus();
+				}
+			});
+		}
+	}
 });

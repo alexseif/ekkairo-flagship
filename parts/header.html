@@ -1,21 +1,25 @@
 <!-- wp:group {"tagName":"header","className":"site-header","layout":{"type":"constrained"}} -->
 <header class="wp-block-group site-header">
-	<!-- wp:group {"style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
-	<div class="wp-block-group" style="margin-top:0;margin-bottom:0">
-		<!-- wp:group {"className":"header-brand","fontSize":"small","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
-		<div class="wp-block-group header-brand has-small-font-size"><!-- wp:paragraph -->
+	<!-- wp:group {"className":"header-top-bar","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"flex","justifyContent":"space-between","flexWrap":"nowrap"}} -->
+	<div class="wp-block-group header-top-bar" style="margin-top:0;margin-bottom:0">
+		<!-- wp:group {"className":"header-top-links","fontSize":"xs","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+		<div class="wp-block-group header-top-links has-xs-font-size"><!-- wp:paragraph -->
 			<p><a href="/category/news/">Ειδήσεις</a></p>
 			<!-- /wp:paragraph -->
 
-			<!-- wp:paragraph {"className":"brand-text-group"} -->
-			<p class="brand-text-group"><a href="/category/neo-fos/">Νέο Φως</a></p>
+			<!-- wp:paragraph {"className":"header-top-sep"} -->
+			<p class="header-top-sep">|</p>
+			<!-- /wp:paragraph -->
+
+			<!-- wp:paragraph -->
+			<p><a href="/category/neo-fos/">Νέο Φως</a></p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:group -->
 
-		<!-- wp:group {"fontSize":"small"} -->
-		<div class="wp-block-group has-small-font-size">
-			<!-- wp:search {"label":"Αναζήτηση","showLabel":false,"placeholder":"Αναζήτηση...","width":100,"widthUnit":"%","buttonText":"Search","buttonUseIcon":true,"className":"header-search-form"} /-->
+		<!-- wp:group {"className":"header-search-wrapper","fontSize":"xs"} -->
+		<div class="wp-block-group header-search-wrapper has-xs-font-size">
+			<!-- wp:search {"label":"Αναζήτηση","showLabel":false,"placeholder":"Αναζήτηση...","buttonText":"Search","buttonUseIcon":true,"className":"header-search-form header-search-expandable"} /-->
 		</div>
 		<!-- /wp:group -->
 	</div>

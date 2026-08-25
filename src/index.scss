@@ -146,6 +146,143 @@ a {
 	}
 }
 
+/* Header Top Utility Bar & Expandable Search */
+.header-top-bar {
+	border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.2);
+	height: 2rem;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	.header-top-links {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+
+		.header-top-sep {
+			opacity: 0.4;
+			margin: 0;
+		}
+
+		p {
+			margin: 0;
+		}
+	}
+}
+
+.site-header.is-scrolled .header-top-bar {
+	border-bottom-color: var(--wp--preset--color--border-gray, #e5e7eb);
+}
+
+.header-search-wrapper {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+.header-search-expandable {
+	margin: 0;
+
+	.wp-block-search__inside-wrapper {
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		padding: 0;
+		border: none;
+		background: transparent;
+	}
+
+	.wp-block-search__button {
+		background: transparent !important;
+		border: none !important;
+		padding: 0.25rem !important;
+		cursor: pointer;
+		color: var(--wp--preset--color--white, #ffffff) !important;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: color 0.2s ease;
+
+		svg {
+			width: 1rem;
+			height: 1rem;
+			fill: currentColor;
+		}
+
+		&:hover {
+			color: var(--wp--preset--color--accent, #d65141) !important;
+		}
+	}
+
+	.wp-block-search__input {
+		width: 0;
+		opacity: 0;
+		padding: 0;
+		margin: 0;
+		border: 1px solid transparent;
+		outline: none;
+		font-size: 0.75rem;
+		border-radius: 0.375rem;
+		pointer-events: none;
+		color: var(--wp--preset--color--white, #ffffff);
+		background-color: rgba(255, 255, 255, 0.15);
+		backdrop-filter: blur(4px);
+		transition: width 0.3s ease, opacity 0.3s ease, padding 0.3s ease, border-color 0.3s ease, margin 0.3s ease;
+
+		&::placeholder {
+			color: rgba(255, 255, 255, 0.6);
+		}
+	}
+
+	&.is-open,
+	&:focus-within {
+		.wp-block-search__input {
+			width: 11rem;
+			opacity: 1;
+			padding: 0.25rem 0.5rem;
+			pointer-events: auto;
+			border-color: rgba(255, 255, 255, 0.3);
+			margin-right: 0.375rem;
+
+			&:focus {
+				border-color: var(--wp--preset--color--accent, #d65141);
+			}
+		}
+	}
+}
+
+.site-header.is-scrolled .header-search-expandable {
+	.wp-block-search__button {
+		color: var(--wp--preset--color--muted, #4d4d4d) !important;
+
+		&:hover {
+			color: var(--wp--preset--color--accent, #d65141) !important;
+		}
+	}
+
+	.wp-block-search__input {
+		color: var(--wp--preset--color--contrast, #111827);
+		background-color: var(--wp--preset--color--light-neutral, #f8f9fa);
+		border-color: var(--wp--preset--color--border-gray, #e5e7eb);
+
+		&::placeholder {
+			color: var(--wp--preset--color--muted, #4d4d4d);
+		}
+	}
+
+	&.is-open,
+	&:focus-within {
+		.wp-block-search__input {
+			border-color: var(--wp--preset--color--border-gray, #e5e7eb);
+
+			&:focus {
+				border-color: var(--wp--preset--color--primary, #00366d);
+			}
+		}
+	}
+}
+
 /* Account for WordPress Admin Bar when logged in */
 .admin-bar {
 	#wpadminbar {
