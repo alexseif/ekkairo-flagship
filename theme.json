@@ -26,8 +26,8 @@
 					"slug": "secondary"
 				},
 				{
-					"color": "#00366D",
-					"name": "blue Accent",
+					"color": "#d65141",
+					"name": "Accent Terracotta",
 					"slug": "accent"
 				},
 				{
@@ -80,6 +80,48 @@
 					"name": "Serif (Heading)",
 					"slug": "serif"
 				}
+			],
+			"fontSizes": [
+				{
+					"name": "Extra Small",
+					"size": "0.75rem",
+					"slug": "xs"
+				},
+				{
+					"name": "Small",
+					"size": "0.875rem",
+					"slug": "small"
+				},
+				{
+					"name": "Medium",
+					"size": "1rem",
+					"slug": "medium"
+				},
+				{
+					"name": "Large",
+					"size": "1.125rem",
+					"slug": "large"
+				},
+				{
+					"name": "Extra Large",
+					"size": "1.25rem",
+					"slug": "x-large"
+				},
+				{
+					"name": "2X Large",
+					"size": "1.5rem",
+					"slug": "2xl"
+				},
+				{
+					"name": "3X Large",
+					"size": "1.875rem",
+					"slug": "3xl"
+				},
+				{
+					"name": "4X Large",
+					"size": "2.25rem",
+					"slug": "4xl"
+				}
 			]
 		},
 		"spacing": {
@@ -89,22 +131,64 @@
 			"units": [
 				"rem",
 				"em",
-				"%",
-				"px",
-				"vw",
-				"vh"
+				"%"
 			],
-			"spacingScale": {
-				"operator": "*",
-				"increment": 1.5,
-				"steps": 7,
-				"mediumStep": 1.5,
-				"unit": "rem"
-			}
+			"spacingSizes": [
+				{
+					"name": "1 (0.25rem)",
+					"size": "0.25rem",
+					"slug": "10"
+				},
+				{
+					"name": "2 (0.5rem)",
+					"size": "0.5rem",
+					"slug": "20"
+				},
+				{
+					"name": "3 (0.75rem)",
+					"size": "0.75rem",
+					"slug": "30"
+				},
+				{
+					"name": "4 (1rem)",
+					"size": "1rem",
+					"slug": "40"
+				},
+				{
+					"name": "5 (1.25rem)",
+					"size": "1.25rem",
+					"slug": "50"
+				},
+				{
+					"name": "6 (1.5rem)",
+					"size": "1.5rem",
+					"slug": "60"
+				},
+				{
+					"name": "8 (2rem)",
+					"size": "2rem",
+					"slug": "70"
+				},
+				{
+					"name": "10 (2.5rem)",
+					"size": "2.5rem",
+					"slug": "80"
+				},
+				{
+					"name": "12 (3rem)",
+					"size": "3rem",
+					"slug": "90"
+				},
+				{
+					"name": "16 (4rem)",
+					"size": "4rem",
+					"slug": "100"
+				}
+			]
 		},
 		"layout": {
-			"contentSize": "80em",
-			"wideSize": "80em"
+			"contentSize": "80rem",
+			"wideSize": "80rem"
 		}
 	},
 	"styles": {
@@ -115,17 +199,17 @@
 		"typography": {
 			"fontFamily": "var(--wp--preset--font-family--sans-serif)",
 			"fontSize": "var(--wp--preset--font-size--medium)",
-			"lineHeight": "1.6"
+			"lineHeight": "1.5"
 		},
 		"spacing": {
-			"blockGap": "var(--wp--preset--spacing--40)",
+			"blockGap": "var(--wp--preset--spacing--80)",
 			"margin": {
 				"top": "0",
 				"bottom": "0"
 			},
 			"padding": {
-				"top": "var(--wp--preset--spacing--50)",
-				"bottom": "var(--wp--preset--spacing--50)",
+				"top": "0",
+				"bottom": "0",
 				"left": "var(--wp--preset--spacing--40)",
 				"right": "var(--wp--preset--spacing--40)"
 			}
@@ -137,7 +221,7 @@
 				},
 				":hover": {
 					"color": {
-						"text": "var(--wp--preset--color--primary)"
+					"text": "var(--wp--preset--color--accent)"
 					}
 				}
 			},
@@ -153,7 +237,7 @@
 				"spacing": {
 					"margin": {
 						"top": "0",
-						"bottom": "var(--wp--preset--spacing--30)"
+						"bottom": "var(--wp--preset--spacing--50)"
 					}
 				}
 			},
@@ -169,8 +253,8 @@
 					"padding": {
 						"top": "0.625em",
 						"bottom": "0.625em",
-						"left": "1.25em",
-						"right": "1.25em"
+						"left": "1.5em",
+						"right": "1.5em"
 					}
 				}
 			}
@@ -183,12 +267,12 @@
 			},
 			"core/columns": {
 				"spacing": {
-					"blockGap": "var(--wp--preset--spacing--50)"
+					"blockGap": "var(--wp--preset--spacing--70)"
 				}
 			},
 			"core/post-template": {
 				"spacing": {
-					"blockGap": "var(--wp--preset--spacing--40)"
+					"blockGap": "var(--wp--preset--spacing--50)"
 				}
 			}
 		}
