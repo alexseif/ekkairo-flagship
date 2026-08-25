@@ -73,7 +73,7 @@ a {
 	}
 }
 
-/* Section Title Left Accent Bar */
+/* Section Title Left Accent Bar & Heading Links */
 .news-grid-title,
 .about-title,
 .neo-fos-title {
@@ -93,10 +93,16 @@ a {
 		border-radius: 9999px;
 		background-color: var(--wp--preset--color--primary, #00366d);
 	}
-}
 
-.about-title::before {
-	background-color: var(--wp--preset--color--accent, #d65141);
+	a {
+		color: var(--wp--preset--color--dark-neutral, #111827) !important;
+		transition: color 0.2s ease;
+
+		&:hover,
+		&:focus {
+			color: var(--wp--preset--color--primary, #00366d) !important;
+		}
+	}
 }
 
 /* ==========================================================================
@@ -828,6 +834,63 @@ a {
 		border-color: var(--wp--preset--color--primary, #00366d);
 		color: var(--wp--preset--color--primary, #00366d);
 		transition: all 0.2s ease;
+	}
+}
+
+/* ==========================================================================
+   About Purpose Card Responsive Styles
+   ========================================================================== */
+.about-card-box {
+	background-color: var(--wp--preset--color--white, #ffffff);
+	border: 1px solid var(--wp--preset--color--border-gray, #e5e7eb) !important;
+	border-radius: 0.5rem !important;
+	padding: 1.5rem !important;
+
+	@media (min-width: 48em) {
+		padding: 2rem !important;
+	}
+
+	.about-card-text {
+		color: var(--wp--preset--color--dark-neutral, #111827);
+		font-size: 0.875rem !important;
+		line-height: 1.625;
+		margin-bottom: 1rem;
+	}
+
+	.about-read-more-wrapper {
+		margin: 0;
+	}
+
+	.about-read-more-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--wp--preset--color--primary, #00366d) !important;
+		text-decoration: none;
+		transition: color 0.2s ease, gap 0.2s ease;
+
+		&::before {
+			content: '';
+			display: inline-block;
+			width: 1rem;
+			height: 1rem;
+			background-color: currentColor;
+			-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/%3E%3C/svg%3E") no-repeat center / contain;
+			mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z'/%3E%3C/svg%3E") no-repeat center / contain;
+			transition: transform 0.2s ease;
+		}
+
+		&:hover,
+		&:focus {
+			color: var(--wp--preset--color--accent, #d65141) !important;
+			gap: 0.625rem;
+
+			&::before {
+				transform: translateX(0.125rem);
+			}
+		}
 	}
 }
 
