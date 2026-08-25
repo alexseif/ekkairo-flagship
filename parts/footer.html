@@ -4,7 +4,7 @@
 	<div class="wp-block-group footer-primary-content max-w-7xl mx-auto px-4 py-10">
 		<!-- wp:columns {"className":"footer-inner-grid"} -->
 		<div class="wp-block-columns footer-inner-grid">
-			<!-- Column 1: Brand & About -->
+			<!-- Column 1: Brand & About & Social -->
 			<!-- wp:column {"width":"35%","className":"footer-col footer-col-about"} -->
 			<div class="wp-block-column footer-col footer-col-about" style="flex-basis:35%">
 				<!-- wp:group {"className":"footer-brand-header","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
@@ -12,15 +12,15 @@
 					<!-- wp:site-logo {"width":40,"shouldSyncIcon":false} /-->
 					<!-- wp:group {"className":"footer-brand-titles","layout":{"type":"flex","orientation":"vertical"}} -->
 					<div class="wp-block-group footer-brand-titles">
-						<!-- wp:site-title {"level":4,"className":"footer-brand-title"} /-->
-						<!-- wp:site-tagline {"className":"footer-brand-subtitle"} /-->
+						<!-- wp:site-title {"level":4,"className":"footer-brand-title font-heading font-semibold text-sm leading-tight text-foreground-800"} /-->
+						<!-- wp:site-tagline {"className":"footer-brand-subtitle font-heading text-xs leading-tight text-foreground-500"} /-->
 					</div>
 					<!-- /wp:group -->
 				</div>
 				<!-- /wp:group -->
 
-				<!-- wp:paragraph {"className":"footer-desc text-xs text-muted mb-4"} -->
-				<p class="footer-desc text-xs text-muted mb-4">Η Ελληνική Κοινότητα Καΐρου ιδρύθηκε στις 29 Απριλίου 1904 και αποτελεί τον επίσημο εκπρόσωπο του Ελληνισμού στην Αίγυπτο.</p>
+				<!-- wp:paragraph {"className":"footer-desc text-xs text-muted mb-4 leading-relaxed"} -->
+				<p class="footer-desc text-xs text-muted mb-4 leading-relaxed">Η Ελληνική Κοινότητα Καΐρου ιδρύθηκε στις 29 Απριλίου 1904 και αποτελεί τον επίσημο εκπρόσωπο του Ελληνισμού στην Αίγυπτο.</p>
 				<!-- /wp:paragraph -->
 
 				<!-- wp:group {"className":"footer-social-wrapper","layout":{"type":"constrained"}} -->
@@ -28,7 +28,7 @@
 					<!-- wp:paragraph {"className":"footer-social-label text-xs font-semibold uppercase tracking-wider mb-2"} -->
 					<p class="footer-social-label text-xs font-semibold uppercase tracking-wider mb-2">Follow Us</p>
 					<!-- /wp:paragraph -->
-					<!-- wp:social-links {"iconColor":"dark-neutral","iconColorValue":"#111827","size":"has-small-icon-size","className":"footer-social-icons"} -->
+					<!-- wp:social-links {"iconColor":"muted","size":"has-small-icon-size","className":"footer-social-icons"} -->
 					<ul class="wp-block-social-links has-small-icon-size has-icon-color footer-social-icons">
 						<!-- wp:social-link {"url":"https://www.facebook.com/ekkairo","service":"facebook"} /-->
 						<!-- wp:social-link {"url":"https://www.instagram.com/ekkairo/","service":"instagram"} /-->
@@ -48,7 +48,28 @@
 				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-4">Πλοήγηση</h4>
 				<!-- /wp:heading -->
 
-				<!-- wp:navigation {"className":"footer-navigation-grid","layout":{"type":"flex","flexWrap":"wrap"}} /-->
+				<!-- wp:html -->
+				<div class="footer-nav-grid">
+					<div class="footer-nav-col">
+						<a href="/">Αρχική</a>
+						<a href="/category/news/">Ειδήσεις</a>
+						<a href="/idrysi/skopoi-idrysi/">Ίδρυση</a>
+						<a href="/category/neo-fos/">Νέο Φως</a>
+						<a href="/eforeies/">Εφορείες</a>
+						<a href="/contact/">Επικοινωνία</a>
+						<a href="/naos-agion-konstantinou-kai-elenis/">Ναός</a>
+					</div>
+					<div class="footer-nav-col">
+						<a href="/paideia/">Παιδεία</a>
+						<a href="/pronoia/">Πρόνοια</a>
+						<a href="/ygeia/">Υγεία</a>
+						<a href="/xenonas/">Ξενώνας</a>
+						<a href="/koimitiria/">Κοιμητήρια</a>
+						<a href="/arxeia/">Αρχεία</a>
+						<a href="/politismos/">Πολιτισμός</a>
+					</div>
+				</div>
+				<!-- /wp:html -->
 			</div>
 			<!-- /wp:column -->
 
@@ -59,23 +80,29 @@
 				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-4">Αναζήτηση</h4>
 				<!-- /wp:heading -->
 
-				<!-- wp:search {"label":"Αναζήτηση","showLabel":false,"placeholder":"Αναζήτηση...","buttonText":"Search","buttonUseIcon":true,"className":"footer-search-block mb-6"} /-->
+				<!-- wp:html -->
+				<form class="footer-search-form" method="get" action="/">
+					<input type="search" name="s" placeholder="Αναζήτηση..." class="footer-search-input" />
+					<button type="submit" class="footer-search-btn" aria-label="Αναζήτηση">
+						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+					</button>
+				</form>
+				<!-- /wp:html -->
 
-				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-2 mb-2"} -->
-				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-2">Εγγραφή</h4>
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold mt-6 mb-2"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold mt-6 mb-2">Εγγραφή</h4>
 				<!-- /wp:heading -->
 
 				<!-- wp:paragraph {"className":"text-xs text-muted mb-3"} -->
 				<p class="text-xs text-muted mb-3">Εγγραφείτε στο newsletter μας για να λαμβάνετε τα νέα και το Νέο Φως.</p>
 				<!-- /wp:paragraph -->
 
-				<!-- wp:buttons -->
-				<div class="wp-block-buttons">
-					<!-- wp:button {"className":"is-style-fill"} -->
-					<div class="wp-block-button is-style-fill"><a class="wp-block-button__link wp-element-button" href="#newsletter">Εγγραφή στο Newsletter &rarr;</a></div>
-					<!-- /wp:button -->
-				</div>
-				<!-- /wp:buttons -->
+				<!-- wp:html -->
+				<a href="#newsletter" class="footer-subscribe-btn">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 6.1a1 1 0 0 1-1.216 0L4 7.238V19h16V7.238zM4.511 5l7.49 5.762L19.49 5H4.511z"/></svg>
+					Εγγραφή στο Newsletter
+				</a>
+				<!-- /wp:html -->
 			</div>
 			<!-- /wp:column -->
 		</div>
