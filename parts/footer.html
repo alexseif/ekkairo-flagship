@@ -1,38 +1,47 @@
-<!-- wp:group {"tagName":"footer","className":"site-footer","layout":{"type":"constrained"}} -->
-<footer class="wp-block-group site-footer">
-	<!-- wp:group {"className":"footer-primary-content max-w-7xl mx-auto px-4 py-10","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group footer-primary-content max-w-7xl mx-auto px-4 py-10">
-		<!-- wp:columns {"className":"footer-inner-grid"} -->
+<!-- wp:group {"tagName":"footer","align":"full","className":"site-footer","style":{"spacing":{"blockGap":"0","margin":{"top":"var:preset|spacing|80"},"padding":{"top":"0","bottom":"0","left":"0","right":"0"}}},"backgroundColor":"footer-bg","layout":{"type":"default"}} -->
+<footer class="wp-block-group alignfull site-footer has-footer-bg-background-color has-background"
+	style="margin-top:var(--wp--preset--spacing--80);padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
+	<!-- wp:group {"align":"full","className":"footer-primary-content","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60","left":"var:preset|spacing|60","right":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignfull footer-primary-content"
+		style="padding-top:var(--wp--preset--spacing--60);padding-right:var(--wp--preset--spacing--60);padding-bottom:var(--wp--preset--spacing--60);padding-left:var(--wp--preset--spacing--60)">
+		<!-- wp:columns {"className":"footer-inner-grid","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
 		<div class="wp-block-columns footer-inner-grid">
-			<!-- Column 1: Brand & About & Social -->
-			<!-- wp:column {"width":"35%","className":"footer-col footer-col-about"} -->
+			<!-- wp:column {"width":"35%","className":"footer-col footer-col-about","style":{"spacing":{"blockGap":"var:preset|spacing|50"}}} -->
 			<div class="wp-block-column footer-col footer-col-about" style="flex-basis:35%">
-				<!-- wp:group {"className":"footer-brand-header","layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
+				<!-- wp:group {"className":"footer-brand-header","style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"flex","flexWrap":"nowrap","verticalAlignment":"center"}} -->
 				<div class="wp-block-group footer-brand-header">
 					<!-- wp:site-logo {"width":40,"shouldSyncIcon":false} /-->
-					<!-- wp:group {"className":"footer-brand-titles","layout":{"type":"flex","orientation":"vertical"}} -->
+
+					<!-- wp:group {"className":"footer-brand-titles","style":{"spacing":{"blockGap":"0"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 					<div class="wp-block-group footer-brand-titles">
 						<!-- wp:site-title {"level":4,"className":"footer-brand-title font-heading font-semibold text-sm leading-tight text-foreground-800"} /-->
-						<!-- wp:site-tagline {"className":"footer-brand-subtitle font-heading text-xs leading-tight text-foreground-500"} /-->
 					</div>
 					<!-- /wp:group -->
 				</div>
 				<!-- /wp:group -->
 
-				<!-- wp:paragraph {"className":"footer-desc text-xs text-muted mb-4 leading-relaxed"} -->
-				<p class="footer-desc text-xs text-muted mb-4 leading-relaxed">Η Ελληνική Κοινότητα Καΐρου ιδρύθηκε στις 29 Απριλίου 1904 και αποτελεί τον επίσημο εκπρόσωπο του Ελληνισμού στην Αίγυπτο.</p>
+				<!-- wp:paragraph {"className":"footer-desc text-xs text-muted leading-relaxed","textColor":"muted","fontSize":"xs"} -->
+				<p
+					class="footer-desc text-xs text-muted leading-relaxed has-muted-color has-text-color has-xs-font-size">
+					Η Ελληνική Κοινότητα Καΐρου ιδρύθηκε στις 29 Απριλίου 1904 και αποτελεί τον επίσημο εκπρόσωπο του
+					Ελληνισμού στην Αίγυπτο.</p>
 				<!-- /wp:paragraph -->
 
-				<!-- wp:group {"className":"footer-social-wrapper","layout":{"type":"constrained"}} -->
+				<!-- wp:group {"className":"footer-social-wrapper","style":{"spacing":{"blockGap":"var:preset|spacing|20"}},"layout":{"type":"constrained"}} -->
 				<div class="wp-block-group footer-social-wrapper">
-					<!-- wp:paragraph {"className":"footer-social-label text-xs font-semibold uppercase tracking-wider mb-2"} -->
-					<p class="footer-social-label text-xs font-semibold uppercase tracking-wider mb-2">Follow Us</p>
+					<!-- wp:paragraph {"className":"footer-social-label text-xs font-semibold uppercase tracking-wider","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|10","top":"0"}}},"textColor":"dark-neutral","fontSize":"xs"} -->
+					<p class="footer-social-label text-xs font-semibold uppercase tracking-wider has-dark-neutral-color has-text-color has-xs-font-size"
+						style="margin-top:0;margin-bottom:var(--wp--preset--spacing--10)">Follow Us</p>
 					<!-- /wp:paragraph -->
-					<!-- wp:social-links {"iconColor":"muted","size":"has-small-icon-size","className":"footer-social-icons"} -->
+
+					<!-- wp:social-links {"iconColor":"muted","size":"has-small-icon-size","className":"has-icon-color footer-social-icons","style":{"spacing":{"blockGap":"var:preset|spacing|10"}}} -->
 					<ul class="wp-block-social-links has-small-icon-size has-icon-color footer-social-icons">
 						<!-- wp:social-link {"url":"https://www.facebook.com/ekkairo","service":"facebook"} /-->
+
 						<!-- wp:social-link {"url":"https://www.instagram.com/ekkairo/","service":"instagram"} /-->
+
 						<!-- wp:social-link {"url":"https://www.youtube.com/channel/UCJHXNXad4QPVnB37JP-4yLA","service":"youtube"} /-->
+
 						<!-- wp:social-link {"url":"https://twitter.com/ekkairo","service":"x"} /-->
 					</ul>
 					<!-- /wp:social-links -->
@@ -41,68 +50,45 @@
 			</div>
 			<!-- /wp:column -->
 
-			<!-- Column 2: Navigation Links Grid -->
-			<!-- wp:column {"width":"35%","className":"footer-col footer-col-nav"} -->
+			<!-- wp:column {"width":"35%","className":"footer-col footer-col-nav","style":{"spacing":{"blockGap":"var:preset|spacing|50"}}} -->
 			<div class="wp-block-column footer-col footer-col-nav" style="flex-basis:35%">
-				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-2 mb-4"} -->
-				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-4">Πλοήγηση</h4>
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-1","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|30","top":"0"}}},"fontSize":"small"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-1 has-small-font-size"
+					style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)">Πλοήγηση</h4>
 				<!-- /wp:heading -->
 
-				<!-- wp:html -->
-				<div class="footer-nav-grid">
-					<div class="footer-nav-col">
-						<a href="/">Αρχική</a>
-						<a href="/category/news/">Ειδήσεις</a>
-						<a href="/idrysi/skopoi-idrysi/">Ίδρυση</a>
-						<a href="/category/neo-fos/">Νέο Φως</a>
-						<a href="/eforeies/">Εφορείες</a>
-						<a href="/contact/">Επικοινωνία</a>
-						<a href="/naos-agion-konstantinou-kai-elenis/">Ναός</a>
-					</div>
-					<div class="footer-nav-col">
-						<a href="/paideia/">Παιδεία</a>
-						<a href="/pronoia/">Πρόνοια</a>
-						<a href="/ygeia/">Υγεία</a>
-						<a href="/xenonas/">Ξενώνας</a>
-						<a href="/koimitiria/">Κοιμητήρια</a>
-						<a href="/arxeia/">Αρχεία</a>
-						<a href="/politismos/">Πολιτισμός</a>
-					</div>
-				</div>
-				<!-- /wp:html -->
+				<!-- wp:navigation {"ref":73934,"className":"footer-nav-menu"} /-->
 			</div>
 			<!-- /wp:column -->
 
-			<!-- Column 3: Search & Newsletter -->
-			<!-- wp:column {"width":"30%","className":"footer-col footer-col-subscribe"} -->
+			<!-- wp:column {"width":"30%","className":"footer-col footer-col-subscribe","style":{"spacing":{"blockGap":"var:preset|spacing|50"}}} -->
 			<div class="wp-block-column footer-col footer-col-subscribe" style="flex-basis:30%">
-				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-2 mb-4"} -->
-				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-2 mb-4">Αναζήτηση</h4>
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold border-b pb-1","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|30","top":"0"}}},"fontSize":"small"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold border-b pb-1 has-small-font-size"
+					style="margin-top:0;margin-bottom:var(--wp--preset--spacing--30)">Αναζήτηση</h4>
 				<!-- /wp:heading -->
 
-				<!-- wp:html -->
-				<form class="footer-search-form" method="get" action="/">
-					<input type="search" name="s" placeholder="Αναζήτηση..." class="footer-search-input" />
-					<button type="submit" class="footer-search-btn" aria-label="Αναζήτηση">
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-					</button>
-				</form>
-				<!-- /wp:html -->
+				<!-- wp:search {"label":"","placeholder":"Αναζήτηση...","buttonText":"Search","style":{"spacing":{"margin":{"bottom":"var:preset|spacing|30"}}},"fontSize":"xs"} /-->
 
-				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold mt-6 mb-2"} -->
-				<h4 class="wp-block-heading footer-heading text-sm font-bold mt-6 mb-2">Εγγραφή</h4>
+				<!-- wp:heading {"level":4,"className":"footer-heading text-sm font-bold","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|10"}}},"fontSize":"small"} -->
+				<h4 class="wp-block-heading footer-heading text-sm font-bold has-small-font-size"
+					style="margin-top:0;margin-bottom:var(--wp--preset--spacing--10)">Εγγραφή</h4>
 				<!-- /wp:heading -->
 
-				<!-- wp:paragraph {"className":"text-xs text-muted mb-3"} -->
-				<p class="text-xs text-muted mb-3">Εγγραφείτε στο newsletter μας για να λαμβάνετε τα νέα και το Νέο Φως.</p>
+				<!-- wp:paragraph {"className":"text-xs text-muted","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|20"}}},"textColor":"muted","fontSize":"xs"} -->
+				<p class="text-xs text-muted has-muted-color has-text-color has-xs-font-size"
+					style="margin-top:0;margin-bottom:var(--wp--preset--spacing--20)">Εγγραφείτε στο newsletter μας για
+					να λαμβάνετε τα νέα και το Νέο Φως.</p>
 				<!-- /wp:paragraph -->
 
-				<!-- wp:html -->
-				<a href="#newsletter" class="footer-subscribe-btn">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm17 4.238l-7.928 6.1a1 1 0 0 1-1.216 0L4 7.238V19h16V7.238zM4.511 5l7.49 5.762L19.49 5H4.511z"/></svg>
-					Εγγραφή στο Newsletter
-				</a>
-				<!-- /wp:html -->
+				<!-- wp:buttons {"style":{"spacing":{"margin":{"top":"0"}}}} -->
+				<div class="wp-block-buttons" style="margin-top:0"><!-- wp:button {"fontSize":"xs"} -->
+					<div class="wp-block-button"><a
+							class="wp-block-button__link has-xs-font-size has-custom-font-size wp-element-button"
+							href="#newsletter">Εγγραφή στο Newsletter</a></div>
+					<!-- /wp:button -->
+				</div>
+				<!-- /wp:buttons -->
 			</div>
 			<!-- /wp:column -->
 		</div>
@@ -110,16 +96,22 @@
 	</div>
 	<!-- /wp:group -->
 
-	<!-- wp:group {"className":"footer-bottom-bar bg-border-gray/30 py-4","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group footer-bottom-bar bg-border-gray/30 py-4">
-		<!-- wp:group {"className":"footer-bottom-inner max-w-7xl mx-auto px-4","layout":{"type":"flex","justifyContent":"space-between"}} -->
-		<div class="wp-block-group footer-bottom-inner max-w-7xl mx-auto px-4">
-			<!-- wp:paragraph {"className":"text-xs text-muted"} -->
-			<p class="text-xs text-muted">All Rights Reserved &copy; 2026 Ελληνική Κοινότητα Καΐρου</p>
+	<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"0","bottom":"0"}}},"backgroundColor":"footer-bottom-bg","layout":{"type":"constrained"}} -->
+	<div class="wp-block-group alignfull has-footer-bottom-bg-background-color has-background"
+		style="padding-top:0;padding-bottom:0">
+		<!-- wp:group {"className":"footer-bottom-bar","style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"},"blockGap":"var:preset|spacing|10"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"space-between"}} -->
+		<div class="wp-block-group footer-bottom-bar"
+			style="padding-top:var(--wp--preset--spacing--40);padding-right:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40);padding-left:var(--wp--preset--spacing--40)">
+			<!-- wp:paragraph {"align":"center","className":"text-xs text-muted","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|10"}}},"textColor":"muted","fontSize":"xs"} -->
+			<p class="has-text-align-center text-xs text-muted has-muted-color has-text-color has-xs-font-size"
+				style="margin-top:0;margin-bottom:var(--wp--preset--spacing--10)">All Rights Reserved © 2026 Ελληνική
+				Κοινότητα Καΐρου</p>
 			<!-- /wp:paragraph -->
 
-			<!-- wp:paragraph {"className":"text-xs text-muted"} -->
-			<p class="text-xs text-muted"><a href="/privacy-policy/">Privacy Policy</a> &nbsp;|&nbsp; <a href="/contact/">Επικοινωνία</a></p>
+			<!-- wp:paragraph {"align":"center","className":"text-xs text-muted","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"textColor":"muted","fontSize":"xs"} -->
+			<p class="has-text-align-center text-xs text-muted has-muted-color has-text-color has-xs-font-size"
+				style="margin-top:0;margin-bottom:0"><a href="/privacy-policy/">Privacy Policy</a> &nbsp;|&nbsp; <a
+					href="/contact/">Επικοινωνία</a></p>
 			<!-- /wp:paragraph -->
 		</div>
 		<!-- /wp:group -->

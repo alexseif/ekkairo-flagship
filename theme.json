@@ -6,7 +6,7 @@
 		"color": {
 			"palette": [
 				{
-					"color": "#00366D",
+					"color": "#005AA8",
 					"name": "Primary Blue",
 					"slug": "primary"
 				},
@@ -44,6 +44,16 @@
 					"color": "#F8F9FA",
 					"name": "Light Neutral",
 					"slug": "light-neutral"
+				},
+				{
+					"color": "#F7F5F1",
+					"name": "Footer Background",
+					"slug": "footer-bg"
+				},
+				{
+					"color": "#F0EEE9",
+					"name": "Footer Bottom Background",
+					"slug": "footer-bottom-bg"
 				},
 				{
 					"color": "#E5E7EB",
