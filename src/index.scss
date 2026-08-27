@@ -389,7 +389,6 @@ a {
 	.wp-block-navigation {
 		.wp-block-navigation__container {
 			gap: 0.25rem;
-			/* Compact Readdy gap-1 */
 		}
 
 		.wp-block-navigation-item__content {
@@ -417,6 +416,52 @@ a {
 
 	.wp-block-navigation .wp-block-navigation-item__content:hover {
 		background-color: rgba(0, 0, 0, 0.05);
+	}
+}
+
+/* ==========================================================================
+   Mobile Responsive Menu: Screen Padding & Open/Close Animation
+   ========================================================================== */
+.wp-block-navigation__responsive-container {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease, visibility 0.3s ease;
+
+	&.is-menu-open,
+	&.has-modal-open {
+		opacity: 1 !important;
+		visibility: visible !important;
+
+		.wp-block-navigation__responsive-dialog {
+			transform: scale(1) !important;
+			opacity: 1 !important;
+		}
+	}
+
+	.wp-block-navigation__responsive-dialog {
+		padding: 2.5rem 1.75rem !important;
+		box-sizing: border-box !important;
+		transform: scale(0.96);
+		opacity: 0;
+		transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+
+		@media (min-width: 48em) {
+			padding: 3.5rem 2.5rem !important;
+		}
+	}
+
+	.wp-block-navigation__responsive-container-content {
+		padding-inline: 0.5rem !important;
+
+		.wp-block-navigation-item__content {
+			color: var(--wp--preset--color--contrast, #111827);
+			transition: color 0.2s ease;
+
+			&:hover,
+			&:focus {
+				color: var(--wp--preset--color--primary, #005aa8) !important;
+			}
+		}
 	}
 }
 
