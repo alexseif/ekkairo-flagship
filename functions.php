@@ -107,3 +107,4 @@ function ekkairo_flagship_pattern_categories(): void {
 }
 add_action( 'init', 'ekkairo_flagship_pattern_categories' );
 
+

@@ -1,31 +1,37 @@
 <!-- wp:template-part {"slug":"header","theme":"ekkairo-flagship","tagName":"","area":"header"} /-->
 
-<!-- wp:group {"className":"internal-page-hero index-hero","align":"full","layout":{"type":"default"}} -->
-<div class="wp-block-group alignfull internal-page-hero index-hero">
-	<!-- wp:group {"className":"internal-hero-overlay","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
-	<div class="wp-block-group internal-hero-overlay" style="margin-top:0;margin-bottom:0">
-		<!-- wp:group {"className":"internal-hero-caption max-w-7xl mx-auto","layout":{"type":"constrained"}} -->
-		<div class="wp-block-group internal-hero-caption max-w-7xl mx-auto">
-			<!-- wp:heading {"level":1,"textColor":"white","className":"internal-hero-title"} -->
-			<h1 class="wp-block-heading has-white-color has-text-color internal-hero-title">Τελευταία Νέα</h1>
-			<!-- /wp:heading -->
-		</div>
-		<!-- /wp:group -->
+<!-- wp:template-part {"slug":"hero-slider","theme":"ekkairo-flagship"} /-->
+
+<!-- wp:group {"tagName":"main","className":"site-main-content news-listing-content","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main-content news-listing-content">
+	<!-- wp:group {"className":"news-listing-header mb-8","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+	<div class="wp-block-group news-listing-header mb-8">
+		<!-- wp:heading {"level":1,"className":"news-grid-title font-heading font-bold text-2xl"} -->
+		<h1 class="wp-block-heading news-grid-title font-heading font-bold text-2xl">Ειδήσεις &amp; Ανακοινώσεις</h1>
+		<!-- /wp:heading -->
 	</div>
 	<!-- /wp:group -->
-</div>
-<!-- /wp:group -->
 
-<!-- wp:group {"tagName":"main","className":"site-main-content internal-content-container","layout":{"type":"constrained"}} -->
-<main class="wp-block-group site-main-content internal-content-container">
-	<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"className":"archive-query-list"} -->
-	<div class="wp-block-query archive-query-list">
-		<!-- wp:post-template {"className":"archive-post-template"} -->
-			<!-- wp:group {"className":"archive-card-item mb-6"} -->
-			<div class="wp-block-group archive-card-item mb-6">
-				<!-- wp:post-title {"isLink":true,"className":"font-heading font-bold text-xl"} /-->
-				<!-- wp:post-date {"className":"text-xs text-muted mb-2"} /-->
-				<!-- wp:post-excerpt {"className":"text-sm text-contrast"} /-->
+	<!-- wp:query {"queryId":1,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"className":"news-feed-query"} -->
+	<div class="wp-block-query news-feed-query">
+		<!-- wp:post-template {"className":"news-feed-template"} -->
+			<!-- wp:group {"className":"news-feed-item","layout":{"type":"default"}} -->
+			<div class="wp-block-group news-feed-item">
+				<!-- wp:post-featured-image {"isLink":true,"sizeSlug":"full","className":"news-feed-thumb"} /-->
+				<!-- wp:group {"className":"news-feed-body","layout":{"type":"default"}} -->
+				<div class="wp-block-group news-feed-body">
+					<!-- wp:group {"className":"news-feed-meta","layout":{"type":"flex","flexWrap":"wrap","verticalAlignment":"center"}} -->
+					<div class="wp-block-group news-feed-meta">
+						<!-- wp:post-terms {"term":"category","className":"news-feed-category"} /-->
+						<!-- wp:post-date {"className":"news-feed-date"} /-->
+					</div>
+					<!-- /wp:group -->
+
+					<!-- wp:post-title {"isLink":true,"level":2,"className":"news-feed-title font-heading"} /-->
+
+					<!-- wp:post-excerpt {"moreText":"Διαβάστε περισσότερα","showMoreOnNewLine":true,"className":"news-feed-excerpt"} /-->
+				</div>
+				<!-- /wp:group -->
 			</div>
 			<!-- /wp:group -->
 		<!-- /wp:post-template -->
@@ -37,7 +43,10 @@
 		<!-- /wp:query-pagination -->
 	</div>
 	<!-- /wp:query -->
+
+	<!-- wp:template-part {"slug":"subscribe-card","theme":"ekkairo-flagship"} /-->
 </main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer","theme":"ekkairo-flagship","tagName":"","area":"footer"} /-->
+
