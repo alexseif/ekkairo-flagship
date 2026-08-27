@@ -174,6 +174,18 @@ log_step "7" "Purge Cache Drop-ins & Configuration Folders"
 run_command "rm -f \"$WEB_ROOT/wp-content/advanced-cache.php\" \"$WEB_ROOT/wp-content/object-cache.php\""
 run_command "rm -rf \"$WEB_ROOT/wp-content/cache\" \"$WEB_ROOT/wp-content/w3tc-config\""
 
+log_step "7b" "Install, Activate & Configure Rank Math SEO"
+run_command "$WP_CLI_82 plugin install seo-by-rank-math --activate --path=\"$WEB_ROOT\" 2>/dev/null || $WP_CLI_82 plugin activate seo-by-rank-math --path=\"$WEB_ROOT\" 2>/dev/null || true"
+run_command "$WP_CLI_82 eval '
+    \$modules = array(\"sitemap\", \"rich-snippet\", \"seo-analysis\", \"link-counter\", \"instant-indexing\");
+    update_option(\"rank_math_modules\", \$modules);
+    \$titles = get_option(\"rank-math-options-titles\", array());
+    \$titles[\"breadcrumbs\"] = \"off\";
+    \$titles[\"knowledgegraph_type\"] = \"organization\";
+    \$titles[\"knowledgegraph_name\"] = \"Ελληνική Κοινότητα Αλεξανδρείας\";
+    update_option(\"rank-math-options-titles\", \$titles);
+' --path=\"$WEB_ROOT\""
+
 # ----------------------------------------------------------------------
 # PHASE B: Modernization & Template Binding (PHP 8.2 Runtime)
 # ----------------------------------------------------------------------

@@ -58,11 +58,29 @@ done
 echo "Setting site locale to Greek (el_GR)..."
 php7.4 "$WP_CLI" option update WPLANG el_GR --path="$WP_DIR" --allow-root
 
-# 3. Activate Ekkairo Flagship FSE Block Theme
+# 3. Install, Activate & Configure Rank Math SEO
+echo "Installing, activating and configuring Rank Math SEO..."
+if ! php8.2 "$WP_CLI" plugin is-installed seo-by-rank-math --path="$WP_DIR" --allow-root 2>/dev/null; then
+    php8.2 "$WP_CLI" plugin install seo-by-rank-math --activate --path="$WP_DIR" --allow-root
+else
+    php8.2 "$WP_CLI" plugin activate seo-by-rank-math --path="$WP_DIR" --allow-root || true
+fi
+
+php8.2 "$WP_CLI" eval '
+    $modules = array("sitemap", "rich-snippet", "seo-analysis", "link-counter", "instant-indexing");
+    update_option("rank_math_modules", $modules);
+    $titles = get_option("rank-math-options-titles", array());
+    $titles["breadcrumbs"] = "off";
+    $titles["knowledgegraph_type"] = "organization";
+    $titles["knowledgegraph_name"] = "Ελληνική Κοινότητα Αλεξανδρείας";
+    update_option("rank-math-options-titles", $titles);
+' --path="$WP_DIR" --allow-root
+
+# 4. Activate Ekkairo Flagship FSE Block Theme
 echo "Activating ekkairo-flagship FSE theme..."
 php8.2 "$WP_CLI" theme activate ekkairo-flagship --path="$WP_DIR" --allow-root
 
-# 4. Transient Clean-Up & Cache Flush
+# 5. Transient Clean-Up & Cache Flush
 echo "Flushing transient cache and object cache..."
 cd "$WP_DIR" || exit 1
 php8.2 "$WP_CLI" transient delete --all --path="$WP_DIR" --allow-root || true
