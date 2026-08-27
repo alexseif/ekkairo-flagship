@@ -1737,14 +1737,15 @@ a {
 
 /* ==========================================================================
    Internal Pages & Single Post Hero Layout (Option A)
-   Mobile-first: height 18rem (288px), Desktop: 24rem (384px)
+   Height: 50vh (min 22rem mobile, min 26rem desktop)
    Spans edge-to-edge from top: 0 underneath fixed header
    ========================================================================== */
 .internal-page-hero {
 	position: relative;
 	width: 100% !important;
 	max-width: 100% !important;
-	min-height: 18rem;
+	height: 50vh !important;
+	min-height: 22rem !important;
 	margin-top: 0 !important;
 	margin-bottom: 2rem !important;
 	padding: 0 !important;
@@ -1754,8 +1755,8 @@ a {
 	align-items: flex-end;
 
 	@media (min-width: 48em) {
-		min-height: 24rem;
-		margin-bottom: 2.5rem !important;
+		min-height: 26rem !important;
+		margin-bottom: 3rem !important;
 	}
 
 	.internal-hero-img,
@@ -1783,6 +1784,9 @@ a {
 		width: 100%;
 		height: 100%;
 		min-height: inherit;
+		margin: 0 !important;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
 		background: linear-gradient(to top, rgba(0, 26, 51, 0.95) 0%, rgba(0, 34, 68, 0.65) 50%, rgba(0, 0, 0, 0.35) 100%);
 		display: flex;
 		align-items: flex-end;
@@ -1796,24 +1800,28 @@ a {
 	}
 
 	.internal-hero-caption {
-		width: 100%;
-		padding-inline: 1rem;
+		width: 100% !important;
+		max-width: 80rem !important;
+		margin-inline: auto !important;
+		margin-top: 0 !important;
+		margin-bottom: 0 !important;
+		padding-inline: 1rem !important;
 
 		@media (min-width: 48em) {
-			padding-inline: 1.5rem;
+			padding-inline: 1.5rem !important;
 		}
 
 		.internal-hero-title {
 			color: var(--wp--preset--color--white, #ffffff) !important;
 			font-family: var(--wp--preset--font-family--serif, serif);
-			font-size: 1.5rem !important;
+			font-size: 1.625rem !important;
 			font-weight: 700;
 			line-height: 1.25;
 			margin: 0 0 0.5rem 0 !important;
 			text-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.5);
 
 			@media (min-width: 48em) {
-				font-size: 2.25rem !important;
+				font-size: 2.5rem !important;
 			}
 		}
 
