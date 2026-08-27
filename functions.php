@@ -67,6 +67,25 @@ function ekkairo_flagship_assets(): void {
 add_action( 'wp_enqueue_scripts', 'ekkairo_flagship_assets' );
 
 /**
+ * Optimize Largest Contentful Paint (LCP) for hero and featured images.
+ * Ensures the main featured image has high fetch priority and loads eagerly without render blocking.
+ *
+ * @param array<string, string> $attr       Array of attribute values for the image markup.
+ * @param WP_Post|int           $attachment Image attachment post object or ID.
+ * @param string|int[]          $size       Requested image size.
+ * @return array<string, string> Modified attributes.
+ */
+function ekkairo_flagship_optimize_lcp_images( array $attr, $attachment, $size ): array {
+	if ( is_singular() && in_the_loop() && is_main_query() ) {
+		$attr['fetchpriority'] = 'high';
+		$attr['loading']       = 'eager';
+		$attr['decoding']      = 'async';
+	}
+	return $attr;
+}
+add_filter( 'wp_get_attachment_image_attributes', 'ekkairo_flagship_optimize_lcp_images', 10, 3 );
+
+/**
  * Register custom block styles.
  */
 function ekkairo_flagship_register_block_styles(): void {

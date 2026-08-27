@@ -76,11 +76,25 @@ php8.2 "$WP_CLI" eval '
     update_option("rank-math-options-titles", $titles);
 ' --path="$WP_DIR" --allow-root
 
-# 4. Activate Ekkairo Flagship FSE Block Theme
+# 4. Purge Autoloaded Options Bloat (~700KB RAM & DB query savings)
+echo "Purging orphaned autoloaded options..."
+php8.2 "$WP_CLI" db query "DELETE FROM wp_options WHERE option_name IN ('rs-templates', 'redux_builder_amp', 'revslider-addons', 'polylang_wpml_strings');" --path="$WP_DIR" --allow-root || true
+php8.2 "$WP_CLI" db query "UPDATE wp_options SET autoload = 'no' WHERE option_name LIKE 'jetpack_%' OR option_name = 'betheme';" --path="$WP_DIR" --allow-root || true
+
+# 5. Install, Activate & Enable Redis Object Cache
+echo "Configuring Redis Object Cache..."
+if ! php8.2 "$WP_CLI" plugin is-installed redis-cache --path="$WP_DIR" --allow-root 2>/dev/null; then
+    php8.2 "$WP_CLI" plugin install redis-cache --activate --path="$WP_DIR" --allow-root || true
+else
+    php8.2 "$WP_CLI" plugin activate redis-cache --path="$WP_DIR" --allow-root || true
+fi
+php8.2 "$WP_CLI" redis enable --path="$WP_DIR" --allow-root 2>/dev/null || true
+
+# 6. Activate Ekkairo Flagship FSE Block Theme
 echo "Activating ekkairo-flagship FSE theme..."
 php8.2 "$WP_CLI" theme activate ekkairo-flagship --path="$WP_DIR" --allow-root
 
-# 5. Transient Clean-Up & Cache Flush
+# 7. Transient Clean-Up & Cache Flush
 echo "Flushing transient cache and object cache..."
 cd "$WP_DIR" || exit 1
 php8.2 "$WP_CLI" transient delete --all --path="$WP_DIR" --allow-root || true

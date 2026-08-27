@@ -186,6 +186,14 @@ run_command "$WP_CLI_82 eval '
     update_option(\"rank-math-options-titles\", \$titles);
 ' --path=\"$WEB_ROOT\""
 
+log_step "7c" "Purge Autoloaded Options Bloat (~700KB RAM/Query Savings)"
+run_command "$WP_CLI_82 db query \"DELETE FROM wp_options WHERE option_name IN ('rs-templates', 'redux_builder_amp', 'revslider-addons', 'polylang_wpml_strings');\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
+run_command "$WP_CLI_82 db query \"UPDATE wp_options SET autoload = 'no' WHERE option_name LIKE 'jetpack_%' OR option_name = 'betheme';\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
+
+log_step "7d" "Install, Activate & Enable Redis Object Cache"
+run_command "$WP_CLI_82 plugin install redis-cache --activate --path=\"$WEB_ROOT\" 2>/dev/null || $WP_CLI_82 plugin activate redis-cache --path=\"$WEB_ROOT\" 2>/dev/null || true"
+run_command "$WP_CLI_82 redis enable --path=\"$WEB_ROOT\" 2>/dev/null || true"
+
 # ----------------------------------------------------------------------
 # PHASE B: Modernization & Template Binding (PHP 8.2 Runtime)
 # ----------------------------------------------------------------------
