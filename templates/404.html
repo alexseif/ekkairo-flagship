@@ -1,17 +1,29 @@
-<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+<!-- wp:template-part {"slug":"header","theme":"ekkairo-flagship","tagName":"","area":"header"} /-->
 
-<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
-<main class="wp-block-group">
-	<!-- wp:heading {"level":1} -->
-	<h1 class="wp-block-heading">404 - Page Not Found</h1>
-	<!-- /wp:heading -->
+<!-- wp:group {"className":"internal-page-hero 404-hero","align":"full","layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull internal-page-hero 404-hero">
+	<!-- wp:group {"className":"internal-hero-overlay","layout":{"type":"default"}} -->
+	<div class="wp-block-group internal-hero-overlay">
+		<!-- wp:group {"className":"internal-hero-caption max-w-7xl mx-auto","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group internal-hero-caption max-w-7xl mx-auto">
+			<!-- wp:heading {"level":1,"textColor":"white","className":"internal-hero-title"} -->
+			<h1 class="wp-block-heading has-white-color has-text-color internal-hero-title">404 - Η σελίδα δεν βρέθηκε</h1>
+			<!-- /wp:heading -->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
 
-	<!-- wp:paragraph -->
-	<p>The page you are looking for does not exist or has been moved.</p>
+<!-- wp:group {"tagName":"main","className":"site-main-content internal-content-container","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main-content internal-content-container">
+	<!-- wp:paragraph {"className":"text-base text-muted mb-6"} -->
+	<p class="text-base text-muted mb-6">Η σελίδα που ζητήσατε δεν υπάρχει ή έχει μετακινηθεί.</p>
 	<!-- /wp:paragraph -->
 
-	<!-- wp:search {"label":"Search","buttonText":"Search"} /-->
+	<!-- wp:search {"label":"Αναζήτηση στην ιστοσελίδα","buttonText":"Αναζήτηση","showLabel":true,"className":"max-w-md"} /-->
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","theme":"ekkairo-flagship","tagName":"","area":"footer"} /-->

@@ -1,19 +1,35 @@
-<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+<!-- wp:template-part {"slug":"header","theme":"ekkairo-flagship","tagName":"","area":"header"} /-->
 
-<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
-<main class="wp-block-group">
-	<!-- wp:query-title {"type":"archive"} /-->
-	<!-- wp:term-description /-->
+<!-- wp:group {"className":"internal-page-hero archive-hero","align":"full","layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull internal-page-hero archive-hero">
+	<!-- wp:group {"className":"internal-hero-overlay","layout":{"type":"default"}} -->
+	<div class="wp-block-group internal-hero-overlay">
+		<!-- wp:group {"className":"internal-hero-caption max-w-7xl mx-auto","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group internal-hero-caption max-w-7xl mx-auto">
+			<!-- wp:query-title {"type":"archive","textColor":"white","className":"internal-hero-title"} /-->
+			<!-- wp:term-description {"textColor":"white","className":"internal-hero-desc"} /-->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
 
-	<!-- wp:query {"queryId":3,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true}} -->
-	<div class="wp-block-query">
-		<!-- wp:post-template -->
-			<!-- wp:post-title {"isLink":true} /-->
-			<!-- wp:post-date /-->
-			<!-- wp:post-excerpt /-->
+<!-- wp:group {"tagName":"main","className":"site-main-content internal-content-container","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main-content internal-content-container">
+	<!-- wp:query {"queryId":3,"query":{"perPage":10,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"className":"archive-query-list"} -->
+	<div class="wp-block-query archive-query-list">
+		<!-- wp:post-template {"className":"archive-post-template"} -->
+			<!-- wp:group {"className":"archive-card-item mb-6"} -->
+			<div class="wp-block-group archive-card-item mb-6">
+				<!-- wp:post-title {"isLink":true,"className":"font-heading font-bold text-xl"} /-->
+				<!-- wp:post-date {"className":"text-xs text-muted mb-2"} /-->
+				<!-- wp:post-excerpt {"className":"text-sm text-contrast"} /-->
+			</div>
+			<!-- /wp:group -->
 		<!-- /wp:post-template -->
 
-		<!-- wp:query-pagination -->
+		<!-- wp:query-pagination {"className":"archive-pagination mt-8"} -->
 			<!-- wp:query-pagination-previous /-->
 			<!-- wp:query-pagination-numbers /-->
 			<!-- wp:query-pagination-next /-->
@@ -23,4 +39,4 @@
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","theme":"ekkairo-flagship","tagName":"","area":"footer"} /-->

@@ -17,6 +17,12 @@ const files = [
 	"parts/social-attraction.html",
 	"parts/neo-fos-grid.html",
 	"templates/front-page.html",
+	"templates/page.html",
+	"templates/single.html",
+	"templates/archive.html",
+	"templates/index.html",
+	"templates/page-publications.html",
+	"templates/404.html",
 ];
 
 let errors = 0;
