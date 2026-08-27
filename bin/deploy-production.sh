@@ -163,7 +163,7 @@ log_step "5" "Execute Custom Post Type (CPT) Migration"
 run_command "$WP_CLI_74 eval-file \"$THEME_DIR/bin/migrate-cpts.php\" --path=\"$WEB_ROOT\""
 
 log_step "6" "Deactivate & Uninstall Legacy Plugins"
-PLUGINS_TO_DELETE=("LayerSlider" "js_composer" "display-posts-shortcode" "force-regenerate-thumbnails" "ewww-image-optimizer" "wordpress-seo" "w3-total-cache" "google-captcha")
+PLUGINS_TO_DELETE=("LayerSlider" "js_composer" "display-posts-shortcode" "force-regenerate-thumbnails" "ewww-image-optimizer" "wordpress-seo" "w3-total-cache" "google-captcha" "jetpack")
 for plugin in "${PLUGINS_TO_DELETE[@]}"; do
     run_command "$WP_CLI_74 plugin deactivate \"$plugin\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
     run_command "$WP_CLI_74 plugin uninstall \"$plugin\" --path=\"$WEB_ROOT\" 2>/dev/null || true"

@@ -85,7 +85,7 @@ php7.4 /usr/local/bin/wp search-replace 'http://ekkairo.local' 'https://backstag
 
 # 6. Deactivate Captcha & Cache Plugins, Purge Cache & Disable WP_CACHE Directive
 echo "Deactivating captcha and cache plugins..."
-php7.4 /usr/local/bin/wp plugin deactivate google-captcha w3-total-cache jetpack-boost --path="$WP_DIR" --allow-root || true
+php7.4 /usr/local/bin/wp plugin deactivate google-captcha w3-total-cache jetpack-boost jetpack --path="$WP_DIR" --allow-root || true
 
 echo "Disabling WP_CACHE in wp-config.php..."
 php7.4 /usr/local/bin/wp config set WP_CACHE false --raw --type=constant --path="$WP_DIR" --allow-root || true

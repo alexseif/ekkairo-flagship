@@ -44,6 +44,7 @@ LEGACY_PLUGINS=(
     "manage-xml-rpc"
     "duplicate-post"
     "aryo-activity-log"
+    "jetpack"
 )
 
 for plugin in "${LEGACY_PLUGINS[@]}"; do
