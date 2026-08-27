@@ -199,4 +199,29 @@ document.addEventListener('DOMContentLoaded', () => {
 			}, 4000);
 		}
 	});
+
+	// 5. Social Share Copy Link Controller
+	document.addEventListener('click', (e) => {
+		const copyBtn = e.target.closest('.share-btn-copy');
+		if (copyBtn) {
+			e.preventDefault();
+			const urlToCopy = copyBtn.getAttribute('data-url') || window.location.href;
+			navigator.clipboard.writeText(urlToCopy).then(() => {
+				const copyText = copyBtn.querySelector('.copy-text');
+				if (copyText) {
+					const originalText = copyText.textContent;
+					copyText.textContent = 'Αντιγράφηκε!';
+					copyBtn.classList.add('is-copied');
+					setTimeout(() => {
+						copyText.textContent = originalText;
+						copyBtn.classList.remove('is-copied');
+					}, 2500);
+				}
+			}).catch(() => {
+				// Fallback
+				prompt('Αντιγράψτε τον σύνδεσμο:', urlToCopy);
+			});
+		}
+	});
 });
+

@@ -17,12 +17,43 @@
 </div>
 <!-- /wp:group -->
 
-<!-- wp:group {"tagName":"main","className":"site-main-content internal-content-container","layout":{"type":"constrained"}} -->
-<main class="wp-block-group site-main-content internal-content-container">
+<!-- wp:group {"tagName":"main","className":"site-main-content single-post-main-content","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main-content single-post-main-content">
 	<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
 	<!-- wp:post-terms {"term":"post_tag","className":"internal-post-tags"} /-->
-	<!-- wp:comments {"className":"internal-post-comments"} /-->
+	<!-- wp:ekkairo/social-share /-->
+	<!-- wp:ekkairo/single-post-nav /-->
+
+	<!-- wp:group {"className":"more-news-section","style":{"spacing":{"margin":{"top":"var:preset|spacing|90","bottom":"var:preset|spacing|90"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group more-news-section" style="margin-top:var(--wp--preset--spacing--90);margin-bottom:var(--wp--preset--spacing--90)">
+		<!-- wp:heading {"level":2,"className":"news-grid-title font-heading font-bold text-2xl mb-6"} -->
+		<h2 class="wp-block-heading news-grid-title font-heading font-bold text-2xl mb-6">Περισσότερα Νέα</h2>
+		<!-- /wp:heading -->
+
+		<!-- wp:query {"queryId":5,"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false},"className":"more-news-grid"} -->
+		<div class="wp-block-query more-news-grid">
+			<!-- wp:post-template {"className":"more-news-template"} -->
+				<!-- wp:group {"className":"news-card-item"} -->
+				<div class="wp-block-group news-card-item">
+					<!-- wp:post-featured-image {"isLink":true,"sizeSlug":"medium_large","className":"news-card-thumb"} /-->
+					<!-- wp:group {"className":"news-card-body"} -->
+					<div class="wp-block-group news-card-body">
+						<!-- wp:post-date {"className":"news-card-date"} /-->
+						<!-- wp:post-title {"isLink":true,"level":3,"className":"news-card-title font-heading"} /-->
+						<!-- wp:post-excerpt {"moreText":"Διαβάστε περισσότερα","showMoreOnNewLine":true,"className":"news-card-excerpt"} /-->
+					</div>
+					<!-- /wp:group -->
+				</div>
+				<!-- /wp:group -->
+			<!-- /wp:post-template -->
+		</div>
+		<!-- /wp:query -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:template-part {"slug":"subscribe-card","theme":"ekkairo-flagship"} /-->
 </main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer","theme":"ekkairo-flagship","tagName":"","area":"footer"} /-->
+
