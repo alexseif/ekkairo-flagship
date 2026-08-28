@@ -74,6 +74,8 @@ if [ -d "$PROD_DIR/public" ]; then
     rsync -av --delete \
         --exclude='wp-config.php' \
         --exclude='wp-content/uploads/' \
+        --exclude='wp-content/cache/' \
+        --exclude='wp-content/boost-cache/' \
         --exclude='wp-content/themes/ekkairo-flagship/' \
         "$PROD_DIR/public/" "$STAGING_DIR/public/"
 fi
