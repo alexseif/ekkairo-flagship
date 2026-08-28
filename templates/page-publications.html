@@ -1,23 +1,24 @@
-<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+<!-- wp:template-part {"slug":"header","theme":"ekkairo-flagship","tagName":"","area":"header"} /-->
 
-<!-- wp:group {"tagName":"main","className":"site-main-content","layout":{"type":"constrained"}} -->
-<main class="wp-block-group site-main-content max-w-7xl mx-auto px-4 py-8">
-	<!-- wp:heading {"level":1,"className":"font-heading font-bold text-2xl text-primary mb-4"} -->
-	<h1 class="wp-block-heading font-heading font-bold text-2xl text-primary mb-4">Εκδόσεις της Ελληνικής Κοινότητας Καΐρου</h1>
-	<!-- /wp:heading -->
-
-	<!-- wp:paragraph {"className":"text-sm text-muted leading-relaxed mb-8 max-w-3xl"} -->
-	<p class="text-sm text-muted leading-relaxed mb-8 max-w-3xl">Η Ελληνική Κοινότητα Καΐρου έχει πλούσια εκδοτική δραστηριότητα. Εδώ παρουσιάζονται τα βιβλία, οι ιστορικές μελέτες και τα λευκώματα που καταγράφουν την πορεία και την πολιτιστική κληρονομιά του Αιγυπτιώτη Ελληνισμού.</p>
-	<!-- /wp:paragraph -->
-
-	<!-- wp:ekkairo/publications-banner /-->
-
-	<!-- wp:group {"className":"mt-10","layout":{"type":"constrained"}} -->
-	<div class="wp-block-group mt-10">
-		<!-- wp:post-content /-->
+<!-- wp:group {"className":"internal-page-hero","align":"full","layout":{"type":"default"}} -->
+<div class="wp-block-group alignfull internal-page-hero">
+	<!-- wp:post-featured-image {"sizeSlug":"full","className":"internal-hero-img"} /-->
+	<!-- wp:group {"className":"internal-hero-overlay","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"default"}} -->
+	<div class="wp-block-group internal-hero-overlay" style="margin-top:0;margin-bottom:0">
+		<!-- wp:group {"className":"internal-hero-caption max-w-7xl mx-auto","layout":{"type":"constrained"}} -->
+		<div class="wp-block-group internal-hero-caption max-w-7xl mx-auto">
+			<!-- wp:post-title {"level":1,"textColor":"white","className":"internal-hero-title"} /-->
+		</div>
+		<!-- /wp:group -->
 	</div>
 	<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"main","className":"site-main-content internal-content-container","layout":{"type":"constrained"}} -->
+<main class="wp-block-group site-main-content internal-content-container">
+	<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
 </main>
 <!-- /wp:group -->
 
-<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
+<!-- wp:template-part {"slug":"footer","theme":"ekkairo-flagship","tagName":"","area":"footer"} /-->
