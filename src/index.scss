@@ -387,10 +387,10 @@ a {
 		.wp-block-site-logo,
 		.wp-block-site-logo img,
 		img {
-			width: 3.5rem !important;
-			height: 3.5rem !important;
-			max-width: 3.5rem !important;
-			max-height: 3.5rem !important;
+			width: 3.75rem !important;
+			height: 3.75rem !important;
+			max-width: 3.75rem !important;
+			max-height: 3.75rem !important;
 			object-fit: contain !important;
 			display: block;
 		}
@@ -405,7 +405,7 @@ a {
 		.site-title-heading {
 			margin: 0;
 			font-family: var(--wp--preset--font-family--serif, serif);
-			font-size: 0.875rem !important;
+			font-size: 1rem !important;
 			font-weight: 600;
 			line-height: 1.15;
 
