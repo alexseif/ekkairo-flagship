@@ -67,6 +67,29 @@ function ekkairo_flagship_assets(): void {
 add_action( 'wp_enqueue_scripts', 'ekkairo_flagship_assets' );
 
 /**
+ * Render Google Analytics (GA4) tracking snippet in head.
+ */
+function ekkairo_flagship_google_analytics(): void {
+	$measurement_id = defined( 'EKKAIRO_GA_MEASUREMENT_ID' ) ? (string) EKKAIRO_GA_MEASUREMENT_ID : 'G-9KTPH1P5KJ';
+
+	if ( empty( $measurement_id ) || is_preview() ) {
+		return;
+	}
+	?>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?php echo esc_attr( $measurement_id ); ?>"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', '<?php echo esc_js( $measurement_id ); ?>');
+</script>
+	<?php
+}
+add_action( 'wp_head', 'ekkairo_flagship_google_analytics', 1 );
+
+/**
  * Optimize Largest Contentful Paint (LCP) for hero and featured images.
  * Ensures the main featured image has high fetch priority and loads eagerly without render blocking.
  *
