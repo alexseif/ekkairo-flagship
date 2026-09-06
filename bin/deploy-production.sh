@@ -1,7 +1,7 @@
 #!/bin/bash
 # bin/deploy-production.sh
 # Autonomous Standalone Production Cutover Deployment Script
-# Targets: Live Production Server (/var/www/ekalexandria.org/public)
+# Targets: Live Production Server (/var/www/ekkairo.org/public)
 # Log: ai-work/logs/deploy-production.log
 
 set -eo pipefail
@@ -28,7 +28,7 @@ LOG_FILE="$LOG_DIR/deploy-production.log"
 exec > >(tee -a "$LOG_FILE") 2>&1
 
 echo "======================================================================"
-echo "   EKA Portal Production Final Cutover Deployment Pipeline"
+echo "   EKK Portal Production Final Cutover Deployment Pipeline"
 echo "   Execution Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
 if [ "$DRY_RUN" = true ]; then
     echo "   MODE: *** NON-DESTRUCTIVE DRY-RUN / TEST MODE ***"
@@ -38,10 +38,10 @@ fi
 echo "======================================================================"
 
 # Determine web root and backup directory paths
-WEB_ROOT="$(cd "$THEME_DIR/../../.." 2>/dev/null && pwd || echo "/var/www/ekalexandria.org/public")"
-BACKUP_DIR="$(dirname "$WEB_ROOT" 2>/dev/null || echo "/var/www/ekalexandria.org")"
+WEB_ROOT="$(cd "$THEME_DIR/../../.." 2>/dev/null && pwd || echo "/var/www/ekkairo.org/public")"
+BACKUP_DIR="$(dirname "$WEB_ROOT" 2>/dev/null || echo "/var/www/ekkairo.org")"
 
-WP_BINARY="$(command -v wp 2>/dev/null || echo "wp")"
+WP_BINARY="$(command -v wp 2>/dev/null || echo "/usr/local/bin/wp")"
 WP_CLI_74="php7.4 $WP_BINARY"
 WP_CLI_82="php8.2 $WP_BINARY"
 
@@ -56,7 +56,6 @@ on_error() {
     if [ "$DRY_RUN" = false ]; then
         echo "⚠️ Maintenance mode (.maintenance) remains ACTIVE to protect site."
         echo "   Check log file for exact details: $LOG_FILE"
-        echo "   Refer to Rollback Protocol in ai-work/deployment-production-SPEC.md"
     fi
     echo "======================================================================"
     exit "$exit_code"
@@ -91,138 +90,138 @@ log_info "Flagship Theme Directory: $THEME_DIR"
 log_info "Initialization complete."
 
 # ----------------------------------------------------------------------
-# PHASE A: Legacy & Cleanup (PHP 7.4 Runtime)
+# PHASE A: Pre-Flight, Safety Backups & Maintenance Lock (PHP 7.4)
 # ----------------------------------------------------------------------
 
 log_step "0" "Pre-Flight System Environment Verification"
-if [ "$DRY_RUN" = true ]; then
-    log_info "Executing pre-flight check in verification mode..."
+if [ -f "$THEME_DIR/bin/pre-flight.sh" ]; then
     bash "$THEME_DIR/bin/pre-flight.sh"
 else
-    bash "$THEME_DIR/bin/pre-flight.sh"
+    log_info "Pre-flight script not found, proceeding..."
 fi
 
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-DB_BACKUP_FILE="$BACKUP_DIR/eka_prod_db_backup_$TIMESTAMP.sql"
-FILE_BACKUP_FILE="$BACKUP_DIR/eka_prod_files_backup_$TIMESTAMP.tar.gz"
+DB_BACKUP_FILE="$BACKUP_DIR/ekk_prod_db_backup_$TIMESTAMP.sql"
+FILE_BACKUP_FILE="$BACKUP_DIR/ekk_prod_files_backup_$TIMESTAMP.tar.gz"
 
 log_step "1" "Create Full Safety Backups (Database & Filesystem Archive)"
-run_command "$WP_CLI_74 db export \"$DB_BACKUP_FILE\" --path=\"$WEB_ROOT\""
-run_command "tar -czf \"$FILE_BACKUP_FILE\" --exclude='*wp-content/uploads*' -C \"$BACKUP_DIR\" \"$(basename "$WEB_ROOT")\""
+run_command "$WP_CLI_74 db export \"$DB_BACKUP_FILE\" --hex-blob --default-character-set=utf8mb4 --skip-plugins --allow-root --path=\"$WEB_ROOT\""
+run_command "tar -czf \"$FILE_BACKUP_FILE\" --exclude='*wp-content/uploads*' --exclude='*wp-content/cache*' --exclude='*wp-content/boost-cache*' -C \"$BACKUP_DIR\" \"$(basename "$WEB_ROOT")\""
 
 log_step "2" "Enable Site Maintenance Mode"
 run_command "echo '<?php \$upgrading = time(); ?>' > \"$WEB_ROOT/.maintenance\""
 
-log_step "3" "Immediate File Permissions & Ownership Fix"
+log_step "3" "Webroot Permissions & Ownership Adjustment"
 run_command "chown -R devops:www-data \"$WEB_ROOT\" 2>/dev/null || chown -R \$(whoami):www-data \"$WEB_ROOT\" 2>/dev/null || true"
 run_command "chmod -R u+w \"$WEB_ROOT/wp-content\" 2>/dev/null || true"
 
-log_step "3b" "Patch Plugin Vendor Autoloader Class Hash Mismatches & Fatal Errors"
-if [ -d "$WEB_ROOT/wp-content/plugins" ]; then
-    for plugin_dir in "$WEB_ROOT/wp-content/plugins"/*; do
-        if [ -d "$plugin_dir/vendor/composer" ]; then
-            STATIC_FILE="$plugin_dir/vendor/composer/autoload_static.php"
-            REAL_FILE="$plugin_dir/vendor/composer/autoload_real.php"
-            MAIN_AUTOLOAD="$plugin_dir/vendor/autoload.php"
-            if [ -f "$STATIC_FILE" ] && [ -f "$REAL_FILE" ]; then
-                STATIC_HASH=$(grep -oE 'ComposerStaticInit[a-f0-9]+' "$STATIC_FILE" 2>/dev/null | head -n 1 | sed 's/ComposerStaticInit//')
-                REAL_HASH=$(grep -oE 'ComposerAutoloaderInit[a-f0-9]+' "$REAL_FILE" 2>/dev/null | head -n 1 | sed 's/ComposerAutoloaderInit//')
-                if [ -n "$STATIC_HASH" ] && [ -n "$REAL_HASH" ] && [ "$STATIC_HASH" != "$REAL_HASH" ]; then
-                    run_command "sed -i 's/$REAL_HASH/$STATIC_HASH/g' \"$REAL_FILE\""
-                    if [ -f "$MAIN_AUTOLOAD" ]; then
-                        run_command "sed -i 's/$REAL_HASH/$STATIC_HASH/g' \"$MAIN_AUTOLOAD\""
-                    fi
-                fi
-            fi
-        fi
-    done
-fi
+# ----------------------------------------------------------------------
+# PHASE B: Disruptive Cache/Captcha Deactivation & Clean-up (PHP 7.4)
+# ----------------------------------------------------------------------
 
-POLYLANG_STATIC="$WEB_ROOT/wp-content/plugins/polylang/vendor/composer/autoload_static.php"
-POLYLANG_REAL="$WEB_ROOT/wp-content/plugins/polylang/vendor/composer/autoload_real.php"
-POLYLANG_AUTOLOAD="$WEB_ROOT/wp-content/plugins/polylang/vendor/autoload.php"
-if [ -f "$POLYLANG_STATIC" ] && [ -f "$POLYLANG_REAL" ]; then
-    run_command "sed -i 's/ComposerStaticInited5bec60c42d525a1c1222212c9f9cff/ComposerStaticInit8f862f0d8b75b7170c1f5eb4256b99b4/g' \"$POLYLANG_STATIC\" 2>/dev/null || true"
-    run_command "sed -i 's/ed5bec60c42d525a1c1222212c9f9cff/8f862f0d8b75b7170c1f5eb4256b99b4/g' \"$POLYLANG_REAL\" 2>/dev/null || true"
-    if [ -f "$POLYLANG_AUTOLOAD" ]; then run_command "sed -i 's/ed5bec60c42d525a1c1222212c9f9cff/8f862f0d8b75b7170c1f5eb4256b99b4/g' \"$POLYLANG_AUTOLOAD\" 2>/dev/null || true"; fi
-fi
-
-VC_FILE="$WEB_ROOT/wp-content/plugins/js_composer/include/classes/editors/class-vc-frontend-editor.php"
-if [ -f "$VC_FILE" ]; then
-    run_command "sed -i 's/\$mode === \$key \? '\'' vc_active'\'' : \$key === '\''default'\'' \&\& \$mode \!== '\''desktop'\'' \? '\'\'': '\'' vc_st_hidden'\''/((\$mode === \$key) ? '\'' vc_active'\'' : ((\$key === '\''default'\'' \&\& \$mode \!== '\''desktop'\'') ? '\'\'': '\'' vc_st_hidden'\''))/g' \"$VC_FILE\" 2>/dev/null || true"
-fi
-
-log_step "4" "Theme Swap & Legacy Theme Removal"
-run_command "$WP_CLI_74 theme activate ekalexandria-flagship --path=\"$WEB_ROOT\""
-run_command "$WP_CLI_74 option update page_for_posts 0 --path=\"$WEB_ROOT\" 2>/dev/null || true"
-run_command "$WP_CLI_74 theme mod set custom_logo 63053 --path=\"$WEB_ROOT\" 2>/dev/null || true"
-run_command "$WP_CLI_74 theme delete betheme --path=\"$WEB_ROOT\" 2>/dev/null || true"
-run_command "rm -rf \"$WEB_ROOT/wp-content/themes/betheme\""
-
-log_step "5" "Execute Custom Post Type (CPT) Migration"
-run_command "$WP_CLI_74 eval-file \"$THEME_DIR/bin/migrate-cpts.php\" --path=\"$WEB_ROOT\""
-
-log_step "6" "Deactivate & Uninstall Legacy Plugins"
-PLUGINS_TO_DELETE=("LayerSlider" "js_composer" "display-posts-shortcode" "force-regenerate-thumbnails" "ewww-image-optimizer" "wordpress-seo" "w3-total-cache" "google-captcha" "jetpack")
-for plugin in "${PLUGINS_TO_DELETE[@]}"; do
-    run_command "$WP_CLI_74 plugin deactivate \"$plugin\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
-    run_command "$WP_CLI_74 plugin uninstall \"$plugin\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
-    run_command "rm -rf \"$WEB_ROOT/wp-content/plugins/$plugin\""
+log_step "4" "Deactivate Disruptive Plugins & Disable WP_CACHE"
+DISRUPTIVE_PLUGINS=("google-captcha" "w3-total-cache" "jetpack-boost" "jetpack")
+for plugin in "${DISRUPTIVE_PLUGINS[@]}"; do
+    run_command "$WP_CLI_74 plugin deactivate \"$plugin\" --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
 done
 
-log_step "7" "Purge Cache Drop-ins & Configuration Folders"
-run_command "rm -f \"$WEB_ROOT/wp-content/advanced-cache.php\" \"$WEB_ROOT/wp-content/object-cache.php\""
-run_command "rm -rf \"$WEB_ROOT/wp-content/cache\" \"$WEB_ROOT/wp-content/w3tc-config\""
+run_command "$WP_CLI_74 config set WP_CACHE false --raw --type=constant --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
+run_command "rm -rf \"$WEB_ROOT/wp-content/cache/\"* \"$WEB_ROOT/wp-content/boost-cache/\"* \"$WEB_ROOT/wp-content/advanced-cache.php\" \"$WEB_ROOT/wp-content/object-cache.php\" \"$WEB_ROOT/wp-content/w3tc-config\""
+run_command "$WP_CLI_74 cache flush --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
 
-log_step "7b" "Install, Activate & Configure Rank Math SEO"
-run_command "$WP_CLI_82 plugin install seo-by-rank-math --activate --path=\"$WEB_ROOT\" 2>/dev/null || $WP_CLI_82 plugin activate seo-by-rank-math --path=\"$WEB_ROOT\" 2>/dev/null || true"
+# ----------------------------------------------------------------------
+# PHASE C: Legacy Plugin Deactivation & Theme Cleanup (PHP 7.4)
+# ----------------------------------------------------------------------
+
+log_step "5" "Deactivate Legacy Plugins"
+LEGACY_PLUGINS=(
+    "polylang"
+    "polylang-theme-strings"
+    "awesome-weather"
+    "facebook-pixel"
+    "LayerSlider"
+    "js_composer"
+    "pdf-image-generator"
+    "php-compatibility-checker"
+    "show-hide-author"
+    "wp-missed-schedule-master"
+    "mailchimp"
+    "force-regenerate-thumbnails"
+    "disable-comments"
+    "manage-xml-rpc"
+    "duplicate-post"
+    "aryo-activity-log"
+    "jetpack"
+)
+
+for plugin in "${LEGACY_PLUGINS[@]}"; do
+    run_command "$WP_CLI_74 plugin deactivate \"$plugin\" --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
+done
+
+log_step "6" "Remove Legacy Theme Directory"
+run_command "rm -rf \"$WEB_ROOT/wp-content/themes/betheme\""
+
+# ----------------------------------------------------------------------
+# PHASE D: Theme Activation & Content Transformation (PHP 8.2)
+# ----------------------------------------------------------------------
+
+log_step "7" "Activate Ekkairo Flagship FSE Theme"
+run_command "$WP_CLI_82 theme activate ekkairo-flagship --path=\"$WEB_ROOT\" --allow-root"
+
+log_step "8" "Execute Content Engine Gutenberg Block Transformation"
+if [ -f "$THEME_DIR/bin/migration-content-engine.php" ]; then
+    run_command "$WP_CLI_82 eval-file \"$THEME_DIR/bin/migration-content-engine.php\" --path=\"$WEB_ROOT\" --skip-plugins --allow-root"
+else
+    log_info "Warning: migration-content-engine.php not found at $THEME_DIR/bin/migration-content-engine.php"
+fi
+
+# ----------------------------------------------------------------------
+# PHASE E: Modernization, Plugins & Infrastructure (PHP 8.2)
+# ----------------------------------------------------------------------
+
+log_step "9" "Configure Site Locale to Greek (el_GR)"
+run_command "$WP_CLI_82 option update WPLANG el_GR --path=\"$WEB_ROOT\" --allow-root"
+
+log_step "10" "Install, Activate & Configure Rank Math SEO"
+run_command "if ! $WP_CLI_82 plugin is-installed seo-by-rank-math --path=\"$WEB_ROOT\" --allow-root 2>/dev/null; then $WP_CLI_82 plugin install seo-by-rank-math --activate --path=\"$WEB_ROOT\" --allow-root; else $WP_CLI_82 plugin activate seo-by-rank-math --path=\"$WEB_ROOT\" --allow-root || true; fi"
 run_command "$WP_CLI_82 eval '
     \$modules = array(\"sitemap\", \"rich-snippet\", \"seo-analysis\", \"link-counter\", \"instant-indexing\");
     update_option(\"rank_math_modules\", \$modules);
     \$titles = get_option(\"rank-math-options-titles\", array());
     \$titles[\"breadcrumbs\"] = \"off\";
     \$titles[\"knowledgegraph_type\"] = \"organization\";
-    \$titles[\"knowledgegraph_name\"] = \"Ελληνική Κοινότητα Αλεξανδρείας\";
+    \$titles[\"knowledgegraph_name\"] = \"Ελληνική Κοινότητα Καΐρου\";
     update_option(\"rank-math-options-titles\", \$titles);
-' --path=\"$WEB_ROOT\""
+' --path=\"$WEB_ROOT\" --allow-root"
 
-log_step "7c" "Purge Autoloaded Options Bloat (~700KB RAM/Query Savings)"
-run_command "$WP_CLI_82 db query \"DELETE FROM wp_options WHERE option_name IN ('rs-templates', 'redux_builder_amp', 'revslider-addons', 'polylang_wpml_strings');\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
-run_command "$WP_CLI_82 db query \"UPDATE wp_options SET autoload = 'no' WHERE option_name LIKE 'jetpack_%' OR option_name = 'betheme';\" --path=\"$WEB_ROOT\" 2>/dev/null || true"
+log_step "11" "Purge Autoloaded Options Bloat"
+run_command "$WP_CLI_82 db query \"DELETE FROM wp_options WHERE option_name IN ('rs-templates', 'redux_builder_amp', 'revslider-addons', 'polylang_wpml_strings');\" --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
+run_command "$WP_CLI_82 db query \"UPDATE wp_options SET autoload = 'no' WHERE option_name LIKE 'jetpack_%' OR option_name = 'betheme';\" --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
 
-log_step "7d" "Install, Activate & Enable Redis Object Cache"
-run_command "$WP_CLI_82 plugin install redis-cache --activate --path=\"$WEB_ROOT\" 2>/dev/null || $WP_CLI_82 plugin activate redis-cache --path=\"$WEB_ROOT\" 2>/dev/null || true"
-run_command "$WP_CLI_82 redis enable --path=\"$WEB_ROOT\" 2>/dev/null || true"
+log_step "12" "Install, Activate & Enable Redis Object Cache"
+run_command "if ! $WP_CLI_82 plugin is-installed redis-cache --path=\"$WEB_ROOT\" --allow-root 2>/dev/null; then $WP_CLI_82 plugin install redis-cache --activate --path=\"$WEB_ROOT\" --allow-root || true; else $WP_CLI_82 plugin activate redis-cache --path=\"$WEB_ROOT\" --allow-root || true; fi"
+run_command "$WP_CLI_82 redis enable --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
 
 # ----------------------------------------------------------------------
-# PHASE B: Modernization & Template Binding (PHP 8.2 Runtime)
+# PHASE F: Invalidation, Cache Flushing & Reopening Site (PHP 8.2)
 # ----------------------------------------------------------------------
 
-log_step "8" "Native OPcache Reset (PHP 8.2)"
-run_command "$WP_CLI_82 eval 'if(function_exists(\"opcache_reset\")) opcache_reset();' --path=\"$WEB_ROOT\""
-
-log_step "9" "Execute Content Engine Stage 02 Gutenberg Block Transformation"
-run_command "$WP_CLI_82 eval-file \"$THEME_DIR/bin/migration-content-engine.php\" --path=\"$WEB_ROOT\" --skip-plugins"
-
-log_step "10" "Execute Stage 03 Page Template Assignment"
-run_command "$WP_CLI_82 eval-file \"$THEME_DIR/bin/assign-page-templates.php\" --path=\"$WEB_ROOT\""
-
-log_step "11" "Execute Stage 03 Classic Menu to FSE Navigation Migration"
-run_command "$WP_CLI_82 eval-file \"$THEME_DIR/bin/migrate-classic-menus-to-fse.php\" --path=\"$WEB_ROOT\""
-
-log_step "12" "Final Permalinks Flush, Object Cache Clear & Maintenance Lift"
-run_command "$WP_CLI_82 rewrite flush --path=\"$WEB_ROOT\""
-run_command "$WP_CLI_82 cache flush --path=\"$WEB_ROOT\""
+log_step "13" "Final Invalidation, Cache Flush & Lift Maintenance Mode"
+run_command "$WP_CLI_82 eval 'if(function_exists(\"opcache_reset\")) opcache_reset();' --path=\"$WEB_ROOT\" --allow-root"
+run_command "$WP_CLI_82 transient delete --all --path=\"$WEB_ROOT\" --allow-root 2>/dev/null || true"
+run_command "$WP_CLI_82 cache flush --path=\"$WEB_ROOT\" --allow-root"
+run_command "$WP_CLI_82 rewrite flush --path=\"$WEB_ROOT\" --allow-root"
 run_command "rm -f \"$WEB_ROOT/.maintenance\""
 
 echo ""
 echo "======================================================================"
 if [ "$DRY_RUN" = true ]; then
     echo "🎉 DRY-RUN SIMULATION COMPLETED SUCCESSFULLY!"
-    echo "   All 12 deployment steps validated with zero syntax or runtime errors."
+    echo "   All production deployment steps validated in test mode."
 else
     echo "🎉 PRODUCTION CUTOVER DEPLOYMENT COMPLETED SUCCESSFULLY!"
-    echo "   EKA Portal modernized and running cleanly on PHP 8.2."
+    echo "   EKK Portal modernized and running cleanly on PHP 8.2."
 fi
 echo "======================================================================"
 exit 0
+
