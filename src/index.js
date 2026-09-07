@@ -223,5 +223,106 @@ document.addEventListener('DOMContentLoaded', () => {
 			});
 		}
 	});
+
+	// 6. Mailchimp Newsletter Subscribe Form Controller (Double Opt-In Async)
+	const subscribeForms = document.querySelectorAll('.subscribe-form');
+	subscribeForms.forEach((form) => {
+		form.addEventListener('submit', (e) => {
+			const actionUrl = form.getAttribute('action');
+			if (!actionUrl || !actionUrl.includes('list-manage.com')) {
+				return;
+			}
+
+			e.preventDefault();
+
+			const parent = form.parentElement;
+			const feedback = parent ? parent.querySelector('.subscribe-feedback') : null;
+			const submitBtn = form.querySelector('.subscribe-submit-btn');
+			const emailInput = form.querySelector('input[name="EMAIL"]');
+
+			if (!emailInput || !emailInput.value.trim()) {
+				return;
+			}
+
+			if (feedback) {
+				feedback.style.display = 'block';
+				feedback.className = 'subscribe-feedback is-loading';
+				feedback.innerHTML = 'Παρακαλούμε περιμένετε...';
+			}
+
+			if (submitBtn) {
+				submitBtn.disabled = true;
+			}
+
+			const jsonpUrl = actionUrl.replace('/subscribe/post?', '/subscribe/post-json?');
+			const callbackName = 'mc_cb_' + Math.random().toString(36).substring(2, 9);
+			const formData = new FormData(form);
+			const params = new URLSearchParams(formData);
+			params.set('c', callbackName);
+
+			const script = document.createElement('script');
+			script.src = `${jsonpUrl}&${params.toString()}`;
+
+			window[callbackName] = (data) => {
+				try {
+					delete window[callbackName];
+				} catch (_) {
+					window[callbackName] = undefined;
+				}
+
+				if (script.parentNode) {
+					script.parentNode.removeChild(script);
+				}
+
+				if (submitBtn) {
+					submitBtn.disabled = false;
+				}
+
+				if (feedback) {
+					feedback.style.display = 'block';
+					if (data.result === 'success' || (data.msg && data.msg.toLowerCase().includes('almost finished'))) {
+						feedback.className = 'subscribe-feedback is-success';
+						feedback.innerHTML = '<strong>Σας ευχαριστούμε για την εγγραφή σας!</strong><br>Σας έχουμε αποστείλει ένα email επιβεβαίωσης. Παρακαλούμε ελέγξτε τα εισερχόμενά σας (ή τον φάκελο spam) και πατήστε στον σύνδεσμο για να ενεργοποιήσετε τη συνδρομή σας.';
+						form.reset();
+					} else {
+						feedback.className = 'subscribe-feedback is-error';
+						let errorMsg = 'Παρουσιάστηκε σφάλμα κατά την εγγραφή. Παρακαλούμε δοκιμάστε ξανά.';
+						const rawMsg = (data.msg || '').toLowerCase();
+						if (rawMsg.includes('already subscribed') || rawMsg.includes('is already subscribed')) {
+							errorMsg = '<strong>Η διεύθυνση email είναι ήδη εγγεγραμμένη</strong> στο ενημερωτικό μας δελτίο.';
+						} else if (rawMsg.includes('invalid') || rawMsg.includes('not valid')) {
+							errorMsg = 'Παρακαλούμε εισάγετε μια έγκυρη διεύθυνση email.';
+						} else if (data.msg) {
+							// Strip any HTML Mailchimp error tags if present
+							const cleanMsg = data.msg.replace(/<[^>]*>?/gm, '').replace(/^[0-9]+\s*-\s*/, '');
+							if (cleanMsg.length > 0 && cleanMsg.length < 200) {
+								errorMsg = cleanMsg;
+							}
+						}
+						feedback.innerHTML = errorMsg;
+					}
+				}
+			};
+
+			script.onerror = () => {
+				try {
+					delete window[callbackName];
+				} catch (_) {
+					window[callbackName] = undefined;
+				}
+				if (script.parentNode) {
+					script.parentNode.removeChild(script);
+				}
+				if (submitBtn) {
+					submitBtn.disabled = false;
+				}
+				// Fallback to native post
+				form.submit();
+			};
+
+			document.body.appendChild(script);
+		});
+	});
 });
+
 
